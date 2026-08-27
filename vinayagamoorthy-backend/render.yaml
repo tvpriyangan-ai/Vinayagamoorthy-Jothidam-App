@@ -3,6 +3,7 @@ services:
     name: vinayagamoorthy-api
     runtime: python
     plan: free
+    rootDir: vinayagamoorthy-backend
     buildCommand: "pip install -r requirements.txt"
     startCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
     envVars:
