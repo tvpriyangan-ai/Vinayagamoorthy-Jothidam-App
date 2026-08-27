@@ -28,6 +28,11 @@ app.include_router(temples.router)
 app.include_router(chat.router)
 
 
+@app.get("/")
+async def root():
+    return {"status": "ok", "app": settings.APP_NAME, "health": "/health"}
+
+
 @app.on_event("startup")
 async def on_startup():
     await ensure_indexes()
