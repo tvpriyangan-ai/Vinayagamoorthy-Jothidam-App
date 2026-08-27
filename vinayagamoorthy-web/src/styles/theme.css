@@ -1,0 +1,224 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cinzel+Decorative:wght@700&family=Catamaran:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap');
+@import "tailwindcss";
+
+/*
+  DESIGN SYSTEM — Vinayagamoorthy Jothidam
+  ------------------------------------------------------------------
+  This follows the client's own mockup exactly: an aged palm-leaf
+  manuscript aesthetic — dark vignette background, warm parchment
+  cards, gold ornamental trim, and twisted-rope bindings between
+  panels (echoing how real palm-leaf manuscripts were bound together).
+
+  Palette:
+    --ink-black:      #150d07  (outer background, deep vignette)
+    --ember-brown:    #2c1c0f  (background mid-tone)
+    --parchment-dark: #6b4e2e  (card shadow edge / wood tone)
+    --parchment-mid:  #a9814f  (card base tone)
+    --parchment-light:#d9b978  (card highlight tone)
+    --gold:           #d8b45c  (ornamental trim, icons, headings)
+    --gold-bright:    #f0d68a  (hover/active gold)
+    --ink-brown:      #3a2812  (text on parchment)
+    --alert-red:      #7a2318  (used sparingly, e.g. today's highlight)
+
+  Type:
+    Display (English wordmark): Cinzel Decorative — carved, ceremonial
+    Headings: Cinzel — restrained companion to the decorative face
+    Tamil + body UI: Catamaran — clean, legible, full Tamil coverage
+    Manuscript flavor text: Cormorant Garamond italic — used sparingly
+*/
+
+:root {
+  --ink-black: #150d07;
+  --ember-brown: #2c1c0f;
+  --parchment-dark: #6b4e2e;
+  --parchment-mid: #a9814f;
+  --parchment-light: #d9b978;
+  --gold: #d8b45c;
+  --gold-bright: #f0d68a;
+  --ink-brown: #3a2812;
+  --alert-red: #7a2318;
+}
+
+@theme {
+  --color-ink-black: #150d07;
+  --color-ember-brown: #2c1c0f;
+  --color-parchment-dark: #6b4e2e;
+  --color-parchment-mid: #a9814f;
+  --color-parchment-light: #d9b978;
+  --color-gold: #d8b45c;
+  --color-gold-bright: #f0d68a;
+  --color-ink-brown: #3a2812;
+  --color-alert-red: #7a2318;
+
+  --font-display: 'Cinzel Decorative', 'Cinzel', serif;
+  --font-heading: 'Cinzel', serif;
+  --font-tamil: 'Catamaran', sans-serif;
+  --font-manuscript: 'Cormorant Garamond', serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-tamil);
+  color: var(--ink-brown);
+  background: radial-gradient(ellipse at center, var(--ember-brown) 0%, var(--ink-black) 78%);
+  min-height: 100vh;
+}
+
+/* Ambient vignette + faint gold dust, sitting behind every page */
+.app-shell {
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.app-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, rgba(216,180,92,0.25) 0, transparent 60%),
+    radial-gradient(1px 1px at 80% 15%, rgba(216,180,92,0.2) 0, transparent 60%),
+    radial-gradient(1px 1px at 60% 70%, rgba(216,180,92,0.18) 0, transparent 60%),
+    radial-gradient(1px 1px at 30% 85%, rgba(216,180,92,0.22) 0, transparent 60%);
+  z-index: 0;
+}
+
+/* Parchment card surface — layered gradients simulate aged, uneven paper */
+.parchment {
+  position: relative;
+  background:
+    radial-gradient(120% 140% at 20% 0%, rgba(255,255,255,0.10), transparent 55%),
+    radial-gradient(140% 120% at 100% 100%, rgba(0,0,0,0.28), transparent 60%),
+    linear-gradient(155deg, var(--parchment-light) 0%, var(--parchment-mid) 48%, var(--parchment-dark) 100%);
+  border: 1px solid rgba(216,180,92,0.55);
+  border-radius: 14px;
+  box-shadow:
+    0 10px 24px rgba(0,0,0,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.15),
+    inset 0 -12px 24px rgba(60,36,12,0.25);
+  color: var(--ink-brown);
+}
+
+/* Fine gold corner flourishes — a restrained nod to the manuscript border art */
+.parchment-corners::before,
+.parchment-corners::after {
+  content: "❖";
+  position: absolute;
+  color: var(--gold);
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+.parchment-corners::before { top: 8px; left: 10px; }
+.parchment-corners::after { top: 8px; right: 10px; }
+
+/* Twisted rope divider — the signature element binding cards together,
+   echoing how real palm-leaf manuscripts are strung on a cord */
+.rope-divider {
+  height: 10px;
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--gold) 0px, var(--gold) 4px,
+    #8a6a34 4px, #8a6a34 8px
+  );
+  border-radius: 999px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  position: relative;
+}
+.rope-knot {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 30%, var(--gold-bright), var(--gold) 60%, #8a6a34 100%);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+}
+
+.gold-heading {
+  font-family: var(--font-heading);
+  color: var(--gold);
+  letter-spacing: 0.04em;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+}
+
+/* For headings placed ON TOP of parchment (light background) — gold-heading
+   above is for dark backgrounds only; using it on parchment fails contrast. */
+.parchment-heading {
+  font-family: var(--font-heading);
+  color: #6b4514;
+  letter-spacing: 0.03em;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.25);
+}
+
+.brand-wordmark {
+  font-family: var(--font-display);
+  color: var(--gold);
+  letter-spacing: 0.06em;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}
+
+.btn-gold {
+  font-family: var(--font-heading);
+  background: linear-gradient(180deg, var(--gold-bright), var(--gold));
+  color: var(--ink-brown);
+  border: 1px solid #8a6a34;
+  border-radius: 999px;
+  padding: 0.65rem 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.4);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btn-gold:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.5);
+}
+.btn-gold:active {
+  transform: translateY(0px);
+}
+.btn-gold:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.input-manuscript {
+  font-family: var(--font-tamil);
+  background: rgba(255,255,255,0.55);
+  border: 1px solid rgba(107,78,46,0.5);
+  border-radius: 8px;
+  padding: 0.6rem 0.85rem;
+  color: var(--ink-brown);
+  width: 100%;
+  outline: none;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.input-manuscript:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(216,180,92,0.35);
+}
+.input-manuscript::placeholder {
+  color: rgba(58,40,18,0.55);
+}
+
+.field-label {
+  font-family: var(--font-tamil);
+  font-weight: 600;
+  color: var(--ink-brown);
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.error-text {
+  color: var(--alert-red);
+  font-size: 0.85rem;
+  font-family: var(--font-tamil);
+}

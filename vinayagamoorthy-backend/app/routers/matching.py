@@ -1,0 +1,53 @@
+from datetime import datetime, timezone
+from fastapi import APIRouter, Depends, HTTPException, status
+
+from app.core.deps import get_current_user
+from app.models.matching import PartnerDetails
+from app.services.astro import generate_full_chart
+from app.services.chart_service import get_user_chart
+from app.services.matching import calculate_porutham
+from app.db.mongodb import matches_collection
+
+router = APIRouter(prefix="/matching", tags=["matching"])
+
+
+@router.post("/check")
+async def check_matching(payload: PartnerDetails, user: dict = Depends(get_current_user)):
+    """
+    Per your spec: user clicks Matching & Advices, a dialog asks for the
+    partner's name/DOB/time/place, and gets back the compatibility report.
+    We use the logged-in user's own saved chart as one side automatically.
+    """
+    if user["gender"] not in ("male", "female") or payload.gender not in ("male", "female"):
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, "gender must be 'male' or 'female'")
+    if user["gender"] == payload.gender:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, "Matching requires one male and one female chart")
+
+    user_chart = await get_user_chart(user)
+    birth = payload.birth.model_dump()
+    partner_chart = generate_full_chart(
+        date=birth["date"], time=birth["time"], tz_offset=birth["timezone_offset"],
+        latitude=birth["latitude"], longitude=birth["longitude"],
+    )
+
+    if user["gender"] == "female":
+        girl_chart, boy_chart = user_chart, partner_chart
+    else:
+        girl_chart, boy_chart = partner_chart, user_chart
+
+    result = calculate_porutham(
+        girl_nakshatra=girl_chart["planets"]["Moon"]["nakshatra_index"],
+        girl_rasi=girl_chart["planets"]["Moon"]["rasi_index"],
+        boy_nakshatra=boy_chart["planets"]["Moon"]["nakshatra_index"],
+        boy_rasi=boy_chart["planets"]["Moon"]["rasi_index"],
+    )
+
+    await matches_collection().insert_one({
+        "user_id": user["_id"],
+        "partner_name": payload.name,
+        "partner_birth": birth,
+        "result_summary": {"matched_count": result["matched_count"], "total_count": result["total_count"]},
+        "checked_at": datetime.now(timezone.utc),
+    })
+
+    return result
