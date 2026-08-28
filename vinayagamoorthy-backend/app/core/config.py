@@ -35,7 +35,10 @@ class Settings(BaseSettings):
 
     # --- Chat with Vinayagamoorthy (Gemini API) ---
     GEMINI_API_KEY: str = ""
-    GEMINI_MODEL: str = "gemini-2.5-flash-lite"  # free-tier eligible; check aistudio.google.com for current options
+    # gemini-2.5-flash-lite was retired for new keys (Aug 2026). If this 404s again,
+    # set GEMINI_MODEL in the environment — "gemini-flash-lite-latest" always points
+    # at the current lite model. Check aistudio.google.com for options.
+    GEMINI_MODEL: str = "gemini-3.5-flash-lite"
 
     class Config:
         env_file = ".env"

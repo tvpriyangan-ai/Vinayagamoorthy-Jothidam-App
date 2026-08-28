@@ -17,7 +17,7 @@ services:
       - key: GEMINI_API_KEY
         sync: false   # set this in Render dashboard (free key from aistudio.google.com/app/apikey)
       - key: GEMINI_MODEL
-        value: gemini-2.5-flash-lite
+        value: gemini-3.5-flash-lite
       - key: SMTP_HOST
         sync: false   # e.g. smtp.gmail.com
       - key: SMTP_PORT
