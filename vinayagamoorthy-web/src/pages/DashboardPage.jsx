@@ -192,9 +192,9 @@ export default function DashboardPage() {
       <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-4 mt-4 mb-8">
         {FEATURE_GRID.map((f) => (
           <Link key={f.key} to={f.route}>
-            <ParchmentCard className="text-center h-full flex flex-col items-center justify-center py-6">
+            <ParchmentCard className="leaf-card--dark text-center h-full flex flex-col items-center justify-center py-6">
               <p className="font-semibold">{t(f.tKey)}</p>
-              <p className="text-xs opacity-70 mt-1">{t(f.subKey)}</p>
+              <p className="text-xs opacity-80 mt-1">{t(f.subKey)}</p>
             </ParchmentCard>
           </Link>
         ))}

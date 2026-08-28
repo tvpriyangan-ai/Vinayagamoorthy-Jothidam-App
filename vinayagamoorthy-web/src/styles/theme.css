@@ -1,44 +1,50 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cinzel+Decorative:wght@700&family=Catamaran:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap');
-/* Extra scripts for the language switcher: Malayalam, Devanagari (Hindi), Gurmukhi (Punjabi).
-   Catamaran only covers Tamil + Latin, so these give ml / hi / pa real glyphs. */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Noto+Serif+Tamil:wght@400;500;600;700&display=swap');
+/* Extra scripts for the language switcher: Malayalam, Devanagari (Hindi), Gurmukhi (Punjabi). */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@400;500;700&family=Noto+Sans+Devanagari:wght@400;500;700&family=Noto+Sans+Gurmukhi:wght@400;500;700&display=swap');
 @import "tailwindcss";
 
+/*
+  OLAI SUVADI (palm-leaf manuscript) theme — client-supplied reference palette.
+  Deep earthy-brown ground, aged gold-leaf card surfaces, an antique gold
+  page frame, fine horizontal manuscript texture, Cinzel + Noto Serif Tamil.
+*/
+
 :root {
-  --ink-black: #160D07;
-  --ember-brown: #1E1209;
-  --study-brown: #24150A;
-  --parchment-dark: #70512F;
-  --parchment-mid: #A9844D;
-  --parchment-light: #C9AA70;
-  --gold: #C9A45C;
-  --gold-bright: #D1B36A;
-  --ink-brown: #24170D;
-  --ink-brown-mid: #2B1B0E;
-  --parchment-heading: #35200F;
-  --alert-red: #8B4225;          /* was #7a2318 — now the terracotta tone */
-  --success-green: #4F6B3A;      /* was #2d5a2d — now the earthy olive tone */
-  --advantage-green: #4F6B3A;
-  --attention-terracotta: #8B4225;
+  --ink-black: #120904;
+  --ember-brown: #251108;
+  --study-brown: #1b0d03;
+  --parchment-dark: #6c4317;
+  --parchment-mid: #9a6827;
+  --parchment-light: #cfa15a;
+  --leaf: #c99b4e;
+  --gold: #e6b94f;
+  --gold-bright: #f2d276;
+  --ink-brown: #241105;
+  --ink-brown-mid: #2d1505;
+  --parchment-heading: #2a1304;
+  --alert-red: #a82c18;
+  --success-green: #4f6b3a;
+  --advantage-green: #4f6b3a;
+  --attention-terracotta: #8b4225;
 }
 
 @theme {
-  --color-ink-black: #160D07;
-  --color-ember-brown: #1E1209;
-  --color-study-brown: #24150A;
-  --color-parchment-dark: #70512F;
-  --color-parchment-mid: #A9844D;
-  --color-parchment-light: #C9AA70;
-  --color-gold: #C9A45C;
-  --color-gold-bright: #D1B36A;
-  --color-ink-brown: #24170D;
-  --color-alert-red: #8B4225;
-  --color-success-green: #4F6B3A;
+  --color-ink-black: #120904;
+  --color-ember-brown: #251108;
+  --color-study-brown: #1b0d03;
+  --color-parchment-dark: #6c4317;
+  --color-parchment-mid: #9a6827;
+  --color-parchment-light: #cfa15a;
+  --color-gold: #e6b94f;
+  --color-gold-bright: #f2d276;
+  --color-ink-brown: #241105;
+  --color-alert-red: #a82c18;
+  --color-success-green: #4f6b3a;
 
-  --font-display: 'Cinzel Decorative', 'Cinzel', serif;
+  --font-display: 'Cinzel', serif;
   --font-heading: 'Cinzel', serif;
-  --font-tamil: 'Catamaran', 'Noto Sans Malayalam', 'Noto Sans Devanagari', 'Noto Sans Gurmukhi', sans-serif;
-  --font-manuscript: 'Cormorant Garamond', serif;
+  --font-tamil: 'Noto Serif Tamil', 'Noto Sans Malayalam', 'Noto Sans Devanagari', 'Noto Sans Gurmukhi', Georgia, serif;
+  --font-manuscript: 'Noto Serif Tamil', Georgia, serif;
 }
 
 * { box-sizing: border-box; }
@@ -47,96 +53,111 @@ html, body, #root { height: 100%; }
 body {
   margin: 0;
   font-family: var(--font-tamil);
-  color: var(--ink-brown);
+  color: var(--gold-bright);
   background:
-    radial-gradient(ellipse at 50% -10%, rgba(201,164,92,0.06), transparent 55%),
-    radial-gradient(ellipse at center, var(--study-brown) 0%, var(--ink-black) 78%);
+    radial-gradient(circle at 50% 25%, rgba(126,79,23,0.18), transparent 44%),
+    linear-gradient(135deg, #100702, var(--ember-brown) 55%, #100702);
   min-height: 100vh;
 }
 
-.app-shell { min-height: 100vh; position: relative; overflow-x: hidden; }
-.app-shell::before {
+/* Fine horizontal + vertical manuscript ruling over the whole UI. */
+body::before {
   content: "";
-  position: fixed; inset: 0; pointer-events: none;
-  background-image:
-    radial-gradient(1px 1px at 10% 20%, rgba(201,164,92,0.25) 0, transparent 60%),
-    radial-gradient(1px 1px at 80% 15%, rgba(201,164,92,0.2) 0, transparent 60%),
-    radial-gradient(1px 1px at 60% 70%, rgba(201,164,92,0.18) 0, transparent 60%),
-    radial-gradient(1px 1px at 30% 85%, rgba(201,164,92,0.22) 0, transparent 60%);
-  z-index: 0;
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.11;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 13px, rgba(242,210,118,0.25) 13px 14px),
+    repeating-linear-gradient(0deg, transparent 0 13px, rgba(242,210,118,0.15) 13px 14px);
 }
 
-/* Renamed from .parchment — kept both selectors so ParchmentCard.jsx
-   works unchanged whether or not you rename its className. */
+.app-shell { min-height: 100vh; position: relative; overflow-x: hidden; }
+
+/* Antique thin gold frame around the content, like a manuscript border. */
+.app-shell::before {
+  content: "";
+  position: fixed;
+  inset: 7px;
+  border: 1px solid var(--gold);
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Aged gold-leaf card surface. */
 .leaf-card, .parchment {
   position: relative;
   padding: 18px 22px 16px;
   border-radius: 3px 7px 4px 8px / 6px 3px 7px 4px;
   background:
-    /* fine incised horizontal fibre — the length of a palm-leaf strip */
-    repeating-linear-gradient(90deg,
-      rgba(58,40,20,0.055) 0 1px, transparent 1px 5px),
-    /* the original faint cross-rule */
-    repeating-linear-gradient(to bottom,
-      rgba(36,23,13,0.05) 0px, rgba(36,23,13,0.05) 1px,
-      transparent 1px, transparent 4px),
-    /* aged foxing spots */
+    radial-gradient(circle at 15% 20%, rgba(255,226,146,0.17), transparent 22%),
+    radial-gradient(circle at 85% 78%, rgba(60,29,3,0.28), transparent 38%),
+    repeating-linear-gradient(90deg, rgba(58,40,20,0.06) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(0deg, rgba(62,31,5,0.10) 0 1px, transparent 1px 4px),
     radial-gradient(circle at 18% 28%, rgba(58,36,16,0.20) 0 1.5px, transparent 2.5px),
     radial-gradient(circle at 67% 61%, rgba(58,36,16,0.16) 0 2px, transparent 3px),
     radial-gradient(circle at 85% 22%, rgba(58,36,16,0.12) 0 1px, transparent 2px),
-    radial-gradient(circle at 39% 83%, rgba(58,36,16,0.13) 0 1.5px, transparent 2.5px),
-    /* sheen + shade */
-    radial-gradient(120% 80% at 15% 10%, rgba(255,255,255,0.08), transparent 55%),
-    radial-gradient(100% 90% at 90% 95%, rgba(0,0,0,0.18), transparent 60%),
-    /* browned long edges, like the rim of a real ola leaf */
-    linear-gradient(90deg,
-      rgba(40,24,10,0.30) 0%, transparent 7%,
-      transparent 93%, rgba(40,24,10,0.32) 100%),
-    linear-gradient(155deg, var(--parchment-light) 0%, var(--parchment-mid) 55%, var(--parchment-dark) 100%);
-  border: 1px solid rgba(40,24,10,0.6);
+    linear-gradient(135deg, var(--parchment-light) 0%, var(--parchment-mid) 52%, var(--parchment-dark) 100%);
+  border: 2px solid var(--gold);
   box-shadow:
-    0 6px 16px rgba(0,0,0,0.45),
-    inset 0 1px 0 rgba(255,255,255,0.12),
-    inset 0 -8px 16px rgba(36,23,13,0.15),
-    inset 0 0 22px rgba(40,24,10,0.22);
+    inset 0 0 0 2px rgba(58,28,4,0.52),
+    inset 0 0 28px rgba(49,22,2,0.35),
+    0 7px 18px rgba(0,0,0,0.6);
   color: var(--ink-brown);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .leaf-card:hover, .parchment:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.14),
-    inset 0 0 22px rgba(40,24,10,0.2);
+  box-shadow:
+    inset 0 0 0 2px rgba(58,28,4,0.5),
+    inset 0 0 28px rgba(49,22,2,0.3),
+    0 11px 22px rgba(0,0,0,0.62);
 }
-/* Non-lifting variant — for the page header and other fixed chrome. */
+/* Non-lifting variant — page header and other fixed chrome. */
 .leaf-card--flat, .leaf-card--flat:hover { transform: none; }
+
+/* Dark leaf variant — feature tiles, panels that read better dark. */
+.leaf-card--dark {
+  background:
+    radial-gradient(circle, rgba(204,153,63,0.20), transparent 55%),
+    linear-gradient(160deg, #2b1607, #160a03);
+  border: 1px solid var(--gold);
+  color: var(--gold-bright);
+  box-shadow: inset 0 0 18px rgba(208,158,64,0.10), 0 4px 12px rgba(0,0,0,0.45);
+}
+.leaf-card--dark .parchment-heading,
+.leaf-card--dark h3 { color: var(--gold-bright); }
+
+/* Small corner ornament (ParchmentCard adds .parchment-corners). */
 .leaf-card.parchment-corners::before, .leaf-card.parchment-corners::after,
 .parchment.parchment-corners::before, .parchment.parchment-corners::after {
-  content: "◆";
+  content: "\2749";
   position: absolute;
-  font-size: 8px;
-  color: var(--parchment-dark);
-  opacity: 0.6;
+  font-size: 10px;
+  color: rgba(255,216,105,0.5);
 }
-.parchment-corners::before { top: 8px; left: 10px; }
-.parchment-corners::after { top: 8px; right: 10px; }
+.parchment-corners::before { top: 7px; left: 10px; }
+.parchment-corners::after { bottom: 7px; right: 10px; }
 
+/* Diagonal gold-dash divider (RopeDivider). */
 .rope-divider {
-  height: 8px;
-  background-image: repeating-linear-gradient(45deg,
-    var(--gold) 0px, var(--gold) 4px, var(--parchment-dark) 4px, var(--parchment-dark) 8px);
-  border-radius: 999px;
+  height: 6px;
+  background-image: repeating-linear-gradient(135deg, var(--gold) 0 7px, #4a2908 7px 12px);
+  border-top: 1px solid #e3b852;
+  border-bottom: 1px solid #e3b852;
   box-shadow: 0 1px 2px rgba(0,0,0,0.5);
   position: relative;
 }
 .rope-knot {
-  width: 16px; height: 16px; border-radius: 999px;
-  background: radial-gradient(circle at 35% 30%, var(--gold-bright), var(--gold) 60%, var(--parchment-dark) 100%);
+  width: 14px; height: 14px; border-radius: 999px;
+  background: radial-gradient(circle at 35% 30%, var(--gold-bright), var(--gold) 55%, #4a2908 100%);
   box-shadow: 0 1px 3px rgba(0,0,0,0.6);
 }
 
 .gold-heading {
   font-family: var(--font-heading);
-  color: var(--gold);
+  color: var(--gold-bright);
   letter-spacing: 0.04em;
   text-shadow: 0 1px 2px rgba(0,0,0,0.6);
 }
@@ -147,51 +168,56 @@ body {
 }
 .brand-wordmark {
   font-family: var(--font-display);
-  color: var(--gold);
+  font-weight: 700;
+  color: var(--gold-bright);
   letter-spacing: 0.06em;
   text-shadow: 0 2px 6px rgba(0,0,0,0.6);
 }
 
 .btn-gold {
   font-family: var(--font-heading);
-  background: var(--ember-brown);
-  color: var(--gold);
-  border: 1px solid var(--gold);
+  background: linear-gradient(180deg, #432307, var(--study-brown));
+  color: var(--gold-bright);
+  border: 1px solid var(--gold-bright);
   border-radius: 3px;
   padding: 0.65rem 1.5rem;
   font-weight: 600;
   letter-spacing: 0.03em;
   transition: all 0.2s ease;
 }
-.btn-gold:hover { background: var(--study-brown); color: var(--gold-bright); border-color: var(--gold-bright); }
-.btn-gold:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.btn-gold:hover {
+  background: linear-gradient(180deg, #5a3009, #241004);
+  color: #fff2cf;
+  border-color: #fff2cf;
+}
+.btn-gold:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
 
-/* Alias of .btn-gold's flat manuscript style, kept for explicit use. */
 .btn-manuscript {
   font-family: var(--font-heading);
-  background: var(--ember-brown);
-  color: var(--gold);
-  border: 1px solid var(--gold);
+  background: linear-gradient(180deg, #432307, var(--study-brown));
+  color: var(--gold-bright);
+  border: 1px solid var(--gold-bright);
   border-radius: 3px;
   padding: 10px 26px;
   letter-spacing: 1.5px;
   transition: all 0.2s ease;
 }
-.btn-manuscript:hover { background: var(--study-brown); color: var(--gold-bright); border-color: var(--gold-bright); }
+.btn-manuscript:hover { background: linear-gradient(180deg, #5a3009, #241004); color: #fff2cf; border-color: #fff2cf; }
 
 .input-manuscript {
   font-family: var(--font-tamil);
-  background: linear-gradient(155deg, var(--parchment-mid), var(--parchment-dark));
-  border: 1px solid var(--gold);
+  background: #211004;
+  border: 1px solid var(--gold-bright);
   border-radius: 3px;
   padding: 0.6rem 0.85rem;
-  color: var(--ink-brown);
+  color: var(--gold-bright);
   width: 100%;
   outline: none;
   transition: box-shadow 0.15s ease, border-color 0.15s ease;
 }
-.input-manuscript:focus { border-color: var(--gold-bright); box-shadow: 0 0 0 3px rgba(201,164,92,0.3); }
-.input-manuscript::placeholder { color: rgba(36,23,13,0.55); }
+.input-manuscript:focus { border-color: #fff2cf; box-shadow: 0 0 0 3px rgba(230,185,79,0.28); }
+.input-manuscript::placeholder { color: rgba(242,210,118,0.5); }
+.input-manuscript option { background: #211004; color: var(--gold-bright); }
 
 .field-label {
   font-family: var(--font-tamil);
@@ -208,37 +234,21 @@ body {
   font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
   padding: 3px 10px; border-radius: 2px; text-transform: uppercase;
 }
-.badge-advantage { background: rgba(79,107,58,0.16); border: 1px solid var(--advantage-green); color: var(--advantage-green); }
-.badge-attention { background: rgba(139,66,37,0.14); border: 1px solid var(--attention-terracotta); color: var(--attention-terracotta); }
-.badge-gold { background: rgba(201,164,92,0.18); border: 1px solid var(--gold); color: var(--parchment-heading); }
+.badge-advantage { background: rgba(79,107,58,0.18); border: 1px solid var(--advantage-green); color: #35521f; }
+.badge-attention { background: rgba(139,66,37,0.16); border: 1px solid var(--attention-terracotta); color: #6e2f18; }
+.badge-gold { background: rgba(230,185,79,0.22); border: 1px solid var(--gold); color: var(--parchment-heading); }
 
 /* ============================================================
-   Palm-leaf finishing — chrome, dividers, tables, chat, helpers
+   Finishing — selection, scrollbar, details, tables, chat, spinner
    ============================================================ */
 
-/* Faint palm frond watermark behind every screen (below the gold dust). */
-.app-shell::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.05;
-  background-repeat: no-repeat;
-  background-position: right -70px bottom -60px;
-  background-size: 440px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Cg fill='none' stroke='%23C9A45C' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M40 380 C120 300 200 200 360 40'/%3E%3Cpath d='M110 300 C132 262 122 220 90 190'/%3E%3Cpath d='M152 250 C178 210 172 165 140 135'/%3E%3Cpath d='M200 198 C232 158 230 114 198 84'/%3E%3Cpath d='M255 145 C286 108 286 64 254 34'/%3E%3Cpath d='M110 300 C152 290 196 300 232 332'/%3E%3Cpath d='M152 250 C196 240 242 250 282 282'/%3E%3Cpath d='M200 198 C248 190 292 202 332 232'/%3E%3Cpath d='M255 145 C300 140 342 152 372 180'/%3E%3C/g%3E%3C/svg%3E");
-}
-
-/* Selection + focus, in gold. */
-::selection { background: rgba(201,164,92,0.35); color: var(--ink-brown); }
+::selection { background: rgba(230,185,79,0.4); color: var(--ink-brown); }
 :focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 2px; border-radius: 2px; }
 a { text-underline-offset: 3px; }
 
-/* Thin manuscript scrollbar. */
 * { scrollbar-width: thin; scrollbar-color: var(--parchment-dark) transparent; }
 ::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-track { background: rgba(0,0,0,0.18); }
+::-webkit-scrollbar-track { background: rgba(0,0,0,0.25); }
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, var(--gold), var(--parchment-dark));
   border-radius: 999px;
@@ -246,7 +256,6 @@ a { text-underline-offset: 3px; }
   background-clip: padding-box;
 }
 
-/* <details> / <summary> — used for the dasha timeline and reading cards. */
 .leaf-card details > summary,
 .parchment details > summary {
   cursor: pointer;
@@ -257,45 +266,41 @@ a { text-underline-offset: 3px; }
 .leaf-card details > summary::-webkit-details-marker,
 .parchment details > summary::-webkit-details-marker { display: none; }
 .leaf-card details > summary::before,
-.parchment details > summary::before { content: "\276E  "; color: var(--gold); }
+.parchment details > summary::before { content: "\276E  "; color: #6b3f0a; }
 .leaf-card details[open] > summary::before,
 .parchment details[open] > summary::before { content: "\276F  "; }
 
-/* A pair of thin gold rules — a manuscript margin line. */
 .manuscript-rule {
   border: 0;
   height: 4px;
-  border-top: 1px solid rgba(201,164,92,0.6);
-  border-bottom: 1px solid rgba(201,164,92,0.6);
+  border-top: 1px solid rgba(230,185,79,0.6);
+  border-bottom: 1px solid rgba(230,185,79,0.6);
   background: transparent;
   margin: 1rem 0;
 }
 
-/* Opt-in ruled table — add class="manuscript-table" to a <table>. */
 .manuscript-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
 .manuscript-table th {
   text-align: left;
   font-family: var(--font-heading);
   color: var(--parchment-heading);
   letter-spacing: 0.02em;
-  border-bottom: 2px double rgba(40,24,10,0.5);
+  border-bottom: 2px double rgba(45,20,3,0.55);
   padding: 6px 8px;
 }
-.manuscript-table td { padding: 6px 8px; border-bottom: 1px solid rgba(40,24,10,0.16); }
+.manuscript-table td { padding: 6px 8px; border-bottom: 1px solid rgba(45,20,3,0.18); }
 .manuscript-table tr:last-child td { border-bottom: 0; }
 
-/* Spinner for loading states. */
 .leaf-spinner {
   width: 28px; height: 28px;
   border-radius: 999px;
-  border: 3px solid rgba(40,24,10,0.25);
+  border: 3px solid rgba(45,20,3,0.3);
   border-top-color: var(--gold);
   animation: leaf-spin 0.9s linear infinite;
   margin: 0 auto;
 }
 @keyframes leaf-spin { to { transform: rotate(360deg); } }
 
-/* Tabs — e.g. "open chart" / "new match" on the matching page. */
 .tab {
   font-family: var(--font-heading);
   letter-spacing: 0.04em;
@@ -311,7 +316,6 @@ a { text-underline-offset: 3px; }
 .tab:hover { opacity: 0.85; }
 .tab--active { opacity: 1; color: var(--gold-bright); border-bottom-color: var(--gold-bright); }
 
-/* Chat bubbles — the Dashboard "Chat with Vinayagamoorthy" panel. */
 .chat-bubble {
   padding: 6px 12px;
   border-radius: 3px 8px 3px 8px;
