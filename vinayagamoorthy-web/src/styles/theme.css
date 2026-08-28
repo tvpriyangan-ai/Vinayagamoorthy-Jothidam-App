@@ -210,6 +210,7 @@ body {
 }
 .badge-advantage { background: rgba(79,107,58,0.16); border: 1px solid var(--advantage-green); color: var(--advantage-green); }
 .badge-attention { background: rgba(139,66,37,0.14); border: 1px solid var(--attention-terracotta); color: var(--attention-terracotta); }
+.badge-gold { background: rgba(201,164,92,0.18); border: 1px solid var(--gold); color: var(--parchment-heading); }
 
 /* ============================================================
    Palm-leaf finishing — chrome, dividers, tables, chat, helpers

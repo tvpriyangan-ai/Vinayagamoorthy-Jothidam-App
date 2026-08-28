@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import FeaturePageShell from '../components/FeaturePageShell';
 import ParchmentCard from '../components/ParchmentCard';
+import Loading from '../components/Loading';
 import { getMyLuckyNotes } from '../api/client';
 
 export default function LuckyNotesPage() {
@@ -14,7 +15,7 @@ export default function LuckyNotesPage() {
   }, []);
 
   if (error) return <FeaturePageShell title="Lucky Notes"><ParchmentCard><p className="error-text text-center">{error}</p></ParchmentCard></FeaturePageShell>;
-  if (!data) return <FeaturePageShell title="Lucky Notes"><ParchmentCard><p className="text-center opacity-70">ஏற்றுகிறது...</p></ParchmentCard></FeaturePageShell>;
+  if (!data) return <FeaturePageShell title="Lucky Notes"><ParchmentCard><Loading text="ஏற்றுகிறது..." /></ParchmentCard></FeaturePageShell>;
 
   return (
     <FeaturePageShell title="Lucky Notes" subtitle={`${data.rasi} ராசிக்கான குறிப்புகள்`} wide>
@@ -51,7 +52,7 @@ export default function LuckyNotesPage() {
 
 function NoteRow({ label, value }) {
   return (
-    <div className="flex justify-between border-b pb-1" style={{ borderColor: 'rgba(107,78,46,0.15)' }}>
+    <div className="flex justify-between border-b pb-1" style={{ borderColor: 'rgba(40,24,10,0.15)' }}>
       <span className="opacity-70">{label}</span>
       <span className="font-semibold text-right">{value}</span>
     </div>

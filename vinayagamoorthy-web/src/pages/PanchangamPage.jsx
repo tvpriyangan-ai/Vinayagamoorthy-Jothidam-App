@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import FeaturePageShell from '../components/FeaturePageShell';
 import ParchmentCard from '../components/ParchmentCard';
+import Loading from '../components/Loading';
 import { getTodayPanchangam } from '../api/client';
 
 export default function PanchangamPage() {
@@ -16,7 +17,7 @@ export default function PanchangamPage() {
   return (
     <FeaturePageShell title="Panchangam" subtitle={data ? `${data.date} · ${data.vaaram}` : ''}>
       {error && <ParchmentCard><p className="error-text text-center">{error}</p></ParchmentCard>}
-      {!data && !error && <ParchmentCard><p className="text-center opacity-70">ஏற்றுகிறது...</p></ParchmentCard>}
+      {!data && !error && <ParchmentCard><Loading text="ஏற்றுகிறது..." /></ParchmentCard>}
       {data && (
         <div className="space-y-4">
           <ParchmentCard>
@@ -52,7 +53,7 @@ export default function PanchangamPage() {
 
 function InfoRow({ label, value }) {
   return (
-    <div className="flex justify-between border-b pb-1" style={{ borderColor: 'rgba(107,78,46,0.15)' }}>
+    <div className="flex justify-between border-b pb-1" style={{ borderColor: 'rgba(40,24,10,0.15)' }}>
       <span className="opacity-70">{label}</span>
       <span className="font-semibold">{value}</span>
     </div>
@@ -61,7 +62,7 @@ function InfoRow({ label, value }) {
 
 function TimeBlock({ label, start, end }) {
   return (
-    <div className="rounded-lg p-3" style={{ background: 'rgba(122,35,24,0.12)', border: '1px solid rgba(122,35,24,0.3)' }}>
+    <div className="rounded-lg p-3" style={{ background: 'rgba(139,66,37,0.12)', border: '1px solid rgba(139,66,37,0.3)' }}>
       <p className="text-xs opacity-70 mb-1">{label}</p>
       <p className="font-semibold">{start} - {end}</p>
     </div>

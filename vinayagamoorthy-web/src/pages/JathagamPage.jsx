@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import FeaturePageShell from '../components/FeaturePageShell';
 import ParchmentCard from '../components/ParchmentCard';
+import Loading from '../components/Loading';
 import { useLanguage } from '../i18n/LanguageContext';
 import { getMyJathagam, getMyJathagamReading } from '../api/client';
 
@@ -65,7 +66,7 @@ export default function JathagamPage() {
   if (!chart) {
     return (
       <FeaturePageShell title={t('jat.title')}>
-        <ParchmentCard><p className="text-center opacity-70">{t('common.loading')}</p></ParchmentCard>
+        <ParchmentCard><Loading text={t('common.loading')} /></ParchmentCard>
       </FeaturePageShell>
     );
   }
@@ -120,8 +121,8 @@ export default function JathagamPage() {
                   key={i}
                   className="border p-1 flex flex-col items-center justify-center text-center"
                   style={{
-                    borderColor: 'rgba(107,78,46,0.5)',
-                    background: isLagna ? 'rgba(216,180,92,0.35)' : 'rgba(255,255,255,0.15)',
+                    borderColor: 'rgba(40,24,10,0.5)',
+                    background: isLagna ? 'rgba(201,164,92,0.35)' : 'rgba(255,255,255,0.15)',
                     minHeight: '60px',
                   }}
                 >
@@ -173,7 +174,7 @@ function ReadingSection({ t, reading, loading, openKey, setOpenKey, onRegenerate
     return (
       <ParchmentCard>
         <h3 className="parchment-heading text-lg mb-2 text-center">{t('jat.readingTitle')}</h3>
-        <p className="text-center opacity-70 text-sm py-4">{t('jat.readingLoading')}</p>
+        <Loading text={t('jat.readingLoading')} />
       </ParchmentCard>
     );
   }
@@ -205,7 +206,7 @@ function ReadingSection({ t, reading, loading, openKey, setOpenKey, onRegenerate
         {r.sections.map((s) => {
           const open = openKey === s.key;
           return (
-            <div key={s.key} className="rounded-lg overflow-hidden" style={{ border: '1px solid rgba(107,78,46,0.3)' }}>
+            <div key={s.key} className="rounded-lg overflow-hidden" style={{ border: '1px solid rgba(40,24,10,0.3)' }}>
               <button
                 onClick={() => setOpenKey(open ? null : s.key)}
                 className="w-full flex items-center justify-between px-3 py-2 text-left font-semibold text-sm"

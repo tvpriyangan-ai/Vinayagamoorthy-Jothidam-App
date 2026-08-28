@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import FeaturePageShell from '../components/FeaturePageShell';
 import ParchmentCard from '../components/ParchmentCard';
+import Loading from '../components/Loading';
 import { getMyDosha, getTemplesForMyDoshas } from '../api/client';
 
 export default function DoshaPage() {
@@ -19,7 +20,7 @@ export default function DoshaPage() {
   }, []);
 
   if (error) return <FeaturePageShell title="தோஷ பரிகாரங்கள்"><ParchmentCard><p className="error-text text-center">{error}</p></ParchmentCard></FeaturePageShell>;
-  if (!data) return <FeaturePageShell title="தோஷ பரிகாரங்கள்"><ParchmentCard><p className="text-center opacity-70">ஏற்றுகிறது...</p></ParchmentCard></FeaturePageShell>;
+  if (!data) return <FeaturePageShell title="தோஷ பரிகாரங்கள்"><ParchmentCard><Loading text="ஏற்றுகிறது..." /></ParchmentCard></FeaturePageShell>;
 
   return (
     <FeaturePageShell title="தோஷ பரிகாரங்கள்" wide>

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import FeaturePageShell from '../components/FeaturePageShell';
 import ParchmentCard from '../components/ParchmentCard';
+import Loading from '../components/Loading';
 import { useLanguage } from '../i18n/LanguageContext';
 import { getMyVastuReport } from '../api/client';
 
@@ -32,7 +33,7 @@ export default function VastuPage() {
     <FeaturePageShell title={t('vastu.title')} wide>
       {loading && (
         <ParchmentCard>
-          <p className="text-center opacity-70 text-sm py-6">{t('vastu.loading')}</p>
+          <Loading text={t('vastu.loading')} />
         </ParchmentCard>
       )}
 
@@ -61,7 +62,7 @@ export default function VastuPage() {
             {data.report.sections.map((s) => {
               const open = openKey === s.key;
               return (
-                <div key={s.key} className="rounded-lg overflow-hidden" style={{ border: '1px solid rgba(107,78,46,0.3)' }}>
+                <div key={s.key} className="rounded-lg overflow-hidden" style={{ border: '1px solid rgba(40,24,10,0.3)' }}>
                   <button
                     onClick={() => setOpenKey(open ? null : s.key)}
                     className="w-full flex items-center justify-between px-3 py-2 text-left font-semibold text-sm"

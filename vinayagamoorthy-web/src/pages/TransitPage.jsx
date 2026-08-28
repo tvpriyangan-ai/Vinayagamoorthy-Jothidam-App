@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import FeaturePageShell from '../components/FeaturePageShell';
 import ParchmentCard from '../components/ParchmentCard';
+import Loading from '../components/Loading';
 import { useT } from '../i18n/LanguageContext';
 import { getMyTransitPredictions } from '../api/client';
 
@@ -17,7 +18,7 @@ export default function TransitPage() {
   }, []);
 
   if (error) return <FeaturePageShell title={t('transit.title')}><ParchmentCard><p className="error-text text-center">{error}</p></ParchmentCard></FeaturePageShell>;
-  if (!data) return <FeaturePageShell title={t('transit.title')}><ParchmentCard><p className="text-center opacity-70">{t('common.loading')}</p></ParchmentCard></FeaturePageShell>;
+  if (!data) return <FeaturePageShell title={t('transit.title')}><ParchmentCard><Loading text={t('common.loading')} /></ParchmentCard></FeaturePageShell>;
 
   const dur = (d) => [
     d.years ? `${d.years} ${t('transit.yrs')}` : null,
@@ -97,7 +98,7 @@ export default function TransitPage() {
 
 function DashaBox({ label, lord, range, remaining }) {
   return (
-    <div className="rounded-lg p-3" style={{ background: 'rgba(255,255,255,0.22)', border: '1px solid rgba(107,78,46,0.3)' }}>
+    <div className="rounded-lg p-3" style={{ background: 'rgba(255,255,255,0.22)', border: '1px solid rgba(40,24,10,0.3)' }}>
       <p className="text-xs opacity-70">{label}</p>
       <p className="font-semibold text-lg">{lord}</p>
       <p className="text-xs opacity-75 mt-1">{range}</p>

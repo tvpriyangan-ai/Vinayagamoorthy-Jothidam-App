@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import FeaturePageShell from '../components/FeaturePageShell';
 import ParchmentCard from '../components/ParchmentCard';
 import { getMyProfile, updateMyProfile, uploadPalmPhoto, extractErrorMessage } from '../api/client';
+import Loading from '../components/Loading';
 import { useLanguage } from '../i18n/LanguageContext';
 import { LANGUAGES } from '../i18n/translations';
 
@@ -97,7 +98,9 @@ export default function ProfilePage() {
   if (!profile) {
     return (
       <FeaturePageShell title="View / Edit Profile">
-        <ParchmentCard><p className="text-center opacity-70">{error || 'ஏற்றுகிறது...'}</p></ParchmentCard>
+        <ParchmentCard>{error
+          ? <p className="error-text text-center">{error}</p>
+          : <Loading text="ஏற்றுகிறது..." />}</ParchmentCard>
       </FeaturePageShell>
     );
   }

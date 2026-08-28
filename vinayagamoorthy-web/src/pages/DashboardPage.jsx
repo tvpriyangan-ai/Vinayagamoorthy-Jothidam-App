@@ -123,7 +123,7 @@ export default function DashboardPage() {
                 to={item.route || `/content/${item.key}`}
                 state={!item.route ? { title: t(item.tKey) } : undefined}
                 className="flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium"
-                style={{ background: 'rgba(255,255,255,0.25)', border: '1px solid rgba(107,78,46,0.3)' }}
+                style={{ background: 'rgba(255,255,255,0.25)', border: '1px solid rgba(40,24,10,0.3)' }}
               >
                 {t(item.tKey)} <span>›</span>
               </Link>

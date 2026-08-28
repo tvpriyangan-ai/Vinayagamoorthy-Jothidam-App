@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import FeaturePageShell from '../components/FeaturePageShell';
 import ParchmentCard from '../components/ParchmentCard';
+import Loading from '../components/Loading';
 import { listTemples } from '../api/client';
 
 export default function TemplesPage() {
@@ -17,7 +18,7 @@ export default function TemplesPage() {
   return (
     <FeaturePageShell title="Temples & Pujas" subtitle="நவகிரக தலங்கள் மற்றும் முக்கிய கோவில்கள்" wide>
       {error && <ParchmentCard><p className="error-text text-center">{error}</p></ParchmentCard>}
-      {!temples && !error && <ParchmentCard><p className="text-center opacity-70">ஏற்றுகிறது...</p></ParchmentCard>}
+      {!temples && !error && <ParchmentCard><Loading text="ஏற்றுகிறது..." /></ParchmentCard>}
       {temples && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {temples.map((t) => (
@@ -28,16 +29,14 @@ export default function TemplesPage() {
                   <p className="text-xs opacity-70">{t.name_en}</p>
                 </div>
                 {t.associated_planet && (
-                  <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: 'rgba(216,180,92,0.35)' }}>
-                    {t.associated_planet}
-                  </span>
+                  <span className="badge badge-gold">{t.associated_planet}</span>
                 )}
               </div>
               <p className="text-sm mt-1">{t.deity}</p>
               <p className="text-xs opacity-70">{t.place}, {t.state}</p>
 
               {expanded === t.id && (
-                <div className="mt-3 pt-3 border-t text-sm" style={{ borderColor: 'rgba(107,78,46,0.3)' }}>
+                <div className="mt-3 pt-3 border-t text-sm" style={{ borderColor: 'rgba(40,24,10,0.3)' }}>
                   <p className="mb-2">{t.description}</p>
                   {t.visiting_hours && (
                     <p className="text-xs mb-2">🕐 <span className="font-semibold">தரிசன நேரம்:</span> {t.visiting_hours}</p>
@@ -45,7 +44,7 @@ export default function TemplesPage() {
                   {t.special_note && (
                     <div
                       className="mb-2 p-2 rounded-lg text-xs italic"
-                      style={{ background: 'rgba(216,180,92,0.2)', borderLeft: '3px solid var(--gold)' }}
+                      style={{ background: 'rgba(201,164,92,0.2)', borderLeft: '3px solid var(--gold)' }}
                     >
                       ✨ {t.special_note}
                     </div>

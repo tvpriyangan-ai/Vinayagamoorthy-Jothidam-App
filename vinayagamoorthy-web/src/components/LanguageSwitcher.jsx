@@ -48,7 +48,7 @@ export default function LanguageSwitcher({ compact = false }) {
                 className="w-full text-left px-3 py-2 text-sm"
                 style={{
                   color: 'var(--ink-brown)',
-                  background: l.code === language ? 'rgba(216,180,92,0.45)' : 'transparent',
+                  background: l.code === language ? 'rgba(201,164,92,0.45)' : 'transparent',
                   fontWeight: l.code === language ? 700 : 500,
                 }}
               >

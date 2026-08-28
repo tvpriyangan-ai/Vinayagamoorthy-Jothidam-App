@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import FeaturePageShell from '../components/FeaturePageShell';
 import ParchmentCard from '../components/ParchmentCard';
+import Loading from '../components/Loading';
 import { listContent } from '../api/client';
 
 const CATEGORY_TITLES = {
@@ -31,7 +32,7 @@ export default function ContentPage() {
   return (
     <FeaturePageShell title={`${icon} ${title}`} wide>
       {error && <ParchmentCard><p className="error-text text-center">{error}</p></ParchmentCard>}
-      {!articles && !error && <ParchmentCard><p className="text-center opacity-70">ஏற்றுகிறது...</p></ParchmentCard>}
+      {!articles && !error && <ParchmentCard><Loading text="ஏற்றுகிறது..." /></ParchmentCard>}
       {articles?.length === 0 && (
         <ParchmentCard><p className="text-center opacity-70">இந்த பகுதியில் இன்னும் கட்டுரைகள் இல்லை.</p></ParchmentCard>
       )}
@@ -53,23 +54,17 @@ function ArticleCard({ article: a }) {
               <span>📋</span> {a.table_title_ta}
             </h4>
           )}
-          <table className="w-full text-sm border-collapse">
+          <table className="manuscript-table">
             <thead>
-              <tr style={{ background: 'rgba(216,180,92,0.35)' }}>
-                {a.table_headers.map((h, i) => (
-                  <th key={i} className="text-left p-2 border" style={{ borderColor: 'rgba(107,78,46,0.3)' }}>
-                    {h}
-                  </th>
-                ))}
+              <tr>
+                {a.table_headers.map((h, i) => <th key={i}>{h}</th>)}
               </tr>
             </thead>
             <tbody>
               {a.table_rows.map((row, ri) => (
-                <tr key={ri} style={{ background: ri % 2 === 0 ? 'rgba(255,255,255,0.15)' : 'transparent' }}>
+                <tr key={ri} style={{ background: ri % 2 === 0 ? 'rgba(255,255,255,0.12)' : 'transparent' }}>
                   {row.map((cell, ci) => (
-                    <td key={ci} className="p-2 border align-top" style={{ borderColor: 'rgba(107,78,46,0.2)' }}>
-                      {cell}
-                    </td>
+                    <td key={ci} className="align-top">{cell}</td>
                   ))}
                 </tr>
               ))}
@@ -90,7 +85,7 @@ function ArticleCard({ article: a }) {
       {a.quote_ta && (
         <div
           className="my-4 p-3 rounded-lg text-center italic font-manuscript text-base"
-          style={{ background: 'rgba(216,180,92,0.2)', borderLeft: '4px solid var(--gold)' }}
+          style={{ background: 'rgba(201,164,92,0.2)', borderLeft: '4px solid var(--gold)' }}
         >
           "{a.quote_ta}"
         </div>
@@ -99,7 +94,7 @@ function ArticleCard({ article: a }) {
       {a.safety_note_ta && (
         <div
           className="p-3 rounded-lg text-xs"
-          style={{ background: 'rgba(122,35,24,0.12)', border: '1px solid rgba(122,35,24,0.3)' }}
+          style={{ background: 'rgba(139,66,37,0.12)', border: '1px solid rgba(139,66,37,0.3)' }}
         >
           <span className="font-semibold" style={{ color: 'var(--alert-red)' }}>⚠️ குறிப்பு: </span>
           {a.safety_note_ta}
@@ -107,7 +102,7 @@ function ArticleCard({ article: a }) {
       )}
 
       {a.reference_links?.length > 0 && (
-        <div className="mt-4 pt-3 border-t" style={{ borderColor: 'rgba(107,78,46,0.2)' }}>
+        <div className="mt-4 pt-3 border-t" style={{ borderColor: 'rgba(40,24,10,0.2)' }}>
           <p className="text-xs font-semibold mb-1">மேலும் அறிய:</p>
           {a.reference_links.map((link, i) => (
             <a key={i} href={link} target="_blank" rel="noopener noreferrer"
