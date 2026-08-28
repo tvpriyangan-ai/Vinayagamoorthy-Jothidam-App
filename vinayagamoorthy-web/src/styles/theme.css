@@ -4,54 +4,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@400;500;700&family=Noto+Sans+Devanagari:wght@400;500;700&family=Noto+Sans+Gurmukhi:wght@400;500;700&display=swap');
 @import "tailwindcss";
 
-/*
-  DESIGN SYSTEM — Vinayagamoorthy Jothidam
-  ------------------------------------------------------------------
-  This follows the client's own mockup exactly: an aged palm-leaf
-  manuscript aesthetic — dark vignette background, warm parchment
-  cards, gold ornamental trim, and twisted-rope bindings between
-  panels (echoing how real palm-leaf manuscripts were bound together).
-
-  Palette:
-    --ink-black:      #150d07  (outer background, deep vignette)
-    --ember-brown:    #2c1c0f  (background mid-tone)
-    --parchment-dark: #6b4e2e  (card shadow edge / wood tone)
-    --parchment-mid:  #a9814f  (card base tone)
-    --parchment-light:#d9b978  (card highlight tone)
-    --gold:           #d8b45c  (ornamental trim, icons, headings)
-    --gold-bright:    #f0d68a  (hover/active gold)
-    --ink-brown:      #3a2812  (text on parchment)
-    --alert-red:      #7a2318  (used sparingly, e.g. today's highlight)
-
-  Type:
-    Display (English wordmark): Cinzel Decorative — carved, ceremonial
-    Headings: Cinzel — restrained companion to the decorative face
-    Tamil + body UI: Catamaran — clean, legible, full Tamil coverage
-    Manuscript flavor text: Cormorant Garamond italic — used sparingly
-*/
-
 :root {
-  --ink-black: #150d07;
-  --ember-brown: #2c1c0f;
-  --parchment-dark: #6b4e2e;
-  --parchment-mid: #a9814f;
-  --parchment-light: #d9b978;
-  --gold: #d8b45c;
-  --gold-bright: #f0d68a;
-  --ink-brown: #3a2812;
-  --alert-red: #7a2318;
+  --ink-black: #160D07;
+  --ember-brown: #1E1209;
+  --study-brown: #24150A;
+  --parchment-dark: #70512F;
+  --parchment-mid: #A9844D;
+  --parchment-light: #C9AA70;
+  --gold: #C9A45C;
+  --gold-bright: #D1B36A;
+  --ink-brown: #24170D;
+  --ink-brown-mid: #2B1B0E;
+  --parchment-heading: #35200F;
+  --alert-red: #8B4225;          /* was #7a2318 — now the terracotta tone */
+  --success-green: #4F6B3A;      /* was #2d5a2d — now the earthy olive tone */
+  --advantage-green: #4F6B3A;
+  --attention-terracotta: #8B4225;
 }
 
 @theme {
-  --color-ink-black: #150d07;
-  --color-ember-brown: #2c1c0f;
-  --color-parchment-dark: #6b4e2e;
-  --color-parchment-mid: #a9814f;
-  --color-parchment-light: #d9b978;
-  --color-gold: #d8b45c;
-  --color-gold-bright: #f0d68a;
-  --color-ink-brown: #3a2812;
-  --color-alert-red: #7a2318;
+  --color-ink-black: #160D07;
+  --color-ember-brown: #1E1209;
+  --color-study-brown: #24150A;
+  --color-parchment-dark: #70512F;
+  --color-parchment-mid: #A9844D;
+  --color-parchment-light: #C9AA70;
+  --color-gold: #C9A45C;
+  --color-gold-bright: #D1B36A;
+  --color-ink-brown: #24170D;
+  --color-alert-red: #8B4225;
+  --color-success-green: #4F6B3A;
 
   --font-display: 'Cinzel Decorative', 'Cinzel', serif;
   --font-heading: 'Cinzel', serif;
@@ -59,88 +41,78 @@
   --font-manuscript: 'Cormorant Garamond', serif;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-html, body, #root {
-  height: 100%;
-}
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
 
 body {
   margin: 0;
   font-family: var(--font-tamil);
   color: var(--ink-brown);
-  background: radial-gradient(ellipse at center, var(--ember-brown) 0%, var(--ink-black) 78%);
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(201,164,92,0.06), transparent 55%),
+    radial-gradient(ellipse at center, var(--study-brown) 0%, var(--ink-black) 78%);
   min-height: 100vh;
 }
 
-/* Ambient vignette + faint gold dust, sitting behind every page */
-.app-shell {
-  min-height: 100vh;
-  position: relative;
-  overflow-x: hidden;
-}
-
+.app-shell { min-height: 100vh; position: relative; overflow-x: hidden; }
 .app-shell::before {
   content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
+  position: fixed; inset: 0; pointer-events: none;
   background-image:
-    radial-gradient(1px 1px at 10% 20%, rgba(216,180,92,0.25) 0, transparent 60%),
-    radial-gradient(1px 1px at 80% 15%, rgba(216,180,92,0.2) 0, transparent 60%),
-    radial-gradient(1px 1px at 60% 70%, rgba(216,180,92,0.18) 0, transparent 60%),
-    radial-gradient(1px 1px at 30% 85%, rgba(216,180,92,0.22) 0, transparent 60%);
+    radial-gradient(1px 1px at 10% 20%, rgba(201,164,92,0.25) 0, transparent 60%),
+    radial-gradient(1px 1px at 80% 15%, rgba(201,164,92,0.2) 0, transparent 60%),
+    radial-gradient(1px 1px at 60% 70%, rgba(201,164,92,0.18) 0, transparent 60%),
+    radial-gradient(1px 1px at 30% 85%, rgba(201,164,92,0.22) 0, transparent 60%);
   z-index: 0;
 }
 
-/* Parchment card surface — layered gradients simulate aged, uneven paper */
-.parchment {
+/* Renamed from .parchment — kept both selectors so ParchmentCard.jsx
+   works unchanged whether or not you rename its className. */
+.leaf-card, .parchment {
   position: relative;
+  padding: 18px 22px 16px;
+  border-radius: 3px 7px 4px 8px / 6px 3px 7px 4px;
   background:
-    radial-gradient(120% 140% at 20% 0%, rgba(255,255,255,0.10), transparent 55%),
-    radial-gradient(140% 120% at 100% 100%, rgba(0,0,0,0.28), transparent 60%),
-    linear-gradient(155deg, var(--parchment-light) 0%, var(--parchment-mid) 48%, var(--parchment-dark) 100%);
-  border: 1px solid rgba(216,180,92,0.55);
-  border-radius: 14px;
+    repeating-linear-gradient(to bottom,
+      rgba(36,23,13,0.05) 0px, rgba(36,23,13,0.05) 1px,
+      transparent 1px, transparent 4px),
+    radial-gradient(120% 80% at 15% 10%, rgba(255,255,255,0.08), transparent 55%),
+    radial-gradient(100% 90% at 90% 95%, rgba(0,0,0,0.18), transparent 60%),
+    linear-gradient(155deg, var(--parchment-light) 0%, var(--parchment-mid) 55%, var(--parchment-dark) 100%);
+  border: 1px solid var(--parchment-dark);
   box-shadow:
-    0 10px 24px rgba(0,0,0,0.45),
-    inset 0 1px 0 rgba(255,255,255,0.15),
-    inset 0 -12px 24px rgba(60,36,12,0.25);
+    0 6px 16px rgba(0,0,0,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.12),
+    inset 0 -8px 16px rgba(36,23,13,0.15);
   color: var(--ink-brown);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-
-/* Fine gold corner flourishes — a restrained nod to the manuscript border art */
-.parchment-corners::before,
-.parchment-corners::after {
-  content: "❖";
+.leaf-card:hover, .parchment:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.14);
+}
+.leaf-card.parchment-corners::before, .leaf-card.parchment-corners::after,
+.parchment.parchment-corners::before, .parchment.parchment-corners::after {
+  content: "◆";
   position: absolute;
-  color: var(--gold);
-  font-size: 0.85rem;
-  opacity: 0.8;
+  font-size: 8px;
+  color: var(--parchment-dark);
+  opacity: 0.6;
 }
 .parchment-corners::before { top: 8px; left: 10px; }
 .parchment-corners::after { top: 8px; right: 10px; }
 
-/* Twisted rope divider — the signature element binding cards together,
-   echoing how real palm-leaf manuscripts are strung on a cord */
 .rope-divider {
-  height: 10px;
-  background-image: repeating-linear-gradient(
-    45deg,
-    var(--gold) 0px, var(--gold) 4px,
-    #8a6a34 4px, #8a6a34 8px
-  );
+  height: 8px;
+  background-image: repeating-linear-gradient(45deg,
+    var(--gold) 0px, var(--gold) 4px, var(--parchment-dark) 4px, var(--parchment-dark) 8px);
   border-radius: 999px;
   box-shadow: 0 1px 2px rgba(0,0,0,0.5);
   position: relative;
 }
 .rope-knot {
-  width: 16px;
-  height: 16px;
-  border-radius: 999px;
-  background: radial-gradient(circle at 35% 30%, var(--gold-bright), var(--gold) 60%, #8a6a34 100%);
+  width: 16px; height: 16px; border-radius: 999px;
+  background: radial-gradient(circle at 35% 30%, var(--gold-bright), var(--gold) 60%, var(--parchment-dark) 100%);
   box-shadow: 0 1px 3px rgba(0,0,0,0.6);
 }
 
@@ -150,16 +122,11 @@ body {
   letter-spacing: 0.04em;
   text-shadow: 0 1px 2px rgba(0,0,0,0.6);
 }
-
-/* For headings placed ON TOP of parchment (light background) — gold-heading
-   above is for dark backgrounds only; using it on parchment fails contrast. */
 .parchment-heading {
   font-family: var(--font-heading);
-  color: #6b4514;
+  color: var(--parchment-heading);
   letter-spacing: 0.03em;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.25);
 }
-
 .brand-wordmark {
   font-family: var(--font-display);
   color: var(--gold);
@@ -169,47 +136,44 @@ body {
 
 .btn-gold {
   font-family: var(--font-heading);
-  background: linear-gradient(180deg, var(--gold-bright), var(--gold));
-  color: var(--ink-brown);
-  border: 1px solid #8a6a34;
-  border-radius: 999px;
+  background: var(--ember-brown);
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: 3px;
   padding: 0.65rem 1.5rem;
   font-weight: 600;
   letter-spacing: 0.03em;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.4);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: all 0.2s ease;
 }
-.btn-gold:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.5);
+.btn-gold:hover { background: var(--study-brown); color: var(--gold-bright); border-color: var(--gold-bright); }
+.btn-gold:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* Alias of .btn-gold's flat manuscript style, kept for explicit use. */
+.btn-manuscript {
+  font-family: var(--font-heading);
+  background: var(--ember-brown);
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: 3px;
+  padding: 10px 26px;
+  letter-spacing: 1.5px;
+  transition: all 0.2s ease;
 }
-.btn-gold:active {
-  transform: translateY(0px);
-}
-.btn-gold:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-}
+.btn-manuscript:hover { background: var(--study-brown); color: var(--gold-bright); border-color: var(--gold-bright); }
 
 .input-manuscript {
   font-family: var(--font-tamil);
-  background: rgba(255,255,255,0.55);
-  border: 1px solid rgba(107,78,46,0.5);
-  border-radius: 8px;
+  background: linear-gradient(155deg, var(--parchment-mid), var(--parchment-dark));
+  border: 1px solid var(--gold);
+  border-radius: 3px;
   padding: 0.6rem 0.85rem;
   color: var(--ink-brown);
   width: 100%;
   outline: none;
   transition: box-shadow 0.15s ease, border-color 0.15s ease;
 }
-.input-manuscript:focus {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(216,180,92,0.35);
-}
-.input-manuscript::placeholder {
-  color: rgba(58,40,18,0.55);
-}
+.input-manuscript:focus { border-color: var(--gold-bright); box-shadow: 0 0 0 3px rgba(201,164,92,0.3); }
+.input-manuscript::placeholder { color: rgba(36,23,13,0.55); }
 
 .field-label {
   font-family: var(--font-tamil);
@@ -219,9 +183,12 @@ body {
   margin-bottom: 0.25rem;
   display: block;
 }
+.error-text { color: var(--alert-red); font-size: 0.85rem; font-family: var(--font-tamil); }
 
-.error-text {
-  color: var(--alert-red);
-  font-size: 0.85rem;
-  font-family: var(--font-tamil);
+.badge {
+  display: inline-block;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+  padding: 3px 10px; border-radius: 2px; text-transform: uppercase;
 }
+.badge-advantage { background: rgba(79,107,58,0.16); border: 1px solid var(--advantage-green); color: var(--advantage-green); }
+.badge-attention { background: rgba(139,66,37,0.14); border: 1px solid var(--attention-terracotta); color: var(--attention-terracotta); }
