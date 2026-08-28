@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import AuthLayout from '../components/AuthLayout';
-import { signup } from '../api/client';
+import { signup, extractErrorMessage } from '../api/client';
 import { COMMON_PLACES } from '../data/places';
 
 const initialForm = {
@@ -55,7 +55,7 @@ export default function SignupPage() {
       localStorage.setItem('user_id', data.user_id);
       navigate('/dashboard');
     } catch (err) {
-      setError(err.response?.data?.detail || 'பதிவு தோல்வியடைந்தது. மீண்டும் முயற்சிக்கவும்.');
+      setError(extractErrorMessage(err, 'பதிவு தோல்வியடைந்தது. மீண்டும் முயற்சிக்கவும்.'));
     } finally {
       setLoading(false);
     }

@@ -1,0 +1,33 @@
+{
+  "name": "vinayagamoorthy-mobile",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "@expo-google-fonts/catamaran": "^0.4.1",
+    "@expo-google-fonts/cinzel": "^0.4.2",
+    "@expo-google-fonts/cinzel-decorative": "^0.4.1",
+    "@expo-google-fonts/cormorant-garamond": "^0.4.1",
+    "@react-native-async-storage/async-storage": "^3.1.1",
+    "@react-native-community/datetimepicker": "^9.1.0",
+    "@react-native-picker/picker": "^2.11.4",
+    "@react-navigation/native": "^7.3.18",
+    "@react-navigation/native-stack": "^7.18.10",
+    "axios": "^1.20.0",
+    "expo": "~57.0.17",
+    "expo-font": "^57.0.1",
+    "expo-linear-gradient": "^57.0.1",
+    "expo-splash-screen": "^57.0.8",
+    "expo-status-bar": "~57.0.1",
+    "react": "19.2.3",
+    "react-native": "0.86.3",
+    "react-native-safe-area-context": "^5.9.1",
+    "react-native-screens": "^4.27.0"
+  },
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "private": true
+}

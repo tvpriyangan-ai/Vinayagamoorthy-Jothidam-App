@@ -50,3 +50,14 @@ class UserOut(BaseModel):
     birth: BirthDetails
     palm_photo_url: Optional[str] = None
     created_at: datetime
+
+
+class UpdateProfileRequest(BaseModel):
+    name: Optional[str] = None
+    email: Optional[EmailStr] = None
+    mobile: Optional[str] = None
+    preferred_language: Optional[str] = None
+    # Birth details intentionally excluded here — changing them would
+    # invalidate the cached chart everywhere. Handle as a separate,
+    # more deliberate flow later if you want to support it (e.g. requiring
+    # re-confirmation, since it affects every other feature in the app).

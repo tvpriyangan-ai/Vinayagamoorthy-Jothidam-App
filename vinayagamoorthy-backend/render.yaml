@@ -9,14 +9,30 @@ services:
     healthCheckPath: /health
     envVars:
       - key: MONGODB_URI
-        sync: false # set this in Render dashboard (MongoDB Atlas connection string)
+        sync: false   # set this in Render dashboard (MongoDB Atlas connection string)
       - key: DB_NAME
         value: vinayagamoorthy
       - key: JWT_SECRET
         generateValue: true
       - key: GEMINI_API_KEY
-        sync: false # set this in Render dashboard (free key from aistudio.google.com/app/apikey)
+        sync: false   # set this in Render dashboard (free key from aistudio.google.com/app/apikey)
       - key: GEMINI_MODEL
         value: gemini-2.5-flash-lite
+      - key: SMTP_HOST
+        sync: false   # e.g. smtp.gmail.com
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_USER
+        sync: false   # your email address
+      - key: SMTP_PASSWORD
+        sync: false   # Gmail: use an App Password, not your real password
+      - key: SMTP_FROM_ADDRESS
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false   # free account at cloudinary.com
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
       - key: ENV
         value: production

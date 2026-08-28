@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import AuthLayout from '../components/AuthLayout';
-import { login } from '../api/client';
+import { login, extractErrorMessage } from '../api/client';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ export default function LoginPage() {
       localStorage.setItem('user_id', data.user_id);
       navigate('/dashboard');
     } catch (err) {
-      setError(err.response?.data?.detail || 'உள்நுழைவு தோல்வியடைந்தது. மீண்டும் முயற்சிக்கவும்.');
+      setError(extractErrorMessage(err, 'உள்நுழைவு தோல்வியடைந்தது. மீண்டும் முயற்சிக்கவும்.'));
     } finally {
       setLoading(false);
     }

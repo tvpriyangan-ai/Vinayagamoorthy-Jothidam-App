@@ -10,3 +10,8 @@ node_modules/
 dist/
 build/
 .DS_Store
+
+# Expo (mobile app)
+.expo/
+web-build/
+*.orig.*

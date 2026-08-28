@@ -44,6 +44,10 @@ def temples_collection():
     return get_db()["temples"]
 
 
+def content_collection():
+    return get_db()["content_articles"]
+
+
 async def ensure_indexes():
     """Call once on startup to create needed indexes."""
     await users_collection().create_index("username", unique=True)
@@ -54,3 +58,4 @@ async def ensure_indexes():
         [("date", 1), ("lat_r", 1), ("lon_r", 1)], unique=True
     )
     await temples_collection().create_index("name_en", unique=True)
+    await content_collection().create_index([("category", 1)])

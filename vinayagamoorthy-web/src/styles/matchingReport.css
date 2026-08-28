@@ -1,0 +1,231 @@
+/* Ported from the client's provided design (index.html/style.css).
+   Scoped under .report so it can't collide with the rest of the app. */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
+
+.report * { box-sizing: border-box; }
+
+.report {
+  --maroon-dark: #300507;
+  --maroon: #590b0e;
+  --maroon-light: #741114;
+  --gold: #dca518;
+  --gold-light: #ffe16a;
+  --gold-dark: #9b6507;
+  --cream: #fff4d7;
+  --cream-dark: #ead7ad;
+  --green: #327819;
+  --green-dark: #1e4e0d;
+  --text: #35170e;
+
+  position: relative;
+  width: 1100px;
+  margin: auto;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 8%, rgba(255, 204, 70, .10), transparent 30%),
+    linear-gradient(145deg, #320608 0%, #610b0e 48%, #2b0507 100%);
+  border: 2px solid var(--gold);
+  box-shadow: 0 30px 80px rgba(0,0,0,.65), inset 0 0 0 7px rgba(255,216,90,.08);
+  color: var(--cream);
+  font-family: "Noto Sans Tamil", sans-serif;
+}
+
+.report::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(255,225,106,.65);
+  pointer-events: none;
+}
+.report::after {
+  content: "";
+  position: absolute;
+  inset: 21px;
+  border: 1px solid rgba(220,165,24,.28);
+  pointer-events: none;
+}
+
+.report .ornament {
+  position: absolute;
+  z-index: 2;
+  color: var(--gold-light);
+  font-size: 82px;
+  line-height: 1;
+  opacity: .75;
+}
+.report .ornament-tl { top: 4px; left: 10px; }
+.report .ornament-tr { top: 4px; right: 10px; transform: scaleX(-1); }
+.report .ornament-bl { bottom: 4px; left: 10px; transform: scaleY(-1); }
+.report .ornament-br { bottom: 4px; right: 10px; transform: scale(-1); }
+
+/* Hanging floral garlands (thoranam) at the top corners */
+.report .thoranam {
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 20px;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,.5));
+}
+.report .thoranam-left { left: 70px; }
+.report .thoranam-right { right: 70px; }
+.report .thoranam-chain {
+  width: 2px;
+  height: 14px;
+  background: linear-gradient(#e0a716, #7a5a10);
+}
+
+.report .header,
+.report .people-section,
+.report .poruththam-section,
+.report .bottom-section,
+.report .footer {
+  position: relative;
+  z-index: 3;
+}
+
+.report .header { text-align: center; padding: 42px 50px 22px; }
+.report .header-small { color: #e9c65c; font-size: 14px; font-weight: 600; letter-spacing: 1.5px; }
+.report .header h1 {
+  margin: 2px 0 0; color: #ffd34c; font-size: 52px; line-height: 1.15; font-weight: 800;
+  font-family: "Playfair Display", serif;
+  text-shadow: 0 2px 0 #7e4004, 0 5px 18px rgba(0,0,0,.65);
+}
+.report .header-subtitle { color: #f8d66e; font-size: 18px; font-weight: 600; }
+.report .gold-divider {
+  width: min(500px, 80%); height: 1px; margin: 12px auto 0;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  color: var(--gold-light);
+}
+.report .gold-divider span { position: relative; top: -13px; padding: 0 18px; background: #570b0d; }
+
+.report .people-section {
+  display: grid; grid-template-columns: 1fr 260px 1fr; gap: 22px;
+  align-items: center; padding: 20px 58px 15px;
+}
+.report .person-card {
+  position: relative; min-height: 260px; padding: 36px 22px 18px; color: var(--text);
+  border: 2px solid var(--gold); border-radius: 12px;
+  background: linear-gradient(145deg, #fff7e5, #ead4a8);
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+.report .person-ribbon {
+  position: absolute; top: -19px; left: 50%; transform: translateX(-50%); white-space: nowrap;
+  padding: 7px 24px; border: 2px solid var(--gold); border-radius: 24px; color: var(--gold-light);
+  background: linear-gradient(#741514, #350607); font-size: 16px; font-weight: 800;
+}
+.report .person-fields { display: grid; gap: 10px; }
+.report .person-fields > div {
+  display: grid; grid-template-columns: 108px 14px 1fr; gap: 4px;
+  min-height: 27px; align-items: end; font-size: 14px;
+}
+.report .person-fields b { font-weight: 800; }
+.report .person-fields em {
+  min-height: 22px; border-bottom: 1px solid #98774d; font-style: normal; color: #5d3b20;
+}
+
+.report .score-area { display: flex; flex-direction: column; align-items: center; }
+.report .score-circle {
+  width: 220px; height: 220px; border-radius: 50%; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background:
+    radial-gradient(circle, #210304 0 61%, transparent 62%),
+    conic-gradient(from 0deg, #ffd94f, #8b5204, #ffd94f, #6f3c03, #ffd94f);
+  box-shadow: 0 0 0 6px #4a2103, 0 0 0 8px #e0a716, 0 12px 32px rgba(0,0,0,.45);
+}
+.report .score-caption { color: #f8d56a; font-size: 16px; font-weight: 700; }
+.report .score {
+  color: #ffd23f; font-family: "Playfair Display", serif; font-size: 65px; font-weight: 700; line-height: 1;
+}
+.report .stars { margin-top: 5px; color: #ffd33e; font-size: 25px; letter-spacing: 2px; }
+.report .result-badge {
+  margin-top: 14px; padding: 8px 19px; border: 1px solid #e3ba31; border-radius: 5px;
+  color: #fff2a5; background: linear-gradient(#4c8918, #275707); font-size: 15px; font-weight: 800;
+  box-shadow: 0 5px 15px rgba(0,0,0,.3);
+}
+
+.report .poruththam-section { padding: 5px 58px 10px; }
+.report .section-heading {
+  display: flex; align-items: center; gap: 16px; margin: 18px 0 12px;
+  color: #ffd550; font-size: 24px; font-weight: 800;
+}
+.report .section-heading::before, .report .section-heading::after {
+  content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, #dca91f, transparent);
+}
+.report .section-heading span {
+  padding: 6px 22px; border: 1px solid #dca91f; border-radius: 25px; background: rgba(84, 9, 12, .75);
+}
+.report .table-shell {
+  overflow: hidden; border: 2px solid var(--gold); border-radius: 11px;
+  background: var(--cream); box-shadow: 0 10px 28px rgba(0,0,0,.35);
+}
+.report table { width: 100%; border-collapse: collapse; color: var(--text); table-layout: fixed; }
+.report thead th {
+  padding: 10px 8px; color: #ffe16c; background: linear-gradient(#6a1114, #3c0608);
+  border-right: 1px solid #d5a82c; font-size: 15px;
+}
+.report tbody tr:nth-child(odd) { background: #fff8e8; }
+.report tbody tr:nth-child(even) { background: #f8eacb; }
+.report tbody td {
+  padding: 8px 9px; border-right: 1px solid #d8c298; border-bottom: 1px solid #d8c298;
+  vertical-align: middle; font-size: 13px; line-height: 1.42;
+}
+.report tbody tr:last-child td { border-bottom: 0; }
+.report tbody td:last-child, .report thead th:last-child { border-right: 0; }
+.report .number-column { width: 6%; text-align: center; }
+.report .name-column { width: 28%; }
+.report .status-column { width: 16%; text-align: center; }
+.report .poruththam-name { font-size: 14px; font-weight: 800; }
+.report .match {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  color: var(--green); font-weight: 800; white-space: nowrap;
+}
+.report .match.no { color: #a42d1f; }
+.report .match-icon {
+  width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%; color: white; background: var(--green); font-size: 12px; font-weight: 900;
+}
+.report .match.no .match-icon { background: #a42d1f; }
+
+.report .bottom-section { display: grid; grid-template-columns: 1.05fr .95fr; gap: 20px; padding: 18px 58px 5px; }
+.report .wedding-panel {
+  position: relative; min-height: 255px; overflow: hidden; border: 1px solid var(--gold);
+  border-radius: 14px; background: linear-gradient(145deg, #3b0808, #731114, #280405);
+}
+.report .wedding-panel img { display: block; width: 100%; height: 100%; min-height: 255px; object-fit: cover; }
+.report .mangalsutra-wrap {
+  position: absolute; top: 6px; left: 50%; transform: translateX(-50%); z-index: 4;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,.6));
+}
+.report .oil-lamp {
+  position: absolute; bottom: 6px; z-index: 4; font-size: 34px;
+  filter: drop-shadow(0 3px 5px rgba(0,0,0,.6));
+}
+.report .oil-lamp-left { left: 8px; }
+.report .oil-lamp-right { right: 8px; }
+.report .traditional-note {
+  min-height: 255px; padding: 25px; display: flex; flex-direction: column; justify-content: center;
+  border: 1px solid var(--gold); border-radius: 14px; position: relative;
+  background: linear-gradient(145deg, rgba(58,7,7,.96), rgba(99,13,15,.92)); text-align: center;
+}
+.report .lotus-decor {
+  position: absolute; font-size: 26px; opacity: 0.85;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,.5));
+}
+.report .lotus-tl { top: 6px; left: 8px; }
+.report .lotus-br { bottom: 6px; right: 8px; }
+.report .note-decoration { color: #e4b32c; font-size: 27px; }
+.report .traditional-note h2 { margin: 2px 0 12px; color: #ffd65b; font-size: 23px; }
+.report .traditional-note p { margin: 0; color: #fff0c9; font-size: 15px; line-height: 2; }
+
+.report .footer { padding: 17px 58px 35px; text-align: center; }
+.report .footer-line { width: 75%; height: 1px; margin: 0 auto 11px; background: linear-gradient(90deg, transparent, #e3b029, transparent); }
+.report .calculated { color: #ffd65b; font-size: 12px; letter-spacing: 2px; font-weight: 600; }
+.report .brand { margin-top: 3px; color: #ffe17c; font-family: "Playfair Display", serif; font-size: 20px; font-weight: 700; }
+.report .email {
+  display: inline-block; margin-top: 10px; padding: 6px 17px; border: 1px solid #dca91f;
+  border-radius: 20px; color: #fff3ca; background: rgba(48,7,7,.8); font-size: 13px;
+}

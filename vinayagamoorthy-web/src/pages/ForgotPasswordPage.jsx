@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import AuthLayout from '../components/AuthLayout';
-import { forgotPassword, resetPassword } from '../api/client';
+import { forgotPassword, resetPassword, extractErrorMessage } from '../api/client';
 
 export default function ForgotPasswordPage() {
   const [step, setStep] = useState('request'); // 'request' | 'reset'
@@ -21,7 +21,7 @@ export default function ForgotPasswordPage() {
       setMessage(data.message);
       setStep('reset');
     } catch (err) {
-      setError(err.response?.data?.detail || 'ஏதோ தவறு நடந்துவிட்டது.');
+      setError(extractErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -35,7 +35,7 @@ export default function ForgotPasswordPage() {
       await resetPassword({ identifier, otp, new_password: newPassword });
       setMessage('கடவுச்சொல் மாற்றப்பட்டது! இப்போது உள்நுழையவும்.');
     } catch (err) {
-      setError(err.response?.data?.detail || 'OTP தவறானது அல்லது காலாவதியானது.');
+      setError(extractErrorMessage(err, 'OTP தவறானது அல்லது காலாவதியானது.'));
     } finally {
       setLoading(false);
     }

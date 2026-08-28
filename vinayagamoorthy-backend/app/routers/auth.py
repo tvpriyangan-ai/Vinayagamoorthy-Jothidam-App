@@ -8,6 +8,7 @@ from app.models.user import SignupRequest, LoginRequest, ForgotPasswordRequest, 
 from app.core.security import hash_password, verify_password, create_access_token
 from app.core.config import settings
 from app.db.mongodb import users_collection, otp_collection
+from app.services.email_service import send_email, build_otp_email
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -55,8 +56,18 @@ async def forgot_password(payload: ForgotPasswordRequest):
         "expires_at": datetime.now(timezone.utc) + timedelta(minutes=settings.OTP_EXPIRE_MINUTES),
     })
 
-    # TODO: wire up real email/SMS provider (e.g. SendGrid, Twilio) here.
-    # For now, this is where that dispatch call would go.
+    # Only attempt email delivery if the identifier looks like an email and
+    # the user actually has one on file — mobile/SMS delivery is a separate,
+    # paid-provider integration (Twilio/MSG91) left as a future step.
+    email_target = user.get("email")
+    if email_target and "@" in payload.identifier:
+        subject, body = build_otp_email(otp)
+        send_email(email_target, subject, body)
+        # Deliberately not branching on the return value in the response —
+        # revealing delivery success/failure would leak whether the account
+        # exists. Check server logs / SMTP provider dashboard to debug
+        # delivery issues instead.
+
     return {"message": "If that account exists, an OTP has been sent."}
 
 

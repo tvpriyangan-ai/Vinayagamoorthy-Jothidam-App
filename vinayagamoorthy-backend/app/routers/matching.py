@@ -32,15 +32,31 @@ async def check_matching(payload: PartnerDetails, user: dict = Depends(get_curre
 
     if user["gender"] == "female":
         girl_chart, boy_chart = user_chart, partner_chart
+        girl_birth, boy_birth = user["birth"], birth
     else:
         girl_chart, boy_chart = partner_chart, user_chart
+        girl_birth, boy_birth = birth, user["birth"]
 
     result = calculate_porutham(
         girl_nakshatra=girl_chart["planets"]["Moon"]["nakshatra_index"],
         girl_rasi=girl_chart["planets"]["Moon"]["rasi_index"],
         boy_nakshatra=boy_chart["planets"]["Moon"]["nakshatra_index"],
         boy_rasi=boy_chart["planets"]["Moon"]["rasi_index"],
+        girl_lagna_rasi=girl_chart["ascendant"]["rasi_index"],
+        boy_lagna_rasi=boy_chart["ascendant"]["rasi_index"],
+        girl_sun_rasi=girl_chart["planets"]["Sun"]["rasi_index"],
+        boy_sun_rasi=boy_chart["planets"]["Sun"]["rasi_index"],
     )
+
+    # Include full chart + birth data for both people — the frontend uses
+    # this to render the mini South Indian chart grids and the groom/bride
+    # detail boxes in the downloadable result report.
+    result["girl_full_chart"] = girl_chart
+    result["boy_full_chart"] = boy_chart
+    result["girl_name"] = user["name"] if user["gender"] == "female" else payload.name
+    result["boy_name"] = payload.name if user["gender"] == "female" else user["name"]
+    result["girl_birth"] = girl_birth
+    result["boy_birth"] = boy_birth
 
     await matches_collection().insert_one({
         "user_id": user["_id"],

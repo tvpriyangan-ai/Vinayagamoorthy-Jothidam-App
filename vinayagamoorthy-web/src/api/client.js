@@ -30,6 +30,31 @@ client.interceptors.response.use(
 
 export default client;
 
+// FastAPI error details can be a plain string OR an array of Pydantic
+// validation error objects ({msg, loc, ...}) — React can't render the
+// latter directly, so every page should go through this instead of
+// reading err.response.data.detail directly.
+export function extractErrorMessage(err, fallback = 'ஏதோ தவறு நடந்துவிட்டது.') {
+  const detail = err?.response?.data?.detail;
+  if (!detail) return fallback;
+  if (typeof detail === 'string') return detail;
+  if (Array.isArray(detail)) {
+    return detail.map((d) => (typeof d === 'string' ? d : d.msg || JSON.stringify(d))).join(', ');
+  }
+  return fallback;
+}
+
+// ---- Users ----
+export const getMyProfile = () => client.get('/users/me');
+export const updateMyProfile = (payload) => client.put('/users/me', payload);
+export const uploadPalmPhoto = (file) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  return client.post('/users/me/palm-photo', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+};
+
 // ---- Auth ----
 export const signup = (payload) => client.post('/auth/signup', payload);
 export const login = (payload) => client.post('/auth/login', payload);
@@ -59,3 +84,10 @@ export const getTemplesForMyDoshas = () => client.get('/temples/for-my-doshas');
 // ---- Chat ----
 export const sendChatMessage = (message) => client.post('/chat/message', { message });
 export const getChatHistory = () => client.get('/chat/history');
+
+// ---- Transit Predictions ----
+export const getMyTransitPredictions = () => client.get('/transit/me');
+
+// ---- Content Library ----
+export const listContent = (category) => client.get('/content', { params: category ? { category } : {} });
+export const getContent = (id) => client.get(`/content/${id}`);
