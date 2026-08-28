@@ -77,13 +77,7 @@ export default function TransitPage() {
           <ParchmentCard key={tr.planet}>
             <div className="flex justify-between items-center mb-1">
               <h3 className="font-semibold">{tr.planet_name_ta} ({tr.planet})</h3>
-              <span
-                className="text-xs font-bold px-2 py-0.5 rounded-full"
-                style={{
-                  background: tr.favorable ? 'rgba(60,120,60,0.15)' : 'rgba(122,35,24,0.12)',
-                  color: tr.favorable ? '#2d5a2d' : 'var(--alert-red)',
-                }}
-              >
+              <span className={`badge ${tr.favorable ? 'badge-advantage' : 'badge-attention'}`}>
                 {tr.favorable ? 'சாதகம்' : 'கவனம் தேவை'}
               </span>
             </div>

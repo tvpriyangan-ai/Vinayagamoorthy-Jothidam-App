@@ -182,7 +182,7 @@ export default function ProfilePage() {
             </select>
           </div>
           {error && <p className="error-text">{error}</p>}
-          {success && <p className="text-sm" style={{ color: '#2d5a2d' }}>{success}</p>}
+          {success && <p className="text-sm" style={{ color: 'var(--success-green)' }}>{success}</p>}
           <button type="submit" className="btn-gold w-full" disabled={saving}>
             {saving ? 'சேமிக்கிறது...' : 'சேமிக்கவும்'}
           </button>

@@ -28,13 +28,7 @@ export default function DoshaPage() {
           <ParchmentCard key={dosha.name}>
             <div className="flex items-center justify-between mb-2">
               <h3 className="parchment-heading text-lg">{dosha.name}</h3>
-              <span
-                className="text-xs font-bold px-3 py-1 rounded-full"
-                style={{
-                  background: dosha.present ? 'rgba(122,35,24,0.15)' : 'rgba(60,120,60,0.15)',
-                  color: dosha.present ? 'var(--alert-red)' : '#2d5a2d',
-                }}
-              >
+              <span className={`badge ${dosha.present ? 'badge-attention' : 'badge-advantage'}`}>
                 {dosha.present ? 'உள்ளது' : 'இல்லை'}
               </span>
             </div>
