@@ -141,22 +141,22 @@ export default function JathagamPage() {
         <ParchmentCard>
           <h3 className="parchment-heading text-lg mb-3 text-center">{t('jat.planetPositions')}</h3>
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="manuscript-table">
               <thead>
-                <tr className="border-b" style={{ borderColor: 'rgba(107,78,46,0.4)' }}>
-                  <th className="text-left py-1">{t('jat.planet')}</th>
-                  <th className="text-left py-1">{t('field.rasi')}</th>
-                  <th className="text-left py-1">{t('field.nakshatra')}</th>
-                  <th className="text-center py-1">{t('jat.retrograde')}</th>
+                <tr>
+                  <th>{t('jat.planet')}</th>
+                  <th>{t('field.rasi')}</th>
+                  <th>{t('field.nakshatra')}</th>
+                  <th className="text-center">{t('jat.retrograde')}</th>
                 </tr>
               </thead>
               <tbody>
                 {Object.entries(chart.planets).map(([name, info]) => (
-                  <tr key={name} className="border-b" style={{ borderColor: 'rgba(107,78,46,0.15)' }}>
-                    <td className="py-1.5 font-medium">{PLANET_SHORT_TA[name]} {name}</td>
-                    <td className="py-1.5">{info.rasi_name_ta} ({info.degree_in_rasi}°)</td>
-                    <td className="py-1.5">{info.nakshatra_name_ta}</td>
-                    <td className="text-center py-1.5">{info.retrograde ? '✓' : '—'}</td>
+                  <tr key={name}>
+                    <td className="font-medium">{PLANET_SHORT_TA[name]} {name}</td>
+                    <td>{info.rasi_name_ta} ({info.degree_in_rasi}°)</td>
+                    <td>{info.nakshatra_name_ta}</td>
+                    <td className="text-center">{info.retrograde ? '✓' : '—'}</td>
                   </tr>
                 ))}
               </tbody>

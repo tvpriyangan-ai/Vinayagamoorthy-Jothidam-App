@@ -167,13 +167,7 @@ export default function DashboardPage() {
             )}
             {chatMessages.map((m, i) => (
               <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div
-                  className="px-3 py-1.5 rounded-lg max-w-[85%]"
-                  style={{
-                    background: m.role === 'user' ? 'var(--gold)' : 'rgba(255,255,255,0.5)',
-                    color: 'var(--ink-brown)',
-                  }}
-                >
+                <div className={`chat-bubble ${m.role === 'user' ? 'chat-bubble--me' : 'chat-bubble--guru'}`}>
                   {m.content}
                 </div>
               </div>

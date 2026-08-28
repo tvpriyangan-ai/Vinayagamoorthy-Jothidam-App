@@ -51,15 +51,15 @@ export default function TransitPage() {
 
           <details>
             <summary className="text-sm cursor-pointer opacity-80">{t('transit.timeline')}</summary>
-            <table className="w-full text-sm mt-2">
+            <table className="manuscript-table mt-2">
               <tbody>
                 {data.dasha.maha_dasha_timeline.map((m, i) => {
                   const isCurrent = m.start === data.dasha.current_maha_dasha.start;
                   return (
-                    <tr key={i} style={{ background: isCurrent ? 'rgba(216,180,92,0.3)' : 'transparent' }}>
-                      <td className="py-1 font-medium">{m.lord_ta} ({m.lord})</td>
-                      <td className="py-1 opacity-75">{m.start} → {m.end}</td>
-                      <td className="py-1 text-right opacity-60">{m.years} {t('transit.yrs')}</td>
+                    <tr key={i} style={{ background: isCurrent ? 'rgba(201,164,92,0.3)' : 'transparent' }}>
+                      <td className="font-medium">{m.lord_ta} ({m.lord})</td>
+                      <td className="opacity-75">{m.start} → {m.end}</td>
+                      <td className="text-right opacity-60">{m.years} {t('transit.yrs')}</td>
                     </tr>
                   );
                 })}

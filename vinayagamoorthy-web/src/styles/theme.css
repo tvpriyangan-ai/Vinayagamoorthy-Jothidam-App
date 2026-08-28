@@ -73,24 +73,42 @@ body {
   padding: 18px 22px 16px;
   border-radius: 3px 7px 4px 8px / 6px 3px 7px 4px;
   background:
+    /* fine incised horizontal fibre — the length of a palm-leaf strip */
+    repeating-linear-gradient(90deg,
+      rgba(58,40,20,0.055) 0 1px, transparent 1px 5px),
+    /* the original faint cross-rule */
     repeating-linear-gradient(to bottom,
       rgba(36,23,13,0.05) 0px, rgba(36,23,13,0.05) 1px,
       transparent 1px, transparent 4px),
+    /* aged foxing spots */
+    radial-gradient(circle at 18% 28%, rgba(58,36,16,0.20) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 67% 61%, rgba(58,36,16,0.16) 0 2px, transparent 3px),
+    radial-gradient(circle at 85% 22%, rgba(58,36,16,0.12) 0 1px, transparent 2px),
+    radial-gradient(circle at 39% 83%, rgba(58,36,16,0.13) 0 1.5px, transparent 2.5px),
+    /* sheen + shade */
     radial-gradient(120% 80% at 15% 10%, rgba(255,255,255,0.08), transparent 55%),
     radial-gradient(100% 90% at 90% 95%, rgba(0,0,0,0.18), transparent 60%),
+    /* browned long edges, like the rim of a real ola leaf */
+    linear-gradient(90deg,
+      rgba(40,24,10,0.30) 0%, transparent 7%,
+      transparent 93%, rgba(40,24,10,0.32) 100%),
     linear-gradient(155deg, var(--parchment-light) 0%, var(--parchment-mid) 55%, var(--parchment-dark) 100%);
-  border: 1px solid var(--parchment-dark);
+  border: 1px solid rgba(40,24,10,0.6);
   box-shadow:
     0 6px 16px rgba(0,0,0,0.45),
     inset 0 1px 0 rgba(255,255,255,0.12),
-    inset 0 -8px 16px rgba(36,23,13,0.15);
+    inset 0 -8px 16px rgba(36,23,13,0.15),
+    inset 0 0 22px rgba(40,24,10,0.22);
   color: var(--ink-brown);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .leaf-card:hover, .parchment:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.14);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.14),
+    inset 0 0 22px rgba(40,24,10,0.2);
 }
+/* Non-lifting variant — for the page header and other fixed chrome. */
+.leaf-card--flat, .leaf-card--flat:hover { transform: none; }
 .leaf-card.parchment-corners::before, .leaf-card.parchment-corners::after,
 .parchment.parchment-corners::before, .parchment.parchment-corners::after {
   content: "◆";
@@ -192,3 +210,123 @@ body {
 }
 .badge-advantage { background: rgba(79,107,58,0.16); border: 1px solid var(--advantage-green); color: var(--advantage-green); }
 .badge-attention { background: rgba(139,66,37,0.14); border: 1px solid var(--attention-terracotta); color: var(--attention-terracotta); }
+
+/* ============================================================
+   Palm-leaf finishing — chrome, dividers, tables, chat, helpers
+   ============================================================ */
+
+/* Faint palm frond watermark behind every screen (below the gold dust). */
+.app-shell::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.05;
+  background-repeat: no-repeat;
+  background-position: right -70px bottom -60px;
+  background-size: 440px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Cg fill='none' stroke='%23C9A45C' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M40 380 C120 300 200 200 360 40'/%3E%3Cpath d='M110 300 C132 262 122 220 90 190'/%3E%3Cpath d='M152 250 C178 210 172 165 140 135'/%3E%3Cpath d='M200 198 C232 158 230 114 198 84'/%3E%3Cpath d='M255 145 C286 108 286 64 254 34'/%3E%3Cpath d='M110 300 C152 290 196 300 232 332'/%3E%3Cpath d='M152 250 C196 240 242 250 282 282'/%3E%3Cpath d='M200 198 C248 190 292 202 332 232'/%3E%3Cpath d='M255 145 C300 140 342 152 372 180'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Selection + focus, in gold. */
+::selection { background: rgba(201,164,92,0.35); color: var(--ink-brown); }
+:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 2px; border-radius: 2px; }
+a { text-underline-offset: 3px; }
+
+/* Thin manuscript scrollbar. */
+* { scrollbar-width: thin; scrollbar-color: var(--parchment-dark) transparent; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: rgba(0,0,0,0.18); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--gold), var(--parchment-dark));
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+/* <details> / <summary> — used for the dasha timeline and reading cards. */
+.leaf-card details > summary,
+.parchment details > summary {
+  cursor: pointer;
+  list-style: none;
+  color: var(--parchment-heading);
+  font-weight: 600;
+}
+.leaf-card details > summary::-webkit-details-marker,
+.parchment details > summary::-webkit-details-marker { display: none; }
+.leaf-card details > summary::before,
+.parchment details > summary::before { content: "\276E  "; color: var(--gold); }
+.leaf-card details[open] > summary::before,
+.parchment details[open] > summary::before { content: "\276F  "; }
+
+/* A pair of thin gold rules — a manuscript margin line. */
+.manuscript-rule {
+  border: 0;
+  height: 4px;
+  border-top: 1px solid rgba(201,164,92,0.6);
+  border-bottom: 1px solid rgba(201,164,92,0.6);
+  background: transparent;
+  margin: 1rem 0;
+}
+
+/* Opt-in ruled table — add class="manuscript-table" to a <table>. */
+.manuscript-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.manuscript-table th {
+  text-align: left;
+  font-family: var(--font-heading);
+  color: var(--parchment-heading);
+  letter-spacing: 0.02em;
+  border-bottom: 2px double rgba(40,24,10,0.5);
+  padding: 6px 8px;
+}
+.manuscript-table td { padding: 6px 8px; border-bottom: 1px solid rgba(40,24,10,0.16); }
+.manuscript-table tr:last-child td { border-bottom: 0; }
+
+/* Spinner for loading states. */
+.leaf-spinner {
+  width: 28px; height: 28px;
+  border-radius: 999px;
+  border: 3px solid rgba(40,24,10,0.25);
+  border-top-color: var(--gold);
+  animation: leaf-spin 0.9s linear infinite;
+  margin: 0 auto;
+}
+@keyframes leaf-spin { to { transform: rotate(360deg); } }
+
+/* Tabs — e.g. "open chart" / "new match" on the matching page. */
+.tab {
+  font-family: var(--font-heading);
+  letter-spacing: 0.04em;
+  padding: 8px 14px;
+  background: none;
+  color: var(--gold);
+  opacity: 0.6;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: opacity 0.15s ease, border-color 0.15s ease;
+}
+.tab:hover { opacity: 0.85; }
+.tab--active { opacity: 1; color: var(--gold-bright); border-bottom-color: var(--gold-bright); }
+
+/* Chat bubbles — the Dashboard "Chat with Vinayagamoorthy" panel. */
+.chat-bubble {
+  padding: 6px 12px;
+  border-radius: 3px 8px 3px 8px;
+  max-width: 85%;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--ink-brown);
+}
+.chat-bubble--me { background: var(--gold); margin-left: auto; }
+.chat-bubble--guru {
+  background: linear-gradient(155deg, var(--parchment-light), var(--parchment-mid));
+  border: 1px solid var(--parchment-dark);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .leaf-card, .parchment { transition: none; }
+  .leaf-card:hover, .parchment:hover { transform: none; }
+  .leaf-spinner { animation-duration: 2s; }
+}

@@ -13,7 +13,7 @@ export default function AppHeader({ userName }) {
   }
 
   return (
-    <header className="parchment flex flex-wrap items-center justify-between gap-y-2 px-5 py-3 mb-4">
+    <header className="parchment leaf-card--flat flex flex-wrap items-center justify-between gap-y-2 px-5 py-3 mb-4">
       <div className="flex items-center gap-3">
         <img src="/logo.png" alt="logo" className="w-11 h-11 rounded-full border-2 border-gold" />
         <div>
