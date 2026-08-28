@@ -15,7 +15,7 @@ const QUICK_START_ITEMS = [
   { key: 'diet', tKey: 'quick.diet' },
   { key: 'ayurveda', tKey: 'quick.ayurveda' },
   { key: 'dosha', tKey: 'quick.dosha', route: '/dosha' },
-  { key: 'vastu', tKey: 'quick.vastu' },
+  { key: 'vastu', tKey: 'quick.vastu', route: '/vastu' },
   { key: 'books', tKey: 'quick.books' },
 ];
 

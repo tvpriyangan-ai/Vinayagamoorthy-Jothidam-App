@@ -4,7 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.db.mongodb import ensure_indexes
 from app.services.gemini_client import is_configured as gemini_configured, check_health as gemini_check
-from app.routers import auth, jathagam, panchangam, matching, lucky_notes, dosha, temples, chat, users, transit, content
+from app.services.photo_upload import is_configured as photo_upload_configured
+from app.routers import auth, jathagam, panchangam, matching, lucky_notes, dosha, temples, chat, users, transit, content, vastu
 from app.services.temple_seed import seed_temples_if_needed
 from app.services.content_seed import seed_content_if_needed
 
@@ -31,6 +32,7 @@ app.include_router(chat.router)
 app.include_router(users.router)
 app.include_router(transit.router)
 app.include_router(content.router)
+app.include_router(vastu.router)
 
 
 @app.get("/")
@@ -57,6 +59,7 @@ async def health(check: str | None = None):
         "app": settings.APP_NAME,
         "gemini_configured": gemini_configured(),
         "gemini_model": settings.GEMINI_MODEL,
+        "photo_upload_configured": photo_upload_configured(),
     }
     if check == "gemini":
         body["gemini"] = await gemini_check()

@@ -13,12 +13,11 @@ The astrology facts still come from our own engine. Gemini only writes the
 prose. Results are cached per (user, language) so repeat visits are instant
 and don't burn quota; the cache is rebuilt if the birth chart changes.
 """
-import json
 from datetime import datetime, timezone
 
 from app.core.languages import normalize_language, language_instruction, language_name
 from app.db.mongodb import jathagam_readings_collection
-from app.services.gemini_client import generate_text, GeminiError, is_configured
+from app.services.gemini_client import generate_text, GeminiError, is_configured, parse_json_object
 from app.services.lucky_notes import get_lucky_notes
 from app.services.dosha import get_dosha_report
 
@@ -93,15 +92,7 @@ Rules:
 
 
 def _parse(raw: str) -> dict:
-    raw = raw.strip()
-    if raw.startswith("```"):
-        raw = raw.split("```", 2)[1]
-        if raw.lstrip().lower().startswith("json"):
-            raw = raw.lstrip()[4:]
-    start, end = raw.find("{"), raw.rfind("}")
-    if start == -1 or end == -1:
-        raise GeminiError("Reading response was not JSON.")
-    data = json.loads(raw[start : end + 1])
+    data = parse_json_object(raw)
     if not isinstance(data.get("sections"), list) or not data["sections"]:
         raise GeminiError("Reading response had no sections.")
     return data

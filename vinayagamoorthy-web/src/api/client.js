@@ -50,9 +50,10 @@ export const updateMyProfile = (payload) => client.put('/users/me', payload);
 export const uploadPalmPhoto = (file) => {
   const formData = new FormData();
   formData.append('file', file);
-  return client.post('/users/me/palm-photo', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
+  // Let the browser set Content-Type (incl. the multipart boundary). Setting
+  // it to a bare "multipart/form-data" string omits the boundary and the
+  // server then can't parse the upload.
+  return client.post('/users/me/palm-photo', formData);
 };
 
 // ---- Auth ----
@@ -89,8 +90,14 @@ export const getTemplesForMyDoshas = () => client.get('/temples/for-my-doshas');
 export const sendChatMessage = (message) => client.post('/chat/message', { message });
 export const getChatHistory = () => client.get('/chat/history');
 
-// ---- Transit Predictions ----
+// ---- Transit Predictions (+ Vimshottari dasha/bhukti) ----
 export const getMyTransitPredictions = () => client.get('/transit/me');
+
+// ---- Personal Vastu report ----
+export const getMyVastuReport = (language, refresh = false) =>
+  client.get('/vastu/me', {
+    params: { ...(language ? { language } : {}), ...(refresh ? { refresh: true } : {}) },
+  });
 
 // ---- Content Library ----
 export const listContent = (category) => client.get('/content', { params: category ? { category } : {} });

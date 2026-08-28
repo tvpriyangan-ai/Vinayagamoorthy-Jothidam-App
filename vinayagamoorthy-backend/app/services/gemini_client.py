@@ -16,8 +16,24 @@ from google.genai import types
 from app.core.config import settings
 
 
+import json
+
+
 class GeminiError(RuntimeError):
     """Raised for any Gemini problem, with a message safe to log."""
+
+
+def parse_json_object(raw: str) -> dict:
+    """Pull the first JSON object out of a model reply (tolerates ``` fences)."""
+    raw = (raw or "").strip()
+    if raw.startswith("```"):
+        raw = raw.split("```", 2)[1]
+        if raw.lstrip().lower().startswith("json"):
+            raw = raw.lstrip()[4:]
+    start, end = raw.find("{"), raw.rfind("}")
+    if start == -1 or end == -1:
+        raise GeminiError("Model response was not JSON.")
+    return json.loads(raw[start : end + 1])
 
 
 def is_configured() -> bool:

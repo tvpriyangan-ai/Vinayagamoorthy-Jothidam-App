@@ -11,6 +11,7 @@ import TemplesPage from './pages/TemplesPage';
 import PanchangamPage from './pages/PanchangamPage';
 import DoshaPage from './pages/DoshaPage';
 import TransitPage from './pages/TransitPage';
+import VastuPage from './pages/VastuPage';
 import ProfilePage from './pages/ProfilePage';
 import ContentPage from './pages/ContentPage';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -39,6 +40,7 @@ export default function App() {
         <Route path="/panchangam" element={Protected(<PanchangamPage />)} />
         <Route path="/dosha" element={Protected(<DoshaPage />)} />
         <Route path="/transit" element={Protected(<TransitPage />)} />
+        <Route path="/vastu" element={Protected(<VastuPage />)} />
         <Route path="/profile" element={Protected(<ProfilePage />)} />
         <Route path="/content/:category" element={Protected(<ContentPage />)} />
 
