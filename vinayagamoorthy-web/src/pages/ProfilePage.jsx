@@ -2,8 +2,11 @@ import { useEffect, useState, useRef } from 'react';
 import FeaturePageShell from '../components/FeaturePageShell';
 import ParchmentCard from '../components/ParchmentCard';
 import { getMyProfile, updateMyProfile, uploadPalmPhoto, extractErrorMessage } from '../api/client';
+import { useLanguage } from '../i18n/LanguageContext';
+import { LANGUAGES } from '../i18n/translations';
 
 export default function ProfilePage() {
+  const { setLanguage } = useLanguage();
   const [profile, setProfile] = useState(null);
   const [form, setForm] = useState({ name: '', email: '', mobile: '', preferred_language: 'ta' });
   const [error, setError] = useState('');
@@ -81,6 +84,7 @@ export default function ProfilePage() {
       };
       const { data } = await updateMyProfile(payload);
       setProfile(data);
+      if (form.preferred_language) setLanguage(form.preferred_language);
       setSuccess('சுயவிவரம் புதுப்பிக்கப்பட்டது!');
     } catch (err) {
       setError(extractErrorMessage(err, 'புதுப்பிக்க முடியவில்லை.'));
@@ -172,8 +176,9 @@ export default function ProfilePage() {
             <label className="field-label">விருப்ப மொழி</label>
             <select className="input-manuscript" value={form.preferred_language}
                     onChange={(e) => update('preferred_language', e.target.value)}>
-              <option value="ta">தமிழ்</option>
-              <option value="en">English</option>
+              {LANGUAGES.map((l) => (
+                <option key={l.code} value={l.code}>{l.label} ({l.english})</option>
+              ))}
             </select>
           </div>
           {error && <p className="error-text">{error}</p>}

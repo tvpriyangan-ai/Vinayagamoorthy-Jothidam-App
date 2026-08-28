@@ -63,6 +63,10 @@ export const resetPassword = (payload) => client.post('/auth/reset-password', pa
 
 // ---- Jathagam ----
 export const getMyJathagam = () => client.get('/jathagam/me');
+export const getMyJathagamReading = (language, refresh = false) =>
+  client.get('/jathagam/me/reading', {
+    params: { ...(language ? { language } : {}), ...(refresh ? { refresh: true } : {}) },
+  });
 
 // ---- Panchangam ----
 export const getTodayPanchangam = (params) => client.get('/panchangam/today', { params });

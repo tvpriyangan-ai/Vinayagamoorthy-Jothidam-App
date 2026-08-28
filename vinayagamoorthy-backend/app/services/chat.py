@@ -7,12 +7,11 @@ just to explain and converse naturally in the user's language, never to
 invent planetary positions of its own.
 
 Uses the Gemini API (free tier available via Google AI Studio). Swapping
-providers later (e.g. to Claude) only means changing this one file — the
+providers later (e.g. to Claude) only means changing gemini_client.py — the
 grounding approach and every other module stays identical.
 """
-from google import genai
-from google.genai import types
-from app.core.config import settings
+from app.core.languages import language_instruction
+from app.services.gemini_client import generate_text, GeminiError  # noqa: F401 (re-exported)
 from app.services.lucky_notes import get_lucky_notes
 from app.services.dosha import get_dosha_report
 
@@ -26,42 +25,41 @@ def _format_chart_context(user: dict, chart: dict) -> str:
     active_doshas = [d["name"] for d in dosha_report["doshas"] if d["present"]]
 
     planet_lines = "\n".join(
-        f"- {name}: {info['rasi_name_ta']} ராசி, {info['nakshatra_name_ta']} நட்சத்திரம்"
-        f"{' (வக்ரம்)' if info['retrograde'] else ''}"
+        f"- {name}: {info['rasi_name_ta']} rasi, {info['nakshatra_name_ta']} nakshatra"
+        f"{' (retrograde)' if info['retrograde'] else ''}"
         for name, info in planets.items()
     )
 
-    return f"""இது {user['name']} என்பவரின் ஜாதக விவரம் — இதை மட்டுமே பயன்படுத்தி பதில் அளிக்கவும்:
+    return f"""Birth chart of {user['name']} — use ONLY this data to answer:
 
-லக்னம்: {chart['ascendant']['rasi_name_ta']}
-ராசி (சந்திர ராசி): {chart['rasi']}
-நட்சத்திரம்: {chart['nakshatra']}
+Lagnam (ascendant): {chart['ascendant']['rasi_name_ta']}
+Rasi (Moon sign): {chart['rasi']}
+Nakshatra (birth star): {chart['nakshatra']}
 
-கிரக நிலைகள்:
+Planetary positions:
 {planet_lines}
 
-அதிர்ஷ்ட குறிப்புகள்: நிறம் - {lucky['favorable']['lucky_color']}, எண் - {lucky['favorable']['lucky_number']}, நாள் - {lucky['favorable']['lucky_day']}, கல் - {lucky['favorable']['lucky_stone']}
+Lucky notes: colour - {lucky['favorable']['lucky_color']}, number - {lucky['favorable']['lucky_number']}, day - {lucky['favorable']['lucky_day']}, stone - {lucky['favorable']['lucky_stone']}
 
-செயலில் உள்ள தோஷங்கள்: {', '.join(active_doshas) if active_doshas else 'எதுவும் இல்லை'}
+Active doshas: {', '.join(active_doshas) if active_doshas else 'none'}
 """
 
 
 def build_system_prompt(user: dict, chart: dict) -> str:
     chart_context = _format_chart_context(user, chart)
-    language = user.get("preferred_language", "ta")
-    lang_instruction = "தமிழில் பதில் அளிக்கவும்." if language == "ta" else "Respond in English."
+    lang_instruction = language_instruction(user.get("preferred_language"))
 
-    return f"""நீங்கள் "வினாயகமூர்த்தி" — ஒரு அனுபவமிக்க, அன்பான ஜோதிட உதவியாளர், "Vinayagamoorthy Jothidam" ஆப்பில்.
+    return f"""You are "Vinayagamoorthy" — an experienced, warm Vedic astrologer (jothidar) inside the "Vinayagamoorthy Jothidam" app.
 
 {chart_context}
 
-வழிகாட்டுதல்கள்:
-- மேலே கொடுக்கப்பட்ட ஜாதக தகவல்களை மட்டுமே பயன்படுத்தி பதிலளிக்கவும். புதிய கிரக நிலைகளை கற்பனை செய்ய வேண்டாம்.
+Guidelines:
+- Answer using ONLY the chart data above. Never invent planetary positions.
 - {lang_instruction}
-- அன்பான, மரியாதையான தொனியில் பேசவும் — பாரம்பரிய ஜோதிடர் போல.
-- திருமணம், ஆரோக்கியம், நிதி போன்ற முக்கிய முடிவுகளுக்கு, இது ஒரு வழிகாட்டுதலே தவிர இறுதி பதில் அல்ல என்பதை நினைவூட்டி, தேவைப்பட்டால் ஒரு அனுபவமிக்க ஜோதிடரை அணுக பரிந்துரைக்கவும்.
-- மருத்துவ ஆலோசனை அல்லது சட்ட ஆலோசனை வழங்க வேண்டாம்.
-- பதில்களை சுருக்கமாகவும், தெளிவாகவும் வைக்கவும்.
+- Speak in a warm, respectful tone, like a traditional family astrologer.
+- For big decisions (marriage, health, finance), remind the user this is guidance, not a final verdict, and suggest consulting an experienced astrologer in person if needed.
+- Do not give medical or legal advice.
+- Keep answers concise and clear.
 """
 
 
@@ -76,23 +74,10 @@ def _history_to_gemini_contents(history: list[dict], new_message: str) -> list[d
 
 
 async def get_chat_reply(user: dict, chart: dict, history: list[dict], new_message: str) -> str:
-    if not settings.GEMINI_API_KEY:
-        raise ValueError(
-            "GEMINI_API_KEY is not set. Get a free key at https://aistudio.google.com/app/apikey "
-            "and add it to your .env file or Render environment variables."
-        )
-
-    client = genai.Client(api_key=settings.GEMINI_API_KEY)
     system_prompt = build_system_prompt(user, chart)
     contents = _history_to_gemini_contents(history, new_message)
-
-    response = await client.aio.models.generate_content(
-        model=settings.GEMINI_MODEL,
+    return await generate_text(
+        system_instruction=system_prompt,
         contents=contents,
-        config=types.GenerateContentConfig(
-            system_instruction=system_prompt,
-            max_output_tokens=1000,
-        ),
+        max_output_tokens=1000,
     )
-
-    return response.text

@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
 from app.db.mongodb import ensure_indexes
+from app.services.gemini_client import is_configured as gemini_configured, check_health as gemini_check
 from app.routers import auth, jathagam, panchangam, matching, lucky_notes, dosha, temples, chat, users, transit, content
 from app.services.temple_seed import seed_temples_if_needed
 from app.services.content_seed import seed_content_if_needed
@@ -45,5 +46,18 @@ async def on_startup():
 
 
 @app.get("/health")
-async def health():
-    return {"status": "ok", "app": settings.APP_NAME}
+async def health(check: str | None = None):
+    """
+    Plain /health is cheap (used by Render's health check).
+    /health?check=gemini makes one live test call to Gemini so you can see
+    from the browser whether the chat / jathagam-reading AI is working.
+    """
+    body = {
+        "status": "ok",
+        "app": settings.APP_NAME,
+        "gemini_configured": gemini_configured(),
+        "gemini_model": settings.GEMINI_MODEL,
+    }
+    if check == "gemini":
+        body["gemini"] = await gemini_check()
+    return body

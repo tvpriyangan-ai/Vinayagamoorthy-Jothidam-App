@@ -48,6 +48,10 @@ def content_collection():
     return get_db()["content_articles"]
 
 
+def jathagam_readings_collection():
+    return get_db()["jathagam_readings"]
+
+
 async def ensure_indexes():
     """Call once on startup to create needed indexes."""
     await users_collection().create_index("username", unique=True)
@@ -59,3 +63,6 @@ async def ensure_indexes():
     )
     await temples_collection().create_index("name_en", unique=True)
     await content_collection().create_index([("category", 1)])
+    await jathagam_readings_collection().create_index(
+        [("user_id", 1), ("language", 1)], unique=True
+    )
