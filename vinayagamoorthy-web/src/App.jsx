@@ -16,6 +16,7 @@ import ProfilePage from './pages/ProfilePage';
 import ContentPage from './pages/ContentPage';
 import ContactPage from './pages/ContactPage';
 import ProtectedRoute from './components/ProtectedRoute';
+import MusicPlayer from './components/MusicPlayer';
 
 function Protected(element) {
   return <ProtectedRoute>{element}</ProtectedRoute>;
@@ -48,6 +49,7 @@ export default function App() {
 
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
+      <MusicPlayer />
       </LanguageProvider>
     </BrowserRouter>
   );

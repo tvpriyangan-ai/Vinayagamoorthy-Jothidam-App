@@ -495,6 +495,41 @@ a { text-underline-offset: 3px; }
 .feature-tile .ft-title { font-family: var(--font-heading); font-weight: 600; color: var(--parchment-heading); font-size: .92rem; }
 .feature-tile .ft-sub { font-size: .7rem; color: var(--ink-brown); opacity: .65; margin-top: 2px; }
 
+/* Background-music toggle — bottom-right corner, inside the frame. */
+.music-toggle {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  z-index: 40;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--gold);
+  background: linear-gradient(180deg, #3a1e0c, var(--study-brown));
+  color: var(--gold-bright);
+  font-size: 17px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0,0,0,.5), inset 0 1px 0 rgba(216,180,92,.2);
+  transition: color .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+.music-toggle:hover {
+  border-color: var(--gold-bright);
+  box-shadow: 0 0 14px rgba(197,154,58,.3), 0 3px 10px rgba(0,0,0,.5);
+}
+.music-toggle[aria-pressed="false"] { color: rgba(216,180,92,.4); }
+.music-toggle[aria-pressed="false"]::after {
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 1.5px;
+  background: rgba(216,180,92,.7);
+  transform: rotate(-45deg);
+}
+@media (max-width: 640px) { .music-toggle { right: 10px; bottom: 10px; width: 34px; height: 34px; } }
+
 @media (prefers-reduced-motion: reduce) {
   body::after { animation: none; }
   .om-mark { animation: none; }

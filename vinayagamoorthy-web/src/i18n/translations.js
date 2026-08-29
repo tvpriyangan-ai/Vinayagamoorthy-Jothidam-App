@@ -136,6 +136,8 @@ const translations = {
     'mr.reportCaption': 'இந்த 22 திருமணப் பொருத்தங்களும் வேத நூல்கள் மற்றும் பாரம்பரிய ஜோதிட நூல்களை அடிப்படையாகக் கொண்டு, மிகத் துல்லியமாகக் கணக்கிடப்பட்டு வழங்கப்படுகின்றன.',
     'contact.inspiredBy': 'ஈர்ப்பு அளித்தவர்',
     'contact.iyyaName': 'ஜோதிடர் விநாயகமூர்த்தி ஐயா',
+    'music.on': 'இசையை இயக்கு',
+    'music.off': 'இசையை நிறுத்து',
   },
 
   ml: {
@@ -253,6 +255,8 @@ const translations = {
     'mr.reportCaption': 'ഈ 22 വിവാഹ പൊരുത്തങ്ങളും വേദ ഗ്രന്ഥങ്ങളും പരമ്പരാഗത ജ്യോതിഷ ഗ്രന്ഥങ്ങളും അടിസ്ഥാനമാക്കി അതീവ കൃത്യതയോടെ കണക്കാക്കി നൽകുന്നു.',
     'contact.inspiredBy': 'പ്രചോദനം',
     'contact.iyyaName': 'ജ്യോതിഷർ വിനായകമൂർത്തി അയ്യ',
+    'music.on': 'സംഗീതം ഓണാക്കുക',
+    'music.off': 'സംഗീതം ഓഫാക്കുക',
   },
 
   en: {
@@ -370,6 +374,8 @@ const translations = {
     'mr.reportCaption': 'All 22 marriage poruthams are calculated with great precision, based on Vedic scriptures and traditional astrological texts.',
     'contact.inspiredBy': 'Inspired by',
     'contact.iyyaName': 'Jothidar Vinayagamoorthy Iyya',
+    'music.on': 'Turn music on',
+    'music.off': 'Turn music off',
   },
 
   hi: {
@@ -487,6 +493,8 @@ const translations = {
     'mr.reportCaption': 'ये सभी 22 विवाह पोरुत्तम वैदिक ग्रंथों और पारंपरिक ज्योतिष ग्रंथों के आधार पर अत्यंत सटीकता से गणना करके प्रस्तुत किए जाते हैं।',
     'contact.inspiredBy': 'प्रेरणा',
     'contact.iyyaName': 'ज्योतिषी विनायकमूर्ति अय्या',
+    'music.on': 'संगीत चालू करें',
+    'music.off': 'संगीत बंद करें',
   },
 
   pa: {
@@ -604,6 +612,8 @@ const translations = {
     'mr.reportCaption': 'ਇਹ ਸਾਰੇ 22 ਵਿਆਹ ਪੋਰੁੱਤਮ ਵੈਦਿਕ ਗ੍ਰੰਥਾਂ ਅਤੇ ਪਰੰਪਰਾਗਤ ਜੋਤਿਸ਼ ਗ੍ਰੰਥਾਂ ਦੇ ਆਧਾਰ ਤੇ ਬਹੁਤ ਸ਼ੁੱਧਤਾ ਨਾਲ ਗਿਣ ਕੇ ਦਿੱਤੇ ਜਾਂਦੇ ਹਨ।',
     'contact.inspiredBy': 'ਪ੍ਰੇਰਨਾ',
     'contact.iyyaName': 'ਜੋਤਸ਼ੀ ਵਿਨਾਇਕਮੂਰਤੀ ਅੱਯਾ',
+    'music.on': 'ਸੰਗੀਤ ਚਾਲੂ ਕਰੋ',
+    'music.off': 'ਸੰਗੀਤ ਬੰਦ ਕਰੋ',
   },
 };
 
