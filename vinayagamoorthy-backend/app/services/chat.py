@@ -10,16 +10,31 @@ Uses the Gemini API (free tier available via Google AI Studio). Swapping
 providers later (e.g. to Claude) only means changing gemini_client.py — the
 grounding approach and every other module stays identical.
 """
+from datetime import date, datetime
+
 from app.core.languages import language_instruction
 from app.services.gemini_client import generate_text, GeminiError  # noqa: F401 (re-exported)
 from app.services.lucky_notes import get_lucky_notes
 from app.services.dosha import get_dosha_report
+from app.services.dasha import compute_dasha
+from app.services.transit import get_transit_predictions
 
 MAX_HISTORY_TURNS = 10  # keep recent context only; avoids unbounded token growth
 
 
+def _approx_age(birth_date: str) -> str:
+    try:
+        b = datetime.strptime(birth_date, "%Y-%m-%d").date()
+        today = date.today()
+        years = today.year - b.year - ((today.month, today.day) < (b.month, b.day))
+        return f"{years} years"
+    except Exception:
+        return "unknown"
+
+
 def _format_chart_context(user: dict, chart: dict) -> str:
     planets = chart["planets"]
+    birth = user.get("birth", {})
     lucky = get_lucky_notes(planets["Moon"]["rasi_index"])
     dosha_report = get_dosha_report(chart)
     active_doshas = [d["name"] for d in dosha_report["doshas"] if d["present"]]
@@ -30,7 +45,33 @@ def _format_chart_context(user: dict, chart: dict) -> str:
         for name, info in planets.items()
     )
 
+    # Current Vimshottari period + today's gochara — so the assistant can
+    # answer "which period am I in", "is this a good time for…", etc.
+    dasha_line = "unavailable"
+    try:
+        d = compute_dasha(planets["Moon"]["longitude"], birth["date"])
+        md, bh = d["current_maha_dasha"], d["current_bhukti"]
+        dasha_line = (
+            f"{md['lord']} Maha Dasha ({md['start']} to {md['end']}, "
+            f"{md['remaining']['years']}y {md['remaining']['months']}m left); "
+            f"currently {bh['lord']} Bhukti (until {bh['end']})"
+        )
+    except Exception:
+        pass
+
+    transit_line = "unavailable"
+    try:
+        tp = get_transit_predictions(planets["Moon"]["rasi_index"])
+        fav = [t["planet"] for t in tp["transits"] if t["favorable"]]
+        unfav = [t["planet"] for t in tp["transits"] if not t["favorable"]]
+        transit_line = f"favourable now: {', '.join(fav) or 'none'}; needs care: {', '.join(unfav) or 'none'}"
+    except Exception:
+        pass
+
     return f"""Birth chart of {user['name']} — use ONLY this data to answer:
+
+Gender: {user.get('gender', 'unknown')}
+Born: {birth.get('date', '?')} at {birth.get('time', '?')}, {birth.get('place', '?')} (approx age: {_approx_age(birth.get('date', ''))})
 
 Lagnam (ascendant): {chart['ascendant']['rasi_name_ta']}
 Rasi (Moon sign): {chart['rasi']}
@@ -38,6 +79,9 @@ Nakshatra (birth star): {chart['nakshatra']}
 
 Planetary positions:
 {planet_lines}
+
+Current Vimshottari period: {dasha_line}
+Current transits (gochara) vs natal Moon: {transit_line}
 
 Lucky notes: colour - {lucky['favorable']['lucky_color']}, number - {lucky['favorable']['lucky_number']}, day - {lucky['favorable']['lucky_day']}, stone - {lucky['favorable']['lucky_stone']}
 
@@ -54,7 +98,8 @@ def build_system_prompt(user: dict, chart: dict, language: str | None = None) ->
 {chart_context}
 
 Guidelines:
-- Answer using ONLY the chart data above. Never invent planetary positions.
+- Answer the user's PERSONAL questions (career, marriage, timing, health tendencies, finance, education, family, current period, "is now a good time…") by interpreting the birth chart, the current Vimshottari dasha/bhukti and the current transits shown above — the way a traditional jothidar would.
+- Use ONLY the data above. Never invent planetary positions, dashas or dates.
 - {lang_instruction}
 - Speak in a warm, respectful tone, like a traditional family astrologer.
 - For big decisions (marriage, health, finance), remind the user this is guidance, not a final verdict, and suggest consulting an experienced astrologer in person if needed.
