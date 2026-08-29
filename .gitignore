@@ -1,6 +1,8 @@
 .env
 .env.*
 !.env.example
+# committed: build-time API URL for production builds (public value, no secret)
+!vinayagamoorthy-web/.env.production
 __pycache__/
 *.py[cod]
 .pytest_cache/
