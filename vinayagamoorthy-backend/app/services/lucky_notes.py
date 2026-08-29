@@ -53,15 +53,20 @@ class LuckyNotes(TypedDict):
 
 def get_lucky_notes(moon_rasi_index: int) -> LuckyNotes:
     data = RASI_LUCKY_DATA[moon_rasi_index]
-    friendly_names = [RASI_NAMES_TA[i] for i in data["friendly"]]
-    enemy_rasis = [
-        RASI_NAMES_TA[i] for i, d in RASI_LUCKY_DATA.items()
+    friendly_idx = list(data["friendly"])
+    enemy_idx = [
+        i for i in RASI_LUCKY_DATA
         if i != moon_rasi_index and i not in data["friendly"]
     ]
+    friendly_names = [RASI_NAMES_TA[i] for i in friendly_idx]
+    enemy_rasis = [RASI_NAMES_TA[i] for i in enemy_idx]
     unfavorable_planets = PLANET_ENEMIES.get(data["lord"], [])
 
     return {
         "rasi": RASI_NAMES_TA[moon_rasi_index],
+        "moon_rasi_index": moon_rasi_index,
+        "friendly_rasi_indices": friendly_idx,
+        "challenging_rasi_indices": enemy_idx,
         "favorable": {
             "lucky_color": data["color"],
             "lucky_number": data["number"],

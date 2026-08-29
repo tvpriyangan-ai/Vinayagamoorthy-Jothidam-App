@@ -149,6 +149,73 @@ PORUTHAM = {
 }
 
 
+# ── Lucky Notes vocabulary (keyed by the Tamil string the engine emits) ──
+LUCKY_COLOR = {
+    "சிவப்பு": {"en": "Red", "ml": "ചുവപ്പ്", "hi": "लाल", "pa": "ਲਾਲ"},
+    "வெள்ளை": {"en": "White", "ml": "വെള്ള", "hi": "सफ़ेद", "pa": "ਚਿੱਟਾ"},
+    "பச்சை": {"en": "Green", "ml": "പച്ച", "hi": "हरा", "pa": "ਹਰਾ"},
+    "மஞ்சள்": {"en": "Yellow", "ml": "മഞ്ഞ", "hi": "पीला", "pa": "ਪੀਲਾ"},
+    "மஞ்சள் / கிட்டானி": {"en": "Yellow / Cream", "ml": "മഞ്ഞ / ക്രീം", "hi": "पीला / क्रीम", "pa": "ਪੀਲਾ / ਕਰੀਮ"},
+    "நீலம்": {"en": "Blue", "ml": "നീല", "hi": "नीला", "pa": "ਨੀਲਾ"},
+    "கருப்பு / அடர் நீலம்": {"en": "Black / Dark blue", "ml": "കറുപ്പ് / കടും നീല", "hi": "काला / गहरा नीला", "pa": "ਕਾਲਾ / ਗੂੜਾ ਨੀਲਾ"},
+}
+LUCKY_STONE = {
+    "பவளம்": {"en": "Coral", "ml": "പവിഴം", "hi": "मूंगा", "pa": "ਮੂੰਗਾ"},
+    "வைரம்": {"en": "Diamond", "ml": "വജ്രം", "hi": "हीरा", "pa": "ਹੀਰਾ"},
+    "மரகதம்": {"en": "Emerald", "ml": "മരതകം", "hi": "पन्ना", "pa": "ਪੰਨਾ"},
+    "முத்து": {"en": "Pearl", "ml": "മുത്ത്", "hi": "मोती", "pa": "ਮੋਤੀ"},
+    "மாணிக்கம்": {"en": "Ruby", "ml": "മാണിക്യം", "hi": "माणिक", "pa": "ਮਾਣਕ"},
+    "புஷ்பராகம்": {"en": "Yellow sapphire", "ml": "പുഷ്യരാഗം", "hi": "पुखराज", "pa": "ਪੁਖਰਾਜ"},
+    "நீலக்கல்": {"en": "Blue sapphire", "ml": "നീലക്കല്ല്", "hi": "नीलम", "pa": "ਨੀਲਮ"},
+}
+LUCKY_METAL = {
+    "செம்பு": {"en": "Copper", "ml": "ചെമ്പ്", "hi": "तांबा", "pa": "ਤਾਂਬਾ"},
+    "வெள்ளி": {"en": "Silver", "ml": "വെള്ളി", "hi": "चांदी", "pa": "ਚਾਂਦੀ"},
+    "வெண்கலம்": {"en": "Bronze", "ml": "വെങ്കലം", "hi": "कांसा", "pa": "ਕਾਂਸੀ"},
+    "தங்கம்": {"en": "Gold", "ml": "സ്വർണം", "hi": "सोना", "pa": "ਸੋਨਾ"},
+    "இரும்பு": {"en": "Iron", "ml": "ഇരുമ്പ്", "hi": "लोहा", "pa": "ਲੋਹਾ"},
+}
+# weekday-name -> weekday index (lucky_day is "செவ்வாய்க்கிழமை" etc.)
+_LUCKY_DAY_TO_IDX = {
+    "ஞாயிற்றுக்கிழமை": 0, "திங்கட்கிழமை": 1, "செவ்வாய்க்கிழமை": 2, "புதன்கிழமை": 3,
+    "வியாழக்கிழமை": 4, "வெள்ளிக்கிழமை": 5, "சனிக்கிழமை": 6,
+}
+
+DOSHA = {
+    "kuja":     {"ta": "செவ்வாய் தோஷம்", "en": "Kuja Dosha (Mangal)", "ml": "ചൊവ്വ ദോഷം", "hi": "मंगल दोष", "pa": "ਮੰਗਲ ਦੋਸ਼"},
+    "grahan":   {"ta": "ராகு-கேது தோஷம்", "en": "Rahu–Ketu (Grahan) Dosha", "ml": "രാഹു-കേതു ദോഷം", "hi": "राहु-केतु (ग्रहण) दोष", "pa": "ਰਾਹੂ-ਕੇਤੂ (ਗ੍ਰਹਿਣ) ਦੋਸ਼"},
+    "sade_sati":{"ta": "சனி எழரை நாட்டு", "en": "Sade Sati (7½-year Saturn)", "ml": "സാഡേ സാതി", "hi": "साढ़े साती", "pa": "ਸਾਢੇ ਸਾਤੀ"},
+}
+DOSHA_PHASE = {
+    "rising": {"ta": "முதல் கட்டம்", "en": "Rising phase", "ml": "ആരംഭ ഘട്ടം", "hi": "आरंभ चरण", "pa": "ਸ਼ੁਰੂਆਤੀ ਪੜਾਅ"},
+    "peak":   {"ta": "உச்ச கட்டம்", "en": "Peak phase", "ml": "ഉച്ച ഘട്ടം", "hi": "शिखर चरण", "pa": "ਸਿਖਰ ਪੜਾਅ"},
+    "setting":{"ta": "இறுதி கட்டம்", "en": "Setting phase", "ml": "അവസാന ഘട്ടം", "hi": "अंतिम चरण", "pa": "ਅੰਤਿਮ ਪੜਾਅ"},
+}
+DOSHA_NOTE = {
+    "ta": "இவை பாரம்பரிய ஜோதிட வழிகாட்டுதல்கள் மட்டுமே. குருக்கள் அல்லது அனுபவமிக்க ஜோதிடரிடம் ஆலோசனை பெற்ற பின் பரிகாரங்களை மேற்கொள்ளவும்.",
+    "en": "These are traditional astrological pointers only. Consult a priest or an experienced astrologer before acting on any remedy.",
+    "ml": "ഇവ പരമ്പരാഗത ജ്യോതിഷ സൂചനകൾ മാത്രമാണ്. ഏതെങ്കിലും പരിഹാരം ചെയ്യുന്നതിന് മുമ്പ് പുരോഹിതനെയോ പരിചയസമ്പന്നനായ ജ്യോതിഷിയെയോ സമീപിക്കുക.",
+    "hi": "ये केवल पारंपरिक ज्योतिषीय संकेत हैं। किसी भी उपाय को करने से पहले किसी पुजारी या अनुभवी ज्योतिषी से परामर्श करें।",
+    "pa": "ਇਹ ਸਿਰਫ਼ ਪਰੰਪਰਾਗਤ ਜੋਤਿਸ਼ ਸੰਕੇਤ ਹਨ। ਕੋਈ ਵੀ ਉਪਾਅ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਕਿਸੇ ਪੁਜਾਰੀ ਜਾਂ ਤਜਰਬੇਕਾਰ ਜੋਤਸ਼ੀ ਨਾਲ ਸਲਾਹ ਕਰੋ।",
+}
+DOSHA_REMEDIES = {
+    # Kuja
+    "kuja_1": {"ta": "செவ்வாய்க்கிழமைகளில் முருகன் அல்லது ஆஞ்சநேயர் வழிபாடு", "en": "Worship Murugan or Anjaneya (Hanuman) on Tuesdays", "ml": "ചൊവ്വാഴ്ചകളിൽ മുരുകൻ അല്ലെങ്കിൽ ആഞ്ജനേയ ആരാധന", "hi": "मंगलवार को मुरुगन या हनुमान की पूजा करें", "pa": "ਮੰਗਲਵਾਰ ਨੂੰ ਮੁਰੁਗਨ ਜਾਂ ਹਨੁਮਾਨ ਦੀ ਪੂਜਾ ਕਰੋ"},
+    "kuja_2": {"ta": "செவ்வாய் தோஷ சாந்தி பூஜை செய்வது", "en": "Perform a Kuja Dosha shanti puja", "ml": "ചൊവ്വ ദോഷ ശാന്തി പൂജ", "hi": "मंगल दोष शांति पूजा कराएं", "pa": "ਮੰਗਲ ਦੋਸ਼ ਸ਼ਾਂਤੀ ਪੂਜਾ ਕਰਵਾਓ"},
+    "kuja_3": {"ta": "சிவப்பு நிற பொருட்களை தானம் செய்வது", "en": "Donate red-coloured items", "ml": "ചുവന്ന നിറത്തിലുള്ള വസ്തുക്കൾ ദാനം ചെയ്യുക", "hi": "लाल रंग की वस्तुएं दान करें", "pa": "ਲਾਲ ਰੰਗ ਦੀਆਂ ਚੀਜ਼ਾਂ ਦਾਨ ਕਰੋ"},
+    "kuja_4": {"ta": "மங்கள சூக்தம் பாராயணம்", "en": "Recite the Mangala Suktam", "ml": "മംഗള സൂക്തം പാരായണം", "hi": "मंगल सूक्तम का पाठ करें", "pa": "ਮੰਗਲ ਸੂਕਤਮ ਦਾ ਪਾਠ ਕਰੋ"},
+    # Grahan
+    "grahan_1": {"ta": "திருநாகேஸ்வரம் (ராகு) மற்றும் கீழப்பெரும்பள்ளம் (கேது) கோவில்களில் வழிபாடு", "en": "Worship at Thirunageswaram (Rahu) and Keezhaperumpallam (Ketu) temples", "ml": "തിരുനാഗേശ്വരം (രാഹു), കീഴപ്പെരുമ്പള്ളം (കേതു) ക്ഷേത്രങ്ങളിൽ ആരാധന", "hi": "तिरुनागेश्वरम (राहु) और कीलपेरुम्पल्लम (केतु) मंदिरों में पूजा करें", "pa": "ਤਿਰੁਨਾਗੇਸ਼ਵਰਮ (ਰਾਹੂ) ਅਤੇ ਕੀਲਪੇਰੁਮਪੱਲਮ (ਕੇਤੂ) ਮੰਦਰਾਂ ਵਿੱਚ ਪੂਜਾ ਕਰੋ"},
+    "grahan_2": {"ta": "ராகு-கேது சாந்தி பூஜை", "en": "Perform a Rahu–Ketu shanti puja", "ml": "രാഹു-കേതു ശാന്തി പൂജ", "hi": "राहु-केतु शांति पूजा कराएं", "pa": "ਰਾਹੂ-ਕੇਤੂ ਸ਼ਾਂਤੀ ਪੂਜਾ ਕਰਵਾਓ"},
+    "grahan_3": {"ta": "துர்கா சப்தசதி பாராயணம்", "en": "Recite the Durga Saptashati", "ml": "ദുർഗാ സപ്തശതി പാരായണം", "hi": "दुर्गा सप्तशती का पाठ करें", "pa": "ਦੁਰਗਾ ਸਪਤਸ਼ਤੀ ਦਾ ਪਾਠ ਕਰੋ"},
+    # Sade Sati
+    "sade_1": {"ta": "சனிக்கிழமைகளில் ஐயப்பன்/சனீஸ்வரர் வழிபாடு", "en": "Worship Ayyappan / Saneeswarar on Saturdays", "ml": "ശനിയാഴ്ചകളിൽ അയ്യപ്പൻ / ശനീശ്വര ആരാധന", "hi": "शनिवार को अय्यप्पन / शनैश्चर की पूजा करें", "pa": "ਸ਼ਨੀਵਾਰ ਨੂੰ ਅੱਯਪਨ / ਸ਼ਨੀਸ਼ਚਰ ਦੀ ਪੂਜਾ ਕਰੋ"},
+    "sade_2": {"ta": "எள்ளு எண்ணெய், கருப்பு உடைகள் தானம்", "en": "Donate sesame oil and black clothing", "ml": "എള്ളെണ്ണ, കറുത്ത വസ്ത്രം ദാനം", "hi": "तिल का तेल और काले वस्त्र दान करें", "pa": "ਤਿਲ ਦਾ ਤੇਲ ਅਤੇ ਕਾਲੇ ਕੱਪੜੇ ਦਾਨ ਕਰੋ"},
+    "sade_3": {"ta": "ஹனுமான் சாலிசா பாராயணம்", "en": "Recite the Hanuman Chalisa", "ml": "ഹനുമാൻ ചാലിസ പാരായണം", "hi": "हनुमान चालीसा का पाठ करें", "pa": "ਹਨੁਮਾਨ ਚਾਲੀਸਾ ਦਾ ਪਾਠ ਕਰੋ"},
+    "sade_4": {"ta": "சனி சாந்தி பூஜை", "en": "Perform a Shani shanti puja", "ml": "ശനി ശാന്തി പൂജ", "hi": "शनि शांति पूजा कराएं", "pa": "ਸ਼ਨੀ ਸ਼ਾਂਤੀ ਪੂਜਾ ਕਰਵਾਓ"},
+}
+
+
 def _lang(code):
     return normalize_language(code)
 
@@ -271,3 +338,55 @@ def localise_matching(r: dict, lang: str) -> dict:
         if k and k in PORUTHAM:
             p["name"] = PORUTHAM[k].get(_lang(lang), PORUTHAM[k]["ta"])
     return r
+
+
+def _vocab(table, ta_value, lang):
+    L = _lang(lang)
+    if L == "ta":
+        return ta_value
+    return (table.get(ta_value) or {}).get(L, ta_value)
+
+
+def localise_lucky(l: dict, lang: str) -> dict:
+    if not l:
+        return l
+    L = _lang(lang)
+    if l.get("moon_rasi_index") is not None:
+        l["rasi"] = rasi(l["moon_rasi_index"], lang)
+    fav = l.get("favorable") or {}
+    fav["lucky_color"] = _vocab(LUCKY_COLOR, fav.get("lucky_color"), lang)
+    fav["lucky_stone"] = _vocab(LUCKY_STONE, fav.get("lucky_stone"), lang)
+    fav["lucky_metal"] = _vocab(LUCKY_METAL, fav.get("lucky_metal"), lang)
+    di = _LUCKY_DAY_TO_IDX.get(fav.get("lucky_day"))
+    if di is not None:
+        fav["lucky_day"] = weekday(di, lang)
+    if fav.get("ruling_planet"):
+        fav["ruling_planet"] = planet(fav["ruling_planet"], lang)
+    if isinstance(l.get("friendly_rasi_indices"), list):
+        fav["friendly_rasis"] = [rasi(i, lang) for i in l["friendly_rasi_indices"]]
+    if isinstance(l.get("challenging_rasi_indices"), list):
+        (l.get("unfavorable") or {})["challenging_rasis"] = [rasi(i, lang) for i in l["challenging_rasi_indices"]]
+    unf = l.get("unfavorable") or {}
+    unf["challenging_planets"] = [planet(p, lang) for p in unf.get("challenging_planets", [])]
+    return l
+
+
+def localise_dosha(d: dict, lang: str) -> dict:
+    if not d:
+        return d
+    L = _lang(lang)
+    d["note"] = DOSHA_NOTE.get(L, DOSHA_NOTE["ta"])
+    for c in d.get("doshas", []):
+        k = c.get("key")
+        if k and k in DOSHA:
+            c["name"] = DOSHA[k].get(L, DOSHA[k]["ta"])
+        ph = c.get("phase_key")
+        if ph and ph in DOSHA_PHASE:
+            c["phase"] = DOSHA_PHASE[ph].get(L, DOSHA_PHASE[ph]["ta"])
+        rk = c.get("remedy_keys")
+        if isinstance(rk, list):
+            c["remedies"] = [DOSHA_REMEDIES[x].get(L, DOSHA_REMEDIES[x]["ta"]) for x in rk if x in DOSHA_REMEDIES]
+        if c.get("detail_ta") is not None and L != "ta":
+            # keep a short structured detail rather than a Tamil sentence
+            c["detail"] = c.get("detail_short") or c["detail"]
+    return d

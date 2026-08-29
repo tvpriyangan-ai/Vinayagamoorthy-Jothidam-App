@@ -21,10 +21,14 @@ def check_kuja_dosha(mars_rasi_index: int, lagna_rasi_index: int, moon_rasi_inde
     present = house_from_lagna in KUJA_DOSHA_HOUSES or house_from_moon in KUJA_DOSHA_HOUSES
 
     return {
+        "key": "kuja",
         "name": "செவ்வாய் தோஷம் (Kuja Dosham)",
         "present": present,
         "detail": f"லக்னத்திலிருந்து செவ்வாய் {house_from_lagna}ம் வீடு, "
                   f"ராசியிலிருந்து {house_from_moon}ம் வீடு",
+        "detail_ta": True,
+        "detail_short": f"Mars: house {house_from_lagna} from Lagna, {house_from_moon} from Moon",
+        "remedy_keys": ["kuja_1", "kuja_2", "kuja_3", "kuja_4"] if present else [],
         "remedies": [
             "செவ்வாய்க்கிழமைகளில் முருகன் அல்லது ஆஞ்சநேயர் வழிபாடு",
             "செவ்வாய் தோஷ சாந்தி பூஜை செய்வது",
@@ -41,10 +45,14 @@ def check_rahu_ketu_dosha(rahu_rasi_index: int, ketu_rasi_index: int,
     present = grahan_with_sun or grahan_with_moon
 
     return {
+        "key": "grahan",
         "name": "ராகு-கேது தோஷம் (Grahan Dosham)",
         "present": present,
         "detail": "சூரியன்/சந்திரனுடன் ராகு அல்லது கேது இணைந்துள்ளது" if present
                   else "ராகு-கேது இணைவு இல்லை",
+        "detail_ta": True,
+        "detail_short": ("Rahu/Ketu conjunct the Sun/Moon" if present else "No Rahu–Ketu conjunction"),
+        "remedy_keys": ["grahan_1", "grahan_2", "grahan_3"] if present else [],
         "remedies": [
             "திருநாகேஸ்வரம் (ராகு) மற்றும் கீழப்பெரும்பள்ளம் (கேது) கோவில்களில் வழிபாடு",
             "ராகு-கேது சாந்தி பூஜை",
@@ -63,18 +71,24 @@ def check_sade_sati(moon_rasi_index: int, on_date: date | None = None) -> dict:
     diff = (saturn_rasi_index - moon_rasi_index) % 12
     active = diff in (11, 0, 1)
     phase = None
+    phase_key = None
     if diff == 11:
-        phase = "முதல் கட்டம் (Rising Phase)"
+        phase, phase_key = "முதல் கட்டம் (Rising Phase)", "rising"
     elif diff == 0:
-        phase = "உச்ச கட்டம் (Peak Phase)"
+        phase, phase_key = "உச்ச கட்டம் (Peak Phase)", "peak"
     elif diff == 1:
-        phase = "இறுதி கட்டம் (Setting Phase)"
+        phase, phase_key = "இறுதி கட்டம் (Setting Phase)", "setting"
 
     return {
+        "key": "sade_sati",
         "name": "சனி எழரை நாட்டு (Sade Sati)",
         "present": active,
         "phase": phase,
+        "phase_key": phase_key,
         "detail": f"தற்போதைய சனி இடம்: ராசி {saturn_rasi_index}, ராசியிலிருந்து வித்தியாசம் {diff}",
+        "detail_ta": True,
+        "detail_short": f"Saturn now in rasi #{saturn_rasi_index + 1}, {diff} signs from the Moon",
+        "remedy_keys": ["sade_1", "sade_2", "sade_3", "sade_4"] if active else [],
         "remedies": [
             "சனிக்கிழமைகளில் ஐயப்பன்/சனீஸ்வரர் வழிபாடு",
             "எள்ளு எண்ணெய், கருப்பு உடைகள் தானம்",
