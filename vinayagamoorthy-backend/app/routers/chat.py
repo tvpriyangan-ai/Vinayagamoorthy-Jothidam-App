@@ -12,6 +12,7 @@ router = APIRouter(prefix="/chat", tags=["chat"])
 
 class ChatMessageRequest(BaseModel):
     message: str
+    language: str | None = None  # ta|ml|en|hi|pa — the UI's current language
 
 
 @router.post("/message")
@@ -23,7 +24,7 @@ async def send_chat_message(payload: ChatMessageRequest, user: dict = Depends(ge
     history = [{"role": h["role"], "content": h["content"]} for h in history_docs]
 
     try:
-        reply_text = await get_chat_reply(user, chart, history, payload.message)
+        reply_text = await get_chat_reply(user, chart, history, payload.message, payload.language)
     except Exception as e:
         raise HTTPException(status.HTTP_502_BAD_GATEWAY, f"Chat service unavailable: {e}")
 

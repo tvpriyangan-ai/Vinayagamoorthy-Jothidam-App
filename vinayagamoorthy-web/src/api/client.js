@@ -87,7 +87,8 @@ export const getTemple = (id) => client.get(`/temples/${id}`);
 export const getTemplesForMyDoshas = () => client.get('/temples/for-my-doshas');
 
 // ---- Chat ----
-export const sendChatMessage = (message) => client.post('/chat/message', { message });
+export const sendChatMessage = (message, language) =>
+  client.post('/chat/message', { message, ...(language ? { language } : {}) });
 export const getChatHistory = () => client.get('/chat/history');
 
 // ---- Transit Predictions (+ Vimshottari dasha/bhukti) ----

@@ -31,7 +31,7 @@ const FEATURE_GRID = [
 ];
 
 export default function DashboardPage() {
-  const { t, adoptFromProfile } = useLanguage();
+  const { t, adoptFromProfile, language } = useLanguage();
   const [profile, setProfile] = useState(null);
   const [chart, setChart] = useState(null);
   const [panchangam, setPanchangam] = useState(null);
@@ -73,7 +73,7 @@ export default function DashboardPage() {
     setChatInput('');
     setChatLoading(true);
     try {
-      const { data } = await sendChatMessage(userText);
+      const { data } = await sendChatMessage(userText, language);
       setChatMessages((m) => [...m, { role: 'assistant', content: data.reply }]);
     } catch {
       setChatMessages((m) => [...m, { role: 'assistant', content: t('dash.chatError') }]);

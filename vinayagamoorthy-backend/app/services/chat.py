@@ -45,9 +45,9 @@ Active doshas: {', '.join(active_doshas) if active_doshas else 'none'}
 """
 
 
-def build_system_prompt(user: dict, chart: dict) -> str:
+def build_system_prompt(user: dict, chart: dict, language: str | None = None) -> str:
     chart_context = _format_chart_context(user, chart)
-    lang_instruction = language_instruction(user.get("preferred_language"))
+    lang_instruction = language_instruction(language or user.get("preferred_language"))
 
     return f"""You are "Vinayagamoorthy" — an experienced, warm Vedic astrologer (jothidar) inside the "Vinayagamoorthy Jothidam" app.
 
@@ -73,8 +73,10 @@ def _history_to_gemini_contents(history: list[dict], new_message: str) -> list[d
     return contents
 
 
-async def get_chat_reply(user: dict, chart: dict, history: list[dict], new_message: str) -> str:
-    system_prompt = build_system_prompt(user, chart)
+async def get_chat_reply(
+    user: dict, chart: dict, history: list[dict], new_message: str, language: str | None = None
+) -> str:
+    system_prompt = build_system_prompt(user, chart, language)
     contents = _history_to_gemini_contents(history, new_message)
     return await generate_text(
         system_instruction=system_prompt,
