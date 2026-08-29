@@ -42,7 +42,7 @@ const translations = {
     'dash.chatEmpty': 'உங்கள் ஜாதகம் பற்றி எதுவும் கேளுங்கள்...',
     'dash.chatTyping': 'தட்டச்சு செய்கிறது...',
     'dash.chatError': 'மன்னிக்கவும், தற்போது பதிலளிக்க முடியவில்லை. பின்னர் முயற்சிக்கவும்.',
-    'dash.fullPanchangam': 'முழு அல்மனாக்',
+    'dash.fullPanchangam': 'முழு பஞ்சாங்கம்',
     'dash.footer': '© 2026 வினாயகமூர்த்தி ஜோதிடம். அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை. TVP Creations',
 
     'field.name': 'பெயர்',
@@ -280,7 +280,7 @@ const translations = {
     'dash.chatEmpty': 'Ask anything about your horoscope...',
     'dash.chatTyping': 'Typing...',
     'dash.chatError': 'Sorry, could not reply right now. Please try again later.',
-    'dash.fullPanchangam': 'Full Almanac',
+    'dash.fullPanchangam': 'Full Panchangam',
     'dash.footer': '© 2026 Vinayagamoorthy Jothidam. All Rights Reserved. TVP Creations',
 
     'field.name': 'Name',
