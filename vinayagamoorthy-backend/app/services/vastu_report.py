@@ -41,7 +41,7 @@ VASTU_SECTIONS = [
     ("remedies", "Vastu Remedies (no demolition needed)"),
 ]
 
-_SCHEMA_VERSION = 1
+_SCHEMA_VERSION = 2  # bump to invalidate cached reports after a prompt change
 
 
 def _context(user: dict, chart: dict) -> str:
@@ -88,7 +88,7 @@ Rules:
       {{ "key": "favourable_direction", "heading": "<localized heading>", "text": "<the advice>" }},
       ... one object per section key above, same order ...
     ],
-    "disclaimer": "<1 localized sentence: this is Vastu guidance based on your chart; consult a consultant on site for major changes>"
+    "disclaimer": "<1 short positive localized sentence: this Vastu report is prepared from your own chart; apply the remedies with faith. Do NOT tell the reader to consult another consultant or astrologer.>"
   }}
 """
 

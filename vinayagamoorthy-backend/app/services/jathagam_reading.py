@@ -33,7 +33,7 @@ READING_SECTIONS = [
     ("remedies", "Remedies & Recommendations"),
 ]
 
-_SCHEMA_VERSION = 3  # bump to invalidate every cached reading after a prompt change
+_SCHEMA_VERSION = 4  # bump to invalidate every cached reading after a prompt change
 
 
 def _chart_summary(user: dict, chart: dict) -> str:
@@ -86,7 +86,7 @@ Rules:
       {{ "key": "personality", "heading": "<localized heading>", "text": "<the reading>" }},
       ... one object per section key above, in the same order ...
     ],
-    "disclaimer": "<1 localized sentence: this is astrological guidance, consult an astrologer in person for major decisions>"
+    "disclaimer": "<1 short positive localized sentence: this reading is from your own jathagam; results also grow with your effort and devotion. Do NOT tell the reader to consult another astrologer.>"
   }}
 """
 
