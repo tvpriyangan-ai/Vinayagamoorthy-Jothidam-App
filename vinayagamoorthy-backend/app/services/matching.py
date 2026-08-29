@@ -324,14 +324,24 @@ def calculate_porutham(
         _porutham_koodali(girl_rasi, boy_rasi),                       # 21
         _porutham_pakshi(girl_nakshatra, boy_nakshatra),             # 22
     ]
+    _keys = [
+        "dina", "gana", "mahendra", "stree_deergha", "yoni", "rasi", "rasyadhipathi",
+        "vasiya", "rajju", "vedha", "nadi", "vruksha", "lagna", "ayul", "linga",
+        "kendra", "varna", "vaasi", "naattu", "sevaka", "koodali", "pakshi",
+    ]
+    for c, k in zip(checks, _keys):
+        c["key"] = k
+
     matched_count = sum(1 for c in checks if c["matched"])
 
     critical = {"தினப் பொருத்தம்", "கணப் பொருத்தம்", "ரஜ்ஜுப் பொருத்தம்", "வேதைப் பொருத்தம்", "நாடிப் பொருத்தம்"}
     critical_failures = [c["name"] for c in checks if c["name"] in critical and not c["matched"]]
 
     return {
-        "girl": {"nakshatra": NAKSHATRA_NAMES_TA[girl_nakshatra], "rasi": RASI_NAMES_TA[girl_rasi]},
-        "boy": {"nakshatra": NAKSHATRA_NAMES_TA[boy_nakshatra], "rasi": RASI_NAMES_TA[boy_rasi]},
+        "girl": {"nakshatra": NAKSHATRA_NAMES_TA[girl_nakshatra], "rasi": RASI_NAMES_TA[girl_rasi],
+                 "nakshatra_index": girl_nakshatra, "rasi_index": girl_rasi},
+        "boy": {"nakshatra": NAKSHATRA_NAMES_TA[boy_nakshatra], "rasi": RASI_NAMES_TA[boy_rasi],
+                "nakshatra_index": boy_nakshatra, "rasi_index": boy_rasi},
         "poruthams": checks,
         "matched_count": matched_count,
         "total_count": len(checks),

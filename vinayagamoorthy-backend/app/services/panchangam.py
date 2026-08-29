@@ -67,11 +67,13 @@ def _get_tithi(sun_lon: float, moon_lon: float) -> dict:
     tithi_index = int(elongation // 12)  # 0-29
     degree_into_tithi = elongation % 12
     if tithi_index < 15:
-        paksha = "வளர்பிறை"  # waxing (Shukla)
+        paksha_index = 0  # waxing (Shukla)
+        paksha = "வளர்பிறை"
         name = TITHI_NAMES_TA[tithi_index]
         number = tithi_index + 1
     else:
-        paksha = "தேய்பிறை"  # waning (Krishna)
+        paksha_index = 1  # waning (Krishna)
+        paksha = "தேய்பிறை"
         idx = tithi_index - 15
         number = idx + 1
         name = AMAVASAI if idx == 14 else TITHI_NAMES_TA[idx]
@@ -79,6 +81,7 @@ def _get_tithi(sun_lon: float, moon_lon: float) -> dict:
         "index": tithi_index,
         "number": number,
         "paksha": paksha,
+        "paksha_index": paksha_index,
         "name_ta": name,
         "percent_complete": round((degree_into_tithi / 12) * 100, 1),
     }
@@ -174,6 +177,7 @@ def calculate_panchangam(d: date_cls, latitude: float, longitude: float, tz_offs
     return {
         "date": d.isoformat(),
         "vaaram": VAARA_NAMES_TA[weekday_idx],
+        "vaaram_index": weekday_idx,
         "sunrise": sun_times["sunrise"],
         "sunset": sun_times["sunset"],
         "tithi": _get_tithi(sun_lon, moon_lon),

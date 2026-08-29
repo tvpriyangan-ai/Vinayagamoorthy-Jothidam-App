@@ -52,6 +52,7 @@ def get_transit_predictions(natal_moon_rasi_index: int, on_date: date | None = N
             "planet": planet,
             "planet_name_ta": PLANET_NAMES_TA[planet],
             "current_rasi": RASI_NAMES_TA[current_rasi_index],
+            "current_rasi_index": current_rasi_index,
             "house_from_moon": house_from_moon,
             "favorable": favorable,
             "retrograde": info["retrograde"],
@@ -60,6 +61,7 @@ def get_transit_predictions(natal_moon_rasi_index: int, on_date: date | None = N
     return {
         "date": d.isoformat(),
         "natal_moon_rasi": RASI_NAMES_TA[natal_moon_rasi_index],
+        "natal_moon_rasi_index": natal_moon_rasi_index,
         "transits": predictions,
         "note": "இது சந்திர கோச்சாரம் அடிப்படையிலான பொதுவான வழிகாட்டுதல். "
                 "இதர கிரக இணைவுகள், பார்வைகள் ஆகியவை முழுமையான பலனை மாற்றக்கூடும் — "

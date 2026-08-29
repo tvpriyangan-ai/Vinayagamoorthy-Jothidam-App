@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { LanguageProvider } from './i18n/LanguageContext';
+import { LanguageProvider, useLanguage } from './i18n/LanguageContext';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
@@ -22,10 +22,12 @@ function Protected(element) {
   return <ProtectedRoute>{element}</ProtectedRoute>;
 }
 
-export default function App() {
+// Keyed on the language so switching it remounts every page — each page's
+// data load re-runs and comes back localised. (Stays on the same route.)
+function AppRoutes() {
+  const { language } = useLanguage();
   return (
-    <BrowserRouter>
-      <LanguageProvider>
+    <div key={language}>
       <Routes>
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<LoginPage />} />
@@ -35,7 +37,7 @@ export default function App() {
 
         <Route path="/dashboard" element={Protected(<DashboardPage />)} />
 
-        {/* Feature pages — now built for real */}
+        {/* Feature pages */}
         <Route path="/jathagam" element={Protected(<JathagamPage />)} />
         <Route path="/matching" element={Protected(<MatchingPage />)} />
         <Route path="/lucky-notes" element={Protected(<LuckyNotesPage />)} />
@@ -49,7 +51,16 @@ export default function App() {
 
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
-      <MusicPlayer />
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <LanguageProvider>
+        <AppRoutes />
+        <MusicPlayer />
       </LanguageProvider>
     </BrowserRouter>
   );

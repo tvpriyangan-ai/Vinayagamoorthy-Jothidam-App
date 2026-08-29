@@ -3,6 +3,8 @@ from fastapi import APIRouter, Depends, Query
 from typing import Optional
 
 from app.core.deps import get_current_user
+from app.core.languages import normalize_language
+from app.core.i18n_terms import localise_panchangam
 from app.services.panchangam import calculate_panchangam
 from app.db.mongodb import panchangam_collection
 
@@ -14,6 +16,7 @@ async def get_today_panchangam(
     lat: Optional[float] = Query(None, description="Defaults to user's saved birth-place latitude"),
     lon: Optional[float] = Query(None, description="Defaults to user's saved birth-place longitude"),
     tz_offset: Optional[float] = Query(None, description="Defaults to user's saved timezone offset"),
+    lang: Optional[str] = Query(None),
     user: dict = Depends(get_current_user),
 ):
     """
@@ -31,12 +34,17 @@ async def get_today_panchangam(
     # timing doesn't meaningfully change at finer resolution than that.
     lat_r, lon_r = round(latitude, 2), round(longitude, 2)
 
+    language = normalize_language(lang or user.get("preferred_language"))
+
     cached = await panchangam_collection().find_one(
         {"date": today.isoformat(), "lat_r": lat_r, "lon_r": lon_r}
     )
     if cached:
         cached.pop("_id")
-        return cached
+        cached.pop("lat_r", None)
+        cached.pop("lon_r", None)
+        cached.pop("computed_at", None)
+        return localise_panchangam(cached, language)
 
     result = calculate_panchangam(today, latitude, longitude, offset)
     await panchangam_collection().insert_one({
@@ -47,4 +55,4 @@ async def get_today_panchangam(
     })
     result.pop("date", None)
     result["date"] = today.isoformat()
-    return result
+    return localise_panchangam(result, language)

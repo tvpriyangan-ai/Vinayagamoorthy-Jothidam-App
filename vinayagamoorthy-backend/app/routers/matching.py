@@ -1,7 +1,9 @@
 from datetime import datetime, timezone
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 
 from app.core.deps import get_current_user
+from app.core.languages import normalize_language
+from app.core.i18n_terms import localise_chart, localise_matching
 from app.models.matching import PartnerDetails
 from app.services.astro import generate_full_chart
 from app.services.chart_service import get_user_chart
@@ -12,7 +14,11 @@ router = APIRouter(prefix="/matching", tags=["matching"])
 
 
 @router.post("/check")
-async def check_matching(payload: PartnerDetails, user: dict = Depends(get_current_user)):
+async def check_matching(
+    payload: PartnerDetails,
+    lang: str | None = Query(None),
+    user: dict = Depends(get_current_user),
+):
     """
     Per your spec: user clicks Matching & Advices, a dialog asks for the
     partner's name/DOB/time/place, and gets back the compatibility report.
@@ -66,4 +72,7 @@ async def check_matching(payload: PartnerDetails, user: dict = Depends(get_curre
         "checked_at": datetime.now(timezone.utc),
     })
 
-    return result
+    language = normalize_language(lang or user.get("preferred_language"))
+    localise_chart(result["girl_full_chart"], language)
+    localise_chart(result["boy_full_chart"], language)
+    return localise_matching(result, language)

@@ -11,6 +11,12 @@ client.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+  // Attach the current UI language so the backend can localise the
+  // astrology terms it returns (rasi / nakshatra / planet / panchangam …).
+  try {
+    const lang = localStorage.getItem('language');
+    if (lang) config.params = { ...(config.params || {}), lang };
+  } catch { /* storage unavailable — backend falls back to the profile language */ }
   return config;
 });
 
