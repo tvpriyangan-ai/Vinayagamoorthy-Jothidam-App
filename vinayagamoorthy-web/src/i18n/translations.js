@@ -37,7 +37,7 @@ const translations = {
     'dash.profile': 'சுயவிவரம்',
     'dash.quickStart': 'உடனடி ஆரம்பிக்கவும்',
     'dash.today': 'இன்று',
-    'dash.chatTitle': 'வினாயகமூர்த்தி ஐயாவிடம் கேளுங்கள்!',
+    'dash.chatTitle': 'விநாயகமூர்த்தி ஜோதிடரிடம் கேளுங்கள்',
     'dash.chatPlaceholder': 'இங்கே எழுதுங்கள்...',
     'dash.chatEmpty': 'உங்கள் ஜாதகம் பற்றி எதுவும் கேளுங்கள்...',
     'dash.chatTyping': 'தட்டச்சு செய்கிறது...',
