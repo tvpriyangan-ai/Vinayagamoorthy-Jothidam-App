@@ -1,0 +1,14 @@
+{
+  // Cloudflare Workers — Static Assets deployment for the Vite/React SPA.
+  // Build the frontend first:  cd vinayagamoorthy-web && npm ci && npm run build
+  // then:  npx wrangler deploy   (from the repo root)
+  "name": "vinayagamoorthy-jothidam-app",
+  "compatibility_date": "2026-08-28",
+  "assets": {
+    "directory": "./vinayagamoorthy-web/dist",
+    // Native SPA routing: any path that isn't a real file serves /index.html
+    // with a 200. Replaces the Netlify-style _redirects rule (which Cloudflare
+    // rejects as an infinite loop).
+    "not_found_handling": "single-page-application"
+  }
+}

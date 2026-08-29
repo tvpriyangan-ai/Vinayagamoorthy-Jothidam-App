@@ -19,3 +19,8 @@ web-build/
 *.orig.*
 # local design reference images (not shipped)
 vinayagamoorthy-web/design-reference/
+
+# Cloudflare Wrangler local state
+.wrangler/
+.dev.vars
+.dev.vars.*
