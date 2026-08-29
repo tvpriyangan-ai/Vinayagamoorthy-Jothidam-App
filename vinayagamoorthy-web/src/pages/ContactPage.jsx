@@ -45,6 +45,24 @@ export default function ContactPage() {
           <a href={MAILTO} className="btn-gold block text-center mt-5 text-sm">
             ✉ {t('contact.sendEmail')}
           </a>
+
+          <hr className="manuscript-rule my-5" />
+
+          <div className="flex flex-col items-center text-center">
+            <img
+              src="/assets/iyya.jpg"
+              alt={t('contact.iyyaName')}
+              onError={(e) => { e.currentTarget.style.display = 'none'; }}
+              className="w-28 h-28 rounded-full border-2 border-gold object-cover mb-3"
+              style={{ objectPosition: 'center 18%', boxShadow: '0 0 14px rgba(197,154,58,.3)' }}
+            />
+            <span className="text-xs uppercase tracking-widest opacity-60">
+              {t('contact.inspiredBy')}
+            </span>
+            <span className="font-semibold mt-1" style={{ color: 'var(--parchment-heading)' }}>
+              {t('contact.iyyaName')}
+            </span>
+          </div>
         </ParchmentCard>
 
         <div className="text-center mt-5">
