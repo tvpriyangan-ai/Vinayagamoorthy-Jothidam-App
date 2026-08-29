@@ -117,8 +117,7 @@ export default function DashboardPage() {
         </ParchmentCard>
 
         <ParchmentCard className="leaf-bound">
-          <h3 className="parchment-heading heading-kolam text-lg mb-3 text-center">{t('dash.quickStart')}</h3>
-          <div className="space-y-2">
+          <div className="space-y-2 mt-1">
             {QUICK_START_ITEMS.map((item) => (
               <Link
                 key={item.key}
