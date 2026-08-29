@@ -114,9 +114,7 @@ const MatchingReportCard = forwardRef(function MatchingReportCard({ result }, re
               <div className="couple-inner">
                 <DecoImg className="couple-photo" src="/assets/report-couple.png" alt="" />
               </div>
-              <p className="couple-caption">
-                {t('mr.noteCount', { n: result.matched_count, total: result.total_count })} — {result.note}
-              </p>
+              <p className="couple-caption">{t('mr.reportCaption')}</p>
             </section>
 
             <footer className="report-footer">
