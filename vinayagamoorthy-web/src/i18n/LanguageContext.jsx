@@ -1,47 +1,82 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import translations, { DEFAULT_LANGUAGE, LANGUAGES } from './translations';
 import { updateMyProfile } from '../api/client';
 
-const STORAGE_KEY = 'app_language';
-const VALID = LANGUAGES.map((l) => l.code);
+// The single key the chosen language lives under. ("app_language" was the old
+// name — still read once, then migrated, so nobody loses their choice.)
+const STORAGE_KEY = 'language';
+const LEGACY_KEYS = ['app_language'];
+const VALID = LANGUAGES.map((l) => l.code); // ['ta','ml','en','hi','pa']
 
-const LanguageContext = createContext(null);
+// Turn on verbose logging from the browser console with:
+//   localStorage.setItem('debug_i18n', '1')   (then reload)
+function dbg(...args) {
+  try {
+    if (localStorage.getItem('debug_i18n')) console.log('[i18n]', ...args);
+  } catch { /* ignore */ }
+}
 
 function readStored() {
   try {
-    const v = localStorage.getItem(STORAGE_KEY);
-    return VALID.includes(v) ? v : null;
-  } catch {
-    return null;
-  }
+    for (const k of [STORAGE_KEY, ...LEGACY_KEYS]) {
+      const v = localStorage.getItem(k);
+      if (VALID.includes(v)) return v;
+    }
+  } catch { /* private mode / storage disabled */ }
+  return null;
 }
+
+function persist(code) {
+  try {
+    localStorage.setItem(STORAGE_KEY, code);
+    LEGACY_KEYS.forEach((k) => localStorage.removeItem(k));
+  } catch { /* private mode — non-fatal, language still lives in memory */ }
+}
+
+const LanguageContext = createContext(null);
 
 export function LanguageProvider({ children }) {
   const [language, setLanguageState] = useState(() => readStored() || DEFAULT_LANGUAGE);
 
+  // Has the language been PINNED yet? — pinned by an explicit pick in the UI,
+  // OR by adopting the account's saved preference once on login. Seeded true
+  // when a value is already persisted from a previous visit. While pinned, a
+  // profile / API response can NEVER change the language.
+  const pinnedRef = useRef(readStored() != null);
+
+  dbg('provider init — language:', language, '| stored:', readStored(), '| pinned:', pinnedRef.current);
+
+  // Keep <html lang> in sync. Persistence is NOT done here on purpose: an
+  // effect firing for the tentative startup default must not look like a
+  // real choice, or it would block adoptFromProfile below.
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, language);
-    } catch { /* private mode — non-fatal */ }
-    if (typeof document !== 'undefined') {
-      document.documentElement.lang = language;
-    }
+    if (typeof document !== 'undefined') document.documentElement.lang = language;
   }, [language]);
 
-  const setLanguage = useCallback((code) => {
+  const applyLanguage = useCallback((code, { sync }) => {
     if (!VALID.includes(code)) return;
+    pinnedRef.current = true;
+    persist(code);                 // synchronous — happens before any refetch
     setLanguageState(code);
-    // Best-effort sync so the AI (chat + jathagam reading) answers in this language.
-    if (localStorage.getItem('access_token')) {
-      updateMyProfile({ preferred_language: code }).catch(() => {});
+    dbg('applyLanguage:', code, '| sync-to-profile:', !!sync);
+    if (sync && localStorage.getItem('access_token')) {
+      updateMyProfile({ preferred_language: code })
+        .then(() => dbg('profile preferred_language saved:', code))
+        .catch((e) => dbg('profile save failed (kept locally):', e?.message));
     }
   }, []);
 
-  // If the profile loads with a different saved language and the user hasn't
-  // explicitly chosen one this session, adopt the profile's.
+  // Explicit user choice (language switcher, profile page).
+  const setLanguage = useCallback((code) => applyLanguage(code, { sync: true }), [applyLanguage]);
+
+  // Called once after the profile loads. Follows the language saved on the
+  // user's account ONLY if the user hasn't already pinned one in this browser.
   const adoptFromProfile = useCallback((code) => {
-    if (VALID.includes(code) && !readStored()) setLanguageState(code);
-  }, []);
+    if (pinnedRef.current) { dbg('adoptFromProfile skipped (already pinned):', code); return; }
+    if (!VALID.includes(code)) { dbg('adoptFromProfile skipped (invalid):', code); return; }
+    dbg('adoptFromProfile ->', code);
+    applyLanguage(code, { sync: false });
+  }, [applyLanguage]);
 
   const t = useCallback(
     (key, vars) => {
