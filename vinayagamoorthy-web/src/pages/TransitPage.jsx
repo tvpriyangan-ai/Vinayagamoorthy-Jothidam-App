@@ -98,7 +98,7 @@ export default function TransitPage() {
 
 function DashaBox({ label, lord, range, remaining }) {
   return (
-    <div className="rounded-lg p-3" style={{ background: 'rgba(255,255,255,0.22)', border: '1px solid rgba(40,24,10,0.3)' }}>
+    <div className="rounded-lg p-3" style={{ background: 'rgba(255,243,220,0.24)', border: '1px solid rgba(40,24,10,0.3)' }}>
       <p className="text-xs opacity-70">{label}</p>
       <p className="font-semibold text-lg">{lord}</p>
       <p className="text-xs opacity-75 mt-1">{range}</p>

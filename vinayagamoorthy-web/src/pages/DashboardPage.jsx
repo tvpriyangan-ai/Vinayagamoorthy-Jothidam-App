@@ -4,6 +4,7 @@ import AppHeader from '../components/AppHeader';
 import ParchmentCard from '../components/ParchmentCard';
 import RopeDivider from '../components/RopeDivider';
 import SiteFooter from '../components/SiteFooter';
+import Motif from '../components/Motif';
 import { useLanguage } from '../i18n/LanguageContext';
 import {
   getMyProfile, getMyJathagam, getTodayPanchangam,
@@ -11,22 +12,22 @@ import {
 } from '../api/client';
 
 const QUICK_START_ITEMS = [
-  { key: 'meditation', tKey: 'quick.meditation', icon: '🧘' },
-  { key: 'yoga', tKey: 'quick.yoga', icon: '🕉️' },
-  { key: 'diet', tKey: 'quick.diet', icon: '🍚' },
-  { key: 'ayurveda', tKey: 'quick.ayurveda', icon: '🌿' },
-  { key: 'dosha', tKey: 'quick.dosha', route: '/dosha', icon: '🔆' },
-  { key: 'vastu', tKey: 'quick.vastu', route: '/vastu', icon: '🧭' },
-  { key: 'books', tKey: 'quick.books', icon: '📖' },
+  { key: 'meditation', tKey: 'quick.meditation', motif: 'meditation' },
+  { key: 'yoga', tKey: 'quick.yoga', motif: 'yoga' },
+  { key: 'diet', tKey: 'quick.diet', motif: 'diet' },
+  { key: 'ayurveda', tKey: 'quick.ayurveda', motif: 'ayurveda' },
+  { key: 'dosha', tKey: 'quick.dosha', route: '/dosha', motif: 'dosha' },
+  { key: 'vastu', tKey: 'quick.vastu', route: '/vastu', motif: 'vastu' },
+  { key: 'books', tKey: 'quick.books', motif: 'books' },
 ];
 
 const FEATURE_GRID = [
-  { key: 'jathagam', tKey: 'feat.jathagam', subKey: 'feat.jathagam.sub', route: '/jathagam', icon: '📜' },
-  { key: 'matching', tKey: 'feat.matching', subKey: 'feat.matching.sub', route: '/matching', icon: '💞' },
-  { key: 'lucky', tKey: 'feat.lucky', subKey: 'feat.lucky.sub', route: '/lucky-notes', icon: '🪶' },
-  { key: 'temples', tKey: 'feat.temples', subKey: 'feat.temples.sub', route: '/temples', icon: '🛕' },
-  { key: 'panchangam', tKey: 'feat.panchangam', subKey: 'feat.panchangam.sub', route: '/panchangam', icon: '📅' },
-  { key: 'transit', tKey: 'feat.transit', subKey: 'feat.transit.sub', route: '/transit', icon: '🪐' },
+  { key: 'jathagam', tKey: 'feat.jathagam', subKey: 'feat.jathagam.sub', route: '/jathagam', motif: 'jathagam' },
+  { key: 'matching', tKey: 'feat.matching', subKey: 'feat.matching.sub', route: '/matching', motif: 'matching' },
+  { key: 'lucky', tKey: 'feat.lucky', subKey: 'feat.lucky.sub', route: '/lucky-notes', motif: 'lucky' },
+  { key: 'temples', tKey: 'feat.temples', subKey: 'feat.temples.sub', route: '/temples', motif: 'temples' },
+  { key: 'panchangam', tKey: 'feat.panchangam', subKey: 'feat.panchangam.sub', route: '/panchangam', motif: 'panchangam' },
+  { key: 'transit', tKey: 'feat.transit', subKey: 'feat.transit.sub', route: '/transit', motif: 'transit' },
 ];
 
 export default function DashboardPage() {
@@ -90,8 +91,8 @@ export default function DashboardPage() {
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-4">
-        <ParchmentCard>
-          <h3 className="parchment-heading text-lg mb-3 text-center">{t('dash.profile')}</h3>
+        <ParchmentCard className="leaf-bound">
+          <h3 className="parchment-heading heading-kolam text-lg mb-3 text-center">{t('dash.profile')}</h3>
           <div className="flex justify-center mb-3">
             <div className="w-20 h-20 rounded-full bg-ink-brown/20 border-2 border-gold flex items-center justify-center text-3xl">
               👤
@@ -115,8 +116,8 @@ export default function DashboardPage() {
           </Link>
         </ParchmentCard>
 
-        <ParchmentCard>
-          <h3 className="parchment-heading text-lg mb-3 text-center">{t('dash.quickStart')}</h3>
+        <ParchmentCard className="leaf-bound">
+          <h3 className="parchment-heading heading-kolam text-lg mb-3 text-center">{t('dash.quickStart')}</h3>
           <div className="space-y-2">
             {QUICK_START_ITEMS.map((item) => (
               <Link
@@ -125,7 +126,7 @@ export default function DashboardPage() {
                 state={!item.route ? { title: t(item.tKey) } : undefined}
                 className="quick-row"
               >
-                <span className="qi" aria-hidden="true">{item.icon}</span>
+                <Motif name={item.motif} className="qi" />
                 <span>{t(item.tKey)}</span>
                 <span className="qc" aria-hidden="true">›</span>
               </Link>
@@ -133,8 +134,8 @@ export default function DashboardPage() {
           </div>
         </ParchmentCard>
 
-        <ParchmentCard>
-          <h3 className="parchment-heading text-lg mb-1 text-center">{t('dash.today')}</h3>
+        <ParchmentCard className="leaf-bound">
+          <h3 className="parchment-heading heading-kolam text-lg mb-3 text-center">{t('dash.today')}</h3>
           {panchangam ? (
             <>
               <p className="text-center text-xs opacity-70 mb-2">
@@ -158,11 +159,11 @@ export default function DashboardPage() {
           </Link>
         </ParchmentCard>
 
-        <ParchmentCard className="flex flex-col">
-          <h3 className="parchment-heading text-lg mb-2 text-center">{t('dash.chatTitle')}</h3>
+        <ParchmentCard className="leaf-bound flex flex-col">
+          <h3 className="parchment-heading heading-kolam text-lg mb-3 text-center">{t('dash.chatTitle')}</h3>
           <div
-            className="chat-scroll flex-1 overflow-y-auto rounded-lg p-2 mb-2 text-sm space-y-2"
-            style={{ background: 'rgba(0,0,0,0.14)', minHeight: '180px', maxHeight: '220px' }}
+            className="chat-scroll flex-1 overflow-y-auto rounded-sm p-2 mb-2 text-sm space-y-2"
+            style={{ background: 'rgba(0,0,0,0.22)', border: '1px solid var(--engrave)', minHeight: '180px', maxHeight: '220px' }}
           >
             {chatMessages.length === 0 && (
               <p className="text-center opacity-60 italic mt-6">{t('dash.chatEmpty')}</p>
@@ -195,7 +196,7 @@ export default function DashboardPage() {
         {FEATURE_GRID.map((f) => (
           <Link key={f.key} to={f.route}>
             <ParchmentCard className="feature-tile h-full flex flex-col items-center justify-center">
-              <div className="ft-icon" aria-hidden="true">{f.icon}</div>
+              <div className="ft-icon"><Motif name={f.motif} /></div>
               <div className="ft-title">{t(f.tKey)}</div>
               <div className="ft-sub">{t(f.subKey)}</div>
             </ParchmentCard>

@@ -1,291 +1,379 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Noto+Serif+Tamil:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+Tamil:wght@400;500;600;700&display=swap');
 /* Extra scripts for the language switcher: Malayalam, Devanagari (Hindi), Gurmukhi (Punjabi). */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@400;500;700&family=Noto+Sans+Devanagari:wght@400;500;700&family=Noto+Sans+Gurmukhi:wght@400;500;700&display=swap');
 @import "tailwindcss";
 
 /*
-  OLAI SUVADI (palm-leaf manuscript) theme — client-supplied reference palette.
-  Deep earthy-brown ground, aged gold-leaf card surfaces, an antique gold
-  page frame, fine horizontal manuscript texture, Cinzel + Noto Serif Tamil.
+  ═══════════════════════════════════════════════════════════════
+  OLAI SUVADI — an ancient Tamil astrologer's palm-leaf manuscript,
+  digitised. Deep aged wood ground, dried-palm-leaf panels with
+  horizontal fibre, dark engraved borders, temple / kolam corner
+  ornaments, muted antique gold. No glass, no SaaS gradients.
+  ═══════════════════════════════════════════════════════════════
 */
 
 :root {
-  --ink-black: #120904;
-  --ember-brown: #251108;
-  --study-brown: #1b0d03;
-  --parchment-dark: #6c4317;
-  --parchment-mid: #9a6827;
-  --parchment-light: #cfa15a;
-  --leaf: #c99b4e;
-  --gold: #e6b94f;
-  --gold-bright: #f2d276;
-  --ink-brown: #241105;
-  --ink-brown-mid: #2d1505;
-  --parchment-heading: #2a1304;
-  --alert-red: #a82c18;
-  --success-green: #4f6b3a;
-  --advantage-green: #4f6b3a;
-  --attention-terracotta: #8b4225;
+  --ink-black: #1a0d05;       /* deepest wood, never pure black */
+  --deep-wood: #211108;
+  --ember-brown: #241206;
+  --study-brown: #2b1509;
+  --burnt-brown: #5a3217;
+  --engrave: #3a1f0f;         /* dark palm brown — carved borders */
+  --parchment-dark: #6b4420;  /* leaf, shaded edge */
+  --parchment-mid: #a8823f;   /* leaf, body */
+  --parchment-light: #c19a5a; /* leaf, lit face */
+  --leaf: #b58a4a;
+  --gold: #c59a3a;            /* muted antique gold */
+  --gold-bright: #d8b45c;     /* restrained highlight */
+  --ink-brown: #21170e;       /* text on leaf */
+  --ink-brown-mid: #2c1c0e;
+  --parchment-heading: #2c1a0c;
+  --alert-red: #8a2f18;
+  --success-green: #4a6130;
+  --advantage-green: #4a6130;
+  --attention-terracotta: #7e3a1e;
 }
 
 @theme {
-  --color-ink-black: #120904;
-  --color-ember-brown: #251108;
-  --color-study-brown: #1b0d03;
-  --color-parchment-dark: #6c4317;
-  --color-parchment-mid: #9a6827;
-  --color-parchment-light: #cfa15a;
-  --color-gold: #e6b94f;
-  --color-gold-bright: #f2d276;
-  --color-ink-brown: #241105;
-  --color-alert-red: #a82c18;
-  --color-success-green: #4f6b3a;
+  --color-ink-black: #1a0d05;
+  --color-ember-brown: #241206;
+  --color-study-brown: #2b1509;
+  --color-burnt-brown: #5a3217;
+  --color-parchment-dark: #6b4420;
+  --color-parchment-mid: #a8823f;
+  --color-parchment-light: #c19a5a;
+  --color-gold: #c59a3a;
+  --color-gold-bright: #d8b45c;
+  --color-ink-brown: #21170e;
+  --color-alert-red: #8a2f18;
+  --color-success-green: #4a6130;
 
-  --font-display: 'Cinzel', serif;
-  --font-heading: 'Cinzel', serif;
-  --font-tamil: 'Noto Serif Tamil', 'Noto Sans Malayalam', 'Noto Sans Devanagari', 'Noto Sans Gurmukhi', Georgia, serif;
-  --font-manuscript: 'Noto Serif Tamil', Georgia, serif;
+  --font-display: 'Cinzel', 'EB Garamond', serif;
+  --font-heading: 'Cinzel', 'EB Garamond', serif;
+  --font-tamil: 'Noto Serif Tamil', 'EB Garamond', 'Noto Sans Malayalam', 'Noto Sans Devanagari', 'Noto Sans Gurmukhi', Georgia, serif;
+  --font-manuscript: 'EB Garamond', 'Noto Serif Tamil', Georgia, serif;
 }
 
 * { box-sizing: border-box; }
 html, body, #root { height: 100%; }
 
+/* ── Ground: aged dark-brown wood ─────────────────────────────── */
 body {
   margin: 0;
   font-family: var(--font-tamil);
   color: var(--gold-bright);
-  /* Dark wooden temple ground — carved planks + grain + deep vignette. */
   background:
-    radial-gradient(ellipse at 50% 0%, rgba(0,0,0,0.4), transparent 62%),
-    radial-gradient(ellipse at 50% 100%, rgba(0,0,0,0.55), transparent 55%),
-    repeating-linear-gradient(90deg, rgba(0,0,0,0.22) 0 2px, transparent 2px 210px),
-    repeating-linear-gradient(0deg, rgba(74,44,16,0.06) 0 3px, rgba(38,20,8,0.07) 3px 6px),
-    linear-gradient(165deg, #2b1808, #1a0f06 58%, #110a04);
+    radial-gradient(120% 60% at 50% -8%, rgba(0,0,0,.42), transparent 60%),
+    radial-gradient(120% 55% at 50% 112%, rgba(0,0,0,.52), transparent 55%),
+    repeating-linear-gradient(93deg,
+      rgba(0,0,0,.13) 0 1px, transparent 1px 4px,
+      rgba(90,50,23,.045) 4px 9px, transparent 9px 15px),
+    repeating-linear-gradient(1deg, rgba(74,42,16,.05) 0 2px, rgba(28,15,7,.06) 2px 6px),
+    repeating-linear-gradient(90deg, rgba(0,0,0,.20) 0 2px, transparent 2px 250px),
+    linear-gradient(168deg, #2a180b, #1c0f06 55%, #150c05);
   background-attachment: fixed;
   min-height: 100vh;
 }
 
-/* Fine manuscript ruling over the whole UI. */
+/* faint palm-fibre / manuscript ruling over everything */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
-  opacity: 0.08;
+  opacity: .06;
   background:
-    repeating-linear-gradient(90deg, transparent 0 13px, rgba(242,210,118,0.25) 13px 14px),
-    repeating-linear-gradient(0deg, transparent 0 13px, rgba(242,210,118,0.15) 13px 14px);
+    repeating-linear-gradient(0deg, rgba(216,180,92,.5) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(90deg, rgba(216,180,92,.35) 0 1px, transparent 1px 22px);
+}
+
+/* very slow floating dust motes */
+body::after {
+  content: "";
+  position: fixed;
+  inset: -25%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: .5;
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 22%, rgba(216,180,92,.5), transparent 60%),
+    radial-gradient(1px 1px at 78% 14%, rgba(216,180,92,.4), transparent 60%),
+    radial-gradient(1.5px 1.5px at 62% 72%, rgba(216,180,92,.32), transparent 60%),
+    radial-gradient(1px 1px at 32% 86%, rgba(216,180,92,.42), transparent 60%),
+    radial-gradient(1px 1px at 88% 52%, rgba(216,180,92,.28), transparent 60%),
+    radial-gradient(1.5px 1.5px at 46% 40%, rgba(216,180,92,.28), transparent 60%),
+    radial-gradient(1px 1px at 20% 62%, rgba(216,180,92,.3), transparent 60%);
+  animation: dust-drift 40s linear infinite alternate;
+}
+@keyframes dust-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(1.4%, -2.6%, 0); }
 }
 
 .app-shell { min-height: 100vh; position: relative; overflow-x: hidden; }
 
-/* Ornate antique gold frame around the whole view. */
+/* ── Engraved manuscript frame + temple corner ornaments ──────── */
 .app-shell::before {
   content: "";
   position: fixed;
-  inset: 9px;
-  border: 3px solid var(--gold);
-  box-shadow:
-    inset 0 0 0 1px rgba(0,0,0,0.5),
-    inset 0 0 0 6px #1a0f06,
-    inset 0 0 0 7px rgba(230,185,79,0.35),
-    inset 0 0 60px rgba(0,0,0,0.55),
-    0 0 0 1px rgba(230,185,79,0.3);
+  inset: 8px;
   pointer-events: none;
   z-index: 5;
+  border: 2px solid var(--engrave);
+  box-shadow:
+    inset 0 0 0 1px rgba(197,154,58,.45),
+    inset 0 0 0 5px var(--deep-wood),
+    inset 0 0 0 6px rgba(58,31,15,.95),
+    inset 0 0 0 7px rgba(197,154,58,.26),
+    inset 0 0 90px rgba(0,0,0,.5),
+    0 0 0 1px rgba(197,154,58,.22);
 }
-
-/* Filigree medallions in the four frame corners. */
 .app-shell::after {
   content: "";
   position: fixed;
-  inset: 9px;
+  inset: 8px;
   pointer-events: none;
   z-index: 6;
   background-repeat: no-repeat;
   background-position: top left, top right, bottom left, bottom right;
-  background-size: 44px 44px;
+  background-size: 58px 58px;
   background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cg fill='none' stroke='%23e6b94f' stroke-width='2'%3E%3Cpath d='M2 20 A18 18 0 0 1 20 2'/%3E%3Cpath d='M8 20 A12 12 0 0 1 20 8'/%3E%3Ccircle cx='20' cy='20' r='2.5' fill='%23e6b94f'/%3E%3Cpath d='M20 12 L20 20 L28 20'/%3E%3C/g%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cg fill='none' stroke='%23e6b94f' stroke-width='2' transform='rotate(90 20 20)'%3E%3Cpath d='M2 20 A18 18 0 0 1 20 2'/%3E%3Cpath d='M8 20 A12 12 0 0 1 20 8'/%3E%3Ccircle cx='20' cy='20' r='2.5' fill='%23e6b94f'/%3E%3Cpath d='M20 12 L20 20 L28 20'/%3E%3C/g%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cg fill='none' stroke='%23e6b94f' stroke-width='2' transform='rotate(270 20 20)'%3E%3Cpath d='M2 20 A18 18 0 0 1 20 2'/%3E%3Cpath d='M8 20 A12 12 0 0 1 20 8'/%3E%3Ccircle cx='20' cy='20' r='2.5' fill='%23e6b94f'/%3E%3Cpath d='M20 12 L20 20 L28 20'/%3E%3C/g%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cg fill='none' stroke='%23e6b94f' stroke-width='2' transform='rotate(180 20 20)'%3E%3Cpath d='M2 20 A18 18 0 0 1 20 2'/%3E%3Cpath d='M8 20 A12 12 0 0 1 20 8'/%3E%3Ccircle cx='20' cy='20' r='2.5' fill='%23e6b94f'/%3E%3Cpath d='M20 12 L20 20 L28 20'/%3E%3C/g%3E%3C/svg%3E");
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23c59a3a' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M5 5H30M5 5V30'/%3E%3Cpath d='M5 5L21 21'/%3E%3Ccircle cx='21' cy='21' r='3.4'/%3E%3Cpath d='M30 5q11 0 11 11M5 30q0 11 11 11'/%3E%3Cpath d='M41 15q6 0 6 6M15 41q0 6 6 6'/%3E%3Cpath d='M21 21q9-4 11-13M21 21q-4 9-13 11'/%3E%3C/g%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23c59a3a' stroke-width='1.6' stroke-linecap='round' transform='rotate(90 28 28)'%3E%3Cpath d='M5 5H30M5 5V30'/%3E%3Cpath d='M5 5L21 21'/%3E%3Ccircle cx='21' cy='21' r='3.4'/%3E%3Cpath d='M30 5q11 0 11 11M5 30q0 11 11 11'/%3E%3Cpath d='M41 15q6 0 6 6M15 41q0 6 6 6'/%3E%3Cpath d='M21 21q9-4 11-13M21 21q-4 9-13 11'/%3E%3C/g%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23c59a3a' stroke-width='1.6' stroke-linecap='round' transform='rotate(270 28 28)'%3E%3Cpath d='M5 5H30M5 5V30'/%3E%3Cpath d='M5 5L21 21'/%3E%3Ccircle cx='21' cy='21' r='3.4'/%3E%3Cpath d='M30 5q11 0 11 11M5 30q0 11 11 11'/%3E%3Cpath d='M41 15q6 0 6 6M15 41q0 6 6 6'/%3E%3Cpath d='M21 21q9-4 11-13M21 21q-4 9-13 11'/%3E%3C/g%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23c59a3a' stroke-width='1.6' stroke-linecap='round' transform='rotate(180 28 28)'%3E%3Cpath d='M5 5H30M5 5V30'/%3E%3Cpath d='M5 5L21 21'/%3E%3Ccircle cx='21' cy='21' r='3.4'/%3E%3Cpath d='M30 5q11 0 11 11M5 30q0 11 11 11'/%3E%3Cpath d='M41 15q6 0 6 6M15 41q0 6 6 6'/%3E%3Cpath d='M21 21q9-4 11-13M21 21q-4 9-13 11'/%3E%3C/g%3E%3C/svg%3E");
 }
 @media (max-width: 640px) {
-  .app-shell::before { inset: 5px; border-width: 2px; }
-  .app-shell::after { inset: 5px; background-size: 30px 30px; }
+  .app-shell::before { inset: 5px; border-width: 1px; }
+  .app-shell::after  { inset: 5px; background-size: 34px 34px; }
 }
 
-/* Aged gold-leaf card surface. */
+/* ── Palm-leaf panel ──────────────────────────────────────────── */
 .leaf-card, .parchment {
   position: relative;
   padding: 18px 22px 16px;
-  border-radius: 3px 7px 4px 8px / 6px 3px 7px 4px;
+  /* uneven, hand-cut — small, not a modern radius */
+  border-radius: 2px 10px 3px 9px / 8px 3px 10px 3px;
   background:
-    radial-gradient(circle at 15% 20%, rgba(255,226,146,0.17), transparent 22%),
-    radial-gradient(circle at 85% 78%, rgba(60,29,3,0.28), transparent 38%),
-    repeating-linear-gradient(90deg, rgba(58,40,20,0.06) 0 1px, transparent 1px 5px),
-    repeating-linear-gradient(0deg, rgba(62,31,5,0.10) 0 1px, transparent 1px 4px),
-    radial-gradient(circle at 18% 28%, rgba(58,36,16,0.20) 0 1.5px, transparent 2.5px),
-    radial-gradient(circle at 67% 61%, rgba(58,36,16,0.16) 0 2px, transparent 3px),
-    radial-gradient(circle at 85% 22%, rgba(58,36,16,0.12) 0 1px, transparent 2px),
-    linear-gradient(135deg, var(--parchment-light) 0%, var(--parchment-mid) 52%, var(--parchment-dark) 100%);
-  /* carved dark-wood frame with a fine gold inlay line */
-  border: 3px solid #3a1f0a;
+    /* horizontal palm fibre — the defining texture */
+    repeating-linear-gradient(180deg,
+      rgba(58,31,15,.11) 0 1px, rgba(58,31,15,.03) 1px 2px, transparent 2px 6px),
+    repeating-linear-gradient(180deg, rgba(90,50,23,.06) 0 3px, transparent 3px 10px),
+    /* aged scratches & marks */
+    radial-gradient(circle at 16% 24%, rgba(33,17,8,.28) 0 1px, transparent 2px),
+    radial-gradient(circle at 73% 58%, rgba(33,17,8,.22) 0 1.4px, transparent 2.6px),
+    radial-gradient(circle at 88% 30%, rgba(33,17,8,.15) 0 1px, transparent 2px),
+    radial-gradient(circle at 40% 82%, rgba(33,17,8,.2) 0 1.2px, transparent 2.4px),
+    linear-gradient(103deg, transparent 0 43%, rgba(33,17,8,.05) 45% 47%, transparent 49%),
+    /* faint lit sheen + darkened long edges */
+    radial-gradient(130% 90% at 20% 6%, rgba(232,207,152,.14), transparent 46%),
+    linear-gradient(90deg, rgba(33,17,8,.32) 0%, transparent 8%, transparent 92%, rgba(33,17,8,.34) 100%),
+    /* leaf body */
+    linear-gradient(172deg, var(--parchment-light) 0%, var(--parchment-mid) 55%, var(--parchment-dark) 100%);
+  border: 2px solid var(--engrave);
   box-shadow:
-    inset 0 0 0 1px var(--gold),
-    inset 0 0 0 4px rgba(58,28,4,0.55),
-    inset 0 0 30px rgba(49,22,2,0.4),
-    0 8px 20px rgba(0,0,0,0.65);
+    inset 0 0 0 1px rgba(197,154,58,.28),
+    inset 0 2px 5px rgba(255,236,190,.13),
+    inset 0 -10px 20px rgba(33,17,8,.26),
+    inset 0 0 26px rgba(33,17,8,.18),
+    0 10px 22px rgba(0,0,0,.5),
+    0 2px 0 rgba(33,17,8,.5);
   color: var(--ink-brown);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform .22s ease, box-shadow .22s ease;
 }
 .leaf-card:hover, .parchment:hover {
   transform: translateY(-2px);
   box-shadow:
-    inset 0 0 0 1px var(--gold-bright),
-    inset 0 0 0 4px rgba(58,28,4,0.5),
-    inset 0 0 30px rgba(49,22,2,0.34),
-    0 12px 26px rgba(0,0,0,0.68);
+    inset 0 0 0 1px rgba(216,180,92,.5),
+    inset 0 2px 5px rgba(255,236,190,.16),
+    inset 0 -10px 20px rgba(33,17,8,.22),
+    inset 0 0 26px rgba(33,17,8,.15),
+    0 14px 28px rgba(0,0,0,.55),
+    0 0 22px rgba(197,154,58,.15);
 }
-/* Non-lifting variant — page header and other fixed chrome. */
 .leaf-card--flat, .leaf-card--flat:hover { transform: none; }
 
-/* Dark leaf variant — feature tiles, panels that read better dark. */
+/* dark palm-leaf variant */
 .leaf-card--dark {
   background:
-    radial-gradient(circle, rgba(204,153,63,0.20), transparent 55%),
-    linear-gradient(160deg, #2b1607, #160a03);
-  border: 1px solid var(--gold);
+    repeating-linear-gradient(180deg, rgba(216,180,92,.05) 0 1px, transparent 1px 4px),
+    linear-gradient(168deg, #2c1608, #180c05);
+  border: 2px solid var(--engrave);
   color: var(--gold-bright);
-  box-shadow: inset 0 0 18px rgba(208,158,64,0.10), 0 4px 12px rgba(0,0,0,0.45);
+  box-shadow:
+    inset 0 0 0 1px rgba(197,154,58,.22),
+    inset 0 0 24px rgba(0,0,0,.4),
+    0 8px 18px rgba(0,0,0,.5);
 }
 .leaf-card--dark .parchment-heading,
 .leaf-card--dark h3 { color: var(--gold-bright); }
 
-/* Corner flourishes (ParchmentCard adds .parchment-corners). */
-.leaf-card.parchment-corners::before, .leaf-card.parchment-corners::after,
-.parchment.parchment-corners::before, .parchment.parchment-corners::after {
-  content: "\2756";
+/* two string-holes at the top — how ola leaves are actually bound */
+.leaf-bound::before,
+.leaf-bound::after {
+  content: "";
   position: absolute;
   top: 6px;
-  font-size: 11px;
-  color: rgba(122,71,20,0.7);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #120a04, #241a0e 70%);
+  box-shadow: inset 0 0 2px rgba(0,0,0,.9), 0 0 0 1px rgba(58,31,15,.5);
 }
-.parchment-corners::before { left: 10px; }
-.parchment-corners::after { right: 10px; }
+.leaf-bound::before { left: 30%; }
+.leaf-bound::after  { right: 30%; }
 
-/* Diagonal gold-dash divider (RopeDivider). */
+/* small engraved corner flourishes (ParchmentCard adds .parchment-corners) */
+.leaf-card.parchment-corners::before, .leaf-card.parchment-corners::after,
+.parchment.parchment-corners::before, .parchment.parchment-corners::after {
+  content: "\2740";
+  position: absolute;
+  top: 7px;
+  font-size: 11px;
+  color: rgba(58,31,15,.75);
+  text-shadow: 0 1px 0 rgba(255,240,200,.25);
+}
+.parchment-corners::before { left: 11px; }
+.parchment-corners::after  { right: 11px; }
+
+/* ── Binding cord divider ─────────────────────────────────────── */
 .rope-divider {
-  height: 6px;
-  background-image: repeating-linear-gradient(135deg, var(--gold) 0 7px, #4a2908 7px 12px);
-  border-top: 1px solid #e3b852;
-  border-bottom: 1px solid #e3b852;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.5);
-  position: relative;
+  height: 5px;
+  background-image: repeating-linear-gradient(90deg,
+    var(--gold) 0 6px, var(--engrave) 6px 11px);
+  border-radius: 999px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.6), inset 0 1px 0 rgba(216,180,92,.3);
 }
 .rope-knot {
-  width: 14px; height: 14px; border-radius: 999px;
-  background: radial-gradient(circle at 35% 30%, var(--gold-bright), var(--gold) 55%, #4a2908 100%);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  width: 13px; height: 13px; border-radius: 999px;
+  background: radial-gradient(circle at 35% 30%, var(--gold-bright), var(--gold) 55%, var(--engrave) 100%);
+  box-shadow: 0 1px 3px rgba(0,0,0,.7);
+}
+.om-mark {
+  font-family: 'Noto Serif Tamil', serif;
+  color: var(--gold-bright);
+  font-size: 1.5rem;
+  line-height: 1;
+  padding: 0 6px;
+  animation: lamp-glow 5s ease-in-out infinite;
+}
+@keyframes lamp-glow {
+  0%, 100% { text-shadow: 0 0 8px rgba(216,180,92,.4), 0 2px 3px rgba(0,0,0,.7); }
+  50%      { text-shadow: 0 0 18px rgba(232,196,120,.7), 0 0 5px rgba(255,220,150,.5), 0 2px 3px rgba(0,0,0,.7); }
 }
 
+/* ── Type ─────────────────────────────────────────────────────── */
 .gold-heading {
   font-family: var(--font-heading);
   color: var(--gold-bright);
-  letter-spacing: 0.04em;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+  letter-spacing: .05em;
+  text-shadow: 0 1px 2px rgba(0,0,0,.7);
 }
 .parchment-heading {
   font-family: var(--font-heading);
   color: var(--parchment-heading);
-  letter-spacing: 0.03em;
+  letter-spacing: .035em;
 }
 .brand-wordmark {
   font-family: var(--font-display);
   font-weight: 700;
   color: var(--gold-bright);
-  letter-spacing: 0.06em;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+  letter-spacing: .07em;
+  text-shadow: 0 2px 6px rgba(0,0,0,.7);
+}
+/* small kolam rule under a centred heading — add class="heading-kolam" */
+.heading-kolam::after {
+  content: "";
+  display: block;
+  width: 54px;
+  height: 8px;
+  margin: 5px auto 0;
+  background: no-repeat center / contain
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 54 8'%3E%3Cg fill='none' stroke='%23c59a3a' stroke-width='1.3'%3E%3Cpath d='M2 4h14M38 4h14'/%3E%3Ccircle cx='20' cy='4' r='2'/%3E%3Ccircle cx='34' cy='4' r='2'/%3E%3Cpath d='M23 4q4-5 8 0q-4 5-8 0'/%3E%3C/g%3E%3C/svg%3E");
+  opacity: .85;
 }
 
+/* ── Controls — engraved, never glossy ───────────────────────── */
 .btn-gold {
   font-family: var(--font-heading);
-  background: linear-gradient(180deg, #432307, var(--study-brown));
+  background:
+    repeating-linear-gradient(180deg, rgba(0,0,0,.05) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, #3a1e0c, var(--study-brown));
   color: var(--gold-bright);
-  border: 1px solid var(--gold-bright);
-  border-radius: 3px;
-  padding: 0.65rem 1.5rem;
+  border: 1px solid var(--gold);
+  border-radius: 2px;
+  padding: .6rem 1.4rem;
   font-weight: 600;
-  letter-spacing: 0.03em;
-  transition: all 0.2s ease;
+  letter-spacing: .06em;
+  box-shadow: inset 0 1px 0 rgba(216,180,92,.2), inset 0 -2px 6px rgba(0,0,0,.42), 0 2px 0 rgba(0,0,0,.4);
+  transition: color .2s ease, border-color .2s ease, box-shadow .2s ease;
 }
 .btn-gold:hover {
-  background: linear-gradient(180deg, #5a3009, #241004);
-  color: #fff2cf;
-  border-color: #fff2cf;
+  color: #ecd7a0;
+  border-color: var(--gold-bright);
+  box-shadow: inset 0 1px 0 rgba(216,180,92,.3), 0 0 16px rgba(197,154,58,.24), 0 2px 0 rgba(0,0,0,.4);
 }
-.btn-gold:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+.btn-gold:disabled { opacity: .5; cursor: not-allowed; box-shadow: none; }
 
 .btn-manuscript {
   font-family: var(--font-heading);
-  background: linear-gradient(180deg, #432307, var(--study-brown));
+  background: linear-gradient(180deg, #3a1e0c, var(--study-brown));
   color: var(--gold-bright);
-  border: 1px solid var(--gold-bright);
-  border-radius: 3px;
+  border: 1px solid var(--gold);
+  border-radius: 2px;
   padding: 10px 26px;
-  letter-spacing: 1.5px;
-  transition: all 0.2s ease;
+  letter-spacing: 1.4px;
+  transition: all .2s ease;
 }
-.btn-manuscript:hover { background: linear-gradient(180deg, #5a3009, #241004); color: #fff2cf; border-color: #fff2cf; }
+.btn-manuscript:hover { color: #ecd7a0; border-color: var(--gold-bright); box-shadow: 0 0 16px rgba(197,154,58,.24); }
 
 .input-manuscript {
   font-family: var(--font-tamil);
-  background: #211004;
-  border: 1px solid var(--gold-bright);
-  border-radius: 3px;
-  padding: 0.6rem 0.85rem;
+  background: linear-gradient(180deg, #1b0f06, #241206);
+  border: 1px solid var(--gold);
+  border-radius: 2px;
+  padding: .55rem .8rem;
   color: var(--gold-bright);
   width: 100%;
   outline: none;
-  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,.5);
+  transition: box-shadow .15s ease, border-color .15s ease;
 }
-.input-manuscript:focus { border-color: #fff2cf; box-shadow: 0 0 0 3px rgba(230,185,79,0.28); }
-.input-manuscript::placeholder { color: rgba(242,210,118,0.5); }
-.input-manuscript option { background: #211004; color: var(--gold-bright); }
+.input-manuscript:focus { border-color: var(--gold-bright); box-shadow: inset 0 2px 6px rgba(0,0,0,.5), 0 0 0 3px rgba(197,154,58,.28); }
+.input-manuscript::placeholder { color: rgba(216,180,92,.45); }
+.input-manuscript option { background: #1b0f06; color: var(--gold-bright); }
 
 .field-label {
   font-family: var(--font-tamil);
   font-weight: 600;
   color: var(--ink-brown);
-  font-size: 0.875rem;
-  margin-bottom: 0.25rem;
+  font-size: .875rem;
+  margin-bottom: .25rem;
   display: block;
 }
-.error-text { color: var(--alert-red); font-size: 0.85rem; font-family: var(--font-tamil); }
+.error-text { color: var(--alert-red); font-size: .85rem; font-family: var(--font-tamil); }
 
+/* ── Badges ───────────────────────────────────────────────────── */
 .badge {
   display: inline-block;
-  font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
-  padding: 3px 10px; border-radius: 2px; text-transform: uppercase;
+  font-family: var(--font-heading);
+  font-size: 11px; font-weight: 700; letter-spacing: .5px;
+  padding: 3px 10px; border-radius: 1px; text-transform: uppercase;
 }
-.badge-advantage { background: rgba(79,107,58,0.18); border: 1px solid var(--advantage-green); color: #35521f; }
-.badge-attention { background: rgba(139,66,37,0.16); border: 1px solid var(--attention-terracotta); color: #6e2f18; }
-.badge-gold { background: rgba(230,185,79,0.22); border: 1px solid var(--gold); color: var(--parchment-heading); }
+.badge-advantage { background: rgba(74,97,48,.2);  border: 1px solid var(--advantage-green);    color: #35521f; }
+.badge-attention { background: rgba(126,58,30,.18); border: 1px solid var(--attention-terracotta); color: #6e2f18; }
+.badge-gold      { background: rgba(197,154,58,.2); border: 1px solid var(--gold);                color: var(--parchment-heading); }
 
-/* ============================================================
-   Finishing — selection, scrollbar, details, tables, chat, spinner
-   ============================================================ */
-
-::selection { background: rgba(230,185,79,0.4); color: var(--ink-brown); }
-:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 2px; border-radius: 2px; }
+/* ── Finishing — chrome, scrollbar, details, table, chat, spinner ── */
+::selection { background: rgba(197,154,58,.4); color: var(--ink-brown); }
+:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 2px; border-radius: 1px; }
 a { text-underline-offset: 3px; }
 
-* { scrollbar-width: thin; scrollbar-color: var(--parchment-dark) transparent; }
+* { scrollbar-width: thin; scrollbar-color: var(--burnt-brown) transparent; }
 ::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-track { background: rgba(0,0,0,0.25); }
+::-webkit-scrollbar-track { background: rgba(0,0,0,.3); }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--gold), var(--parchment-dark));
+  background: linear-gradient(180deg, var(--gold), var(--engrave));
   border-radius: 999px;
   border: 2px solid transparent;
   background-clip: padding-box;
@@ -301,122 +389,116 @@ a { text-underline-offset: 3px; }
 .leaf-card details > summary::-webkit-details-marker,
 .parchment details > summary::-webkit-details-marker { display: none; }
 .leaf-card details > summary::before,
-.parchment details > summary::before { content: "\276E  "; color: #6b3f0a; }
+.parchment details > summary::before { content: "\276F  "; color: var(--burnt-brown); }
 .leaf-card details[open] > summary::before,
-.parchment details[open] > summary::before { content: "\276F  "; }
+.parchment details[open] > summary::before { content: "\276E  "; }
 
 .manuscript-rule {
   border: 0;
-  height: 4px;
-  border-top: 1px solid rgba(230,185,79,0.6);
-  border-bottom: 1px solid rgba(230,185,79,0.6);
-  background: transparent;
+  height: 6px;
   margin: 1rem 0;
+  background: no-repeat center / auto 6px
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='6' viewBox='0 0 120 6'%3E%3Cg fill='none' stroke='%23c59a3a' stroke-width='1'%3E%3Cpath d='M0 3h44M76 3h44'/%3E%3Ccircle cx='52' cy='3' r='1.6'/%3E%3Ccircle cx='68' cy='3' r='1.6'/%3E%3Cpath d='M56 3q4-4 8 0q-4 4-8 0'/%3E%3C/g%3E%3C/svg%3E"),
+    linear-gradient(90deg, transparent, rgba(197,154,58,.35), transparent);
 }
 
-.manuscript-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.manuscript-table { width: 100%; border-collapse: collapse; font-size: .875rem; }
 .manuscript-table th {
   text-align: left;
   font-family: var(--font-heading);
-  color: var(--parchment-heading);
-  letter-spacing: 0.02em;
-  border-bottom: 2px double rgba(45,20,3,0.55);
-  padding: 6px 8px;
+  color: var(--gold-bright);
+  letter-spacing: .03em;
+  background: linear-gradient(180deg, #2c1608, #1c0f06);
+  border: 1px solid var(--engrave);
+  padding: 7px 9px;
 }
-.manuscript-table td { padding: 6px 8px; border-bottom: 1px solid rgba(45,20,3,0.18); }
+.manuscript-table td { padding: 6px 9px; border-bottom: 1px solid rgba(58,31,15,.28); }
+.manuscript-table tbody tr:nth-child(even) { background: rgba(58,31,15,.07); }
 .manuscript-table tr:last-child td { border-bottom: 0; }
 
 .leaf-spinner {
-  width: 28px; height: 28px;
-  border-radius: 999px;
-  border: 3px solid rgba(45,20,3,0.3);
-  border-top-color: var(--gold);
-  animation: leaf-spin 0.9s linear infinite;
+  width: 30px; height: 30px;
   margin: 0 auto;
+  background: no-repeat center / contain
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cg fill='none' stroke='%23c59a3a' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='13'/%3E%3Cpath d='M20 4v6M20 30v6M4 20h6M30 20h6M8.7 8.7l4.2 4.2M27.1 27.1l4.2 4.2M31.3 8.7l-4.2 4.2M12.9 27.1l-4.2 4.2'/%3E%3C/g%3E%3C/svg%3E");
+  animation: leaf-spin 3s linear infinite;
 }
 @keyframes leaf-spin { to { transform: rotate(360deg); } }
 
 .tab {
   font-family: var(--font-heading);
-  letter-spacing: 0.04em;
+  letter-spacing: .04em;
   padding: 8px 14px;
   background: none;
   color: var(--gold);
-  opacity: 0.6;
+  opacity: .6;
   border: 0;
   border-bottom: 2px solid transparent;
   cursor: pointer;
-  transition: opacity 0.15s ease, border-color 0.15s ease;
+  transition: opacity .15s ease, border-color .15s ease;
 }
-.tab:hover { opacity: 0.85; }
+.tab:hover { opacity: .85; }
 .tab--active { opacity: 1; color: var(--gold-bright); border-bottom-color: var(--gold-bright); }
 
 .chat-bubble {
   padding: 6px 12px;
-  border-radius: 3px 8px 3px 8px;
+  border-radius: 2px 9px 2px 9px;
   max-width: 85%;
-  font-size: 0.875rem;
-  line-height: 1.4;
+  font-size: .875rem;
+  line-height: 1.45;
   color: var(--ink-brown);
 }
 .chat-bubble--me { background: var(--gold); margin-left: auto; }
 .chat-bubble--guru {
-  background: linear-gradient(155deg, var(--parchment-light), var(--parchment-mid));
-  border: 1px solid var(--parchment-dark);
+  background: linear-gradient(172deg, var(--parchment-light), var(--parchment-mid));
+  border: 1px solid var(--engrave);
+}
+.chat-scroll {
+  background-repeat: no-repeat;
+  background-position: center 58%;
+  background-size: 110px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='%23d8b45c' stroke-width='2.4' stroke-linecap='round' opacity='0.42'%3E%3Ccircle cx='50' cy='40' r='19'/%3E%3Cpath d='M31 45q-13 2 -15 15q9 7 18 2'/%3E%3Cpath d='M69 45q13 2 15 15q-9 7 -18 2'/%3E%3Cpath d='M50 59q-9 11 -4 25M50 59q9 11 4 25'/%3E%3Ccircle cx='50' cy='19' r='3.5' fill='%23d8b45c'/%3E%3C/g%3E%3C/svg%3E");
 }
 
-/* ॐ centrepiece for the RopeDivider. */
-.om-mark {
-  font-family: 'Noto Serif Tamil', serif;
-  color: var(--gold-bright);
-  font-size: 1.4rem;
-  line-height: 1;
-  text-shadow: 0 0 10px rgba(230,185,79,0.5), 0 2px 3px rgba(0,0,0,0.7);
-  padding: 0 4px;
-}
-
-/* Dashboard "Start Now" rows — icon · label · chevron. */
+/* ── Dashboard: Start-Now rows & feature tablets ─────────────── */
 .quick-row {
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 9px 12px;
-  border: 1px solid #7a4714;
-  background: linear-gradient(180deg, rgba(16,8,2,0.9), rgba(35,15,3,0.92));
+  border: 1px solid var(--burnt-brown);
+  background: linear-gradient(180deg, rgba(20,11,5,.85), rgba(36,18,8,.9));
   color: var(--gold-bright);
-  font-size: 0.95rem;
+  font-family: var(--font-tamil);
+  font-size: .95rem;
   border-radius: 2px;
+  transition: border-color .15s ease, color .15s ease;
 }
-.quick-row .qi { width: 1.3rem; text-align: center; opacity: 0.9; }
-.quick-row .qc { margin-left: auto; opacity: 0.75; }
-.quick-row:hover { border-color: var(--gold-bright); color: #fff2cf; }
+.quick-row .qi { width: 1.4rem; height: 1.4rem; color: var(--gold); flex: none; }
+.quick-row .qi svg { width: 100%; height: 100%; display: block; }
+.quick-row .qc { margin-left: auto; opacity: .7; }
+.quick-row:hover { border-color: var(--gold); color: #ecd7a0; }
 
-/* Bottom feature tiles — aged parchment, big brown glyph, caption. */
 .feature-tile {
   text-align: center;
   padding: 16px 10px 14px;
   height: 100%;
 }
 .feature-tile .ft-icon {
-  font-size: 2.5rem;
-  line-height: 1;
-  color: #5f3a12;
-  filter: sepia(0.5) saturate(1.3) brightness(0.75);
-  margin-bottom: 6px;
+  width: 42px;
+  height: 42px;
+  margin: 0 auto 7px;
+  color: var(--engrave);
 }
-.feature-tile .ft-title { font-weight: 700; color: var(--parchment-heading); font-size: 0.95rem; }
-.feature-tile .ft-sub { font-size: 0.72rem; color: var(--ink-brown); opacity: 0.7; margin-top: 2px; }
-
-/* Faint Ganesha / ॐ watermark behind the chat transcript. */
-.chat-scroll {
-  background-repeat: no-repeat;
-  background-position: center 60%;
-  background-size: 120px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='%23e6b94f' stroke-width='2.5' stroke-linecap='round' opacity='0.5'%3E%3Ccircle cx='50' cy='42' r='20'/%3E%3Cpath d='M30 46 q-14 2 -16 16 q10 8 20 2'/%3E%3Cpath d='M70 46 q14 2 16 16 q-10 8 -20 2'/%3E%3Cpath d='M50 62 q-10 12 -4 26 M50 62 q10 12 4 26'/%3E%3Ccircle cx='50' cy='20' r='4' fill='%23e6b94f'/%3E%3C/g%3E%3C/svg%3E");
-}
+.feature-tile .ft-icon svg { width: 100%; height: 100%; display: block; }
+.feature-tile:hover .ft-icon { color: var(--burnt-brown); }
+.feature-tile .ft-title { font-family: var(--font-heading); font-weight: 600; color: var(--parchment-heading); font-size: .92rem; }
+.feature-tile .ft-sub { font-size: .7rem; color: var(--ink-brown); opacity: .65; margin-top: 2px; }
 
 @media (prefers-reduced-motion: reduce) {
+  body::after { animation: none; }
+  .om-mark { animation: none; }
+  .leaf-spinner { animation-duration: 6s; }
   .leaf-card, .parchment { transition: none; }
   .leaf-card:hover, .parchment:hover { transform: none; }
-  .leaf-spinner { animation-duration: 2s; }
 }

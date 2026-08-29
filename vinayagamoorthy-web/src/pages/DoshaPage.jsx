@@ -55,7 +55,7 @@ export default function DoshaPage() {
             <h3 className="parchment-heading text-lg mb-3 text-center">பரிந்துரைக்கப்பட்ட கோவில்கள்</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {temples.recommended_temples.map((t) => (
-                <div key={t.id} className="rounded-lg p-3" style={{ background: 'rgba(255,255,255,0.25)' }}>
+                <div key={t.id} className="rounded-lg p-3" style={{ background: 'rgba(255,243,220,0.26)' }}>
                   <p className="font-semibold">{t.name_ta}</p>
                   <p className="text-xs opacity-70">{t.place}, {t.state}</p>
                 </div>

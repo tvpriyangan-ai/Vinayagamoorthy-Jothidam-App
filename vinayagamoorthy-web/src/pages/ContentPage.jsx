@@ -10,10 +10,6 @@ const CATEGORY_TITLES = {
   ayurveda: 'ஆயுள் வேதம்', vastu: 'வாஸ்து', books: 'புத்தகங்கள்',
 };
 
-const CATEGORY_ICONS = {
-  meditation: '🧘', yoga: '🕉️', diet: '🍚', ayurveda: '🌿', vastu: '🏠', books: '📖',
-};
-
 export default function ContentPage() {
   const { category } = useParams();
   const [articles, setArticles] = useState(null);
@@ -27,10 +23,9 @@ export default function ContentPage() {
   }, [category]);
 
   const title = CATEGORY_TITLES[category] || category;
-  const icon = CATEGORY_ICONS[category] || '✨';
 
   return (
-    <FeaturePageShell title={`${icon} ${title}`} wide>
+    <FeaturePageShell title={title} wide>
       {error && <ParchmentCard><p className="error-text text-center">{error}</p></ParchmentCard>}
       {!articles && !error && <ParchmentCard><Loading text="ஏற்றுகிறது..." /></ParchmentCard>}
       {articles?.length === 0 && (
@@ -62,7 +57,7 @@ function ArticleCard({ article: a }) {
             </thead>
             <tbody>
               {a.table_rows.map((row, ri) => (
-                <tr key={ri} style={{ background: ri % 2 === 0 ? 'rgba(255,255,255,0.12)' : 'transparent' }}>
+                <tr key={ri} style={{ background: ri % 2 === 0 ? 'rgba(255,243,220,0.14)' : 'transparent' }}>
                   {row.map((cell, ci) => (
                     <td key={ci} className="align-top">{cell}</td>
                   ))}
@@ -74,9 +69,9 @@ function ArticleCard({ article: a }) {
       )}
 
       {a.sections?.map((s, i) => (
-        <div key={i} className="mb-4 rounded-lg p-3" style={{ background: 'rgba(255,255,255,0.2)' }}>
+        <div key={i} className="mb-4 rounded-sm p-3" style={{ background: 'rgba(255,243,220,0.22)', borderLeft: '3px solid var(--burnt-brown)' }}>
           <h4 className="font-semibold text-sm mb-1.5 flex items-center gap-1">
-            <span>✦</span> {s.heading}
+            <span style={{ color: 'var(--gold)' }}>❁</span> {s.heading}
           </h4>
           <p className="text-sm whitespace-pre-line leading-relaxed">{s.body}</p>
         </div>

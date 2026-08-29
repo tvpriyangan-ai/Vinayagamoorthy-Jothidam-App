@@ -122,7 +122,7 @@ export default function JathagamPage() {
                   className="border p-1 flex flex-col items-center justify-center text-center"
                   style={{
                     borderColor: 'rgba(40,24,10,0.5)',
-                    background: isLagna ? 'rgba(201,164,92,0.35)' : 'rgba(255,255,255,0.15)',
+                    background: isLagna ? 'rgba(201,164,92,0.35)' : 'rgba(255,243,220,0.16)',
                     minHeight: '60px',
                   }}
                 >
@@ -210,13 +210,13 @@ function ReadingSection({ t, reading, loading, openKey, setOpenKey, onRegenerate
               <button
                 onClick={() => setOpenKey(open ? null : s.key)}
                 className="w-full flex items-center justify-between px-3 py-2 text-left font-semibold text-sm"
-                style={{ background: 'rgba(255,255,255,0.28)' }}
+                style={{ background: 'rgba(255,243,220,0.30)' }}
               >
                 <span>{s.heading}</span>
                 <span aria-hidden="true">{open ? '−' : '+'}</span>
               </button>
               {open && (
-                <p className="px-3 py-3 text-sm leading-relaxed" style={{ background: 'rgba(255,255,255,0.12)' }}>
+                <p className="px-3 py-3 text-sm leading-relaxed" style={{ background: 'rgba(255,243,220,0.14)' }}>
                   {s.text}
                 </p>
               )}

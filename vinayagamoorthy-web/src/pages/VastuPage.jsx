@@ -66,13 +66,13 @@ export default function VastuPage() {
                   <button
                     onClick={() => setOpenKey(open ? null : s.key)}
                     className="w-full flex items-center justify-between px-3 py-2 text-left font-semibold text-sm"
-                    style={{ background: 'rgba(255,255,255,0.28)' }}
+                    style={{ background: 'rgba(255,243,220,0.30)' }}
                   >
                     <span>{s.heading}</span>
                     <span aria-hidden="true">{open ? '−' : '+'}</span>
                   </button>
                   {open && (
-                    <p className="px-3 py-3 text-sm leading-relaxed" style={{ background: 'rgba(255,255,255,0.12)' }}>
+                    <p className="px-3 py-3 text-sm leading-relaxed" style={{ background: 'rgba(255,243,220,0.14)' }}>
                       {s.text}
                     </p>
                   )}
