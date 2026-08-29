@@ -14,6 +14,7 @@ import TransitPage from './pages/TransitPage';
 import VastuPage from './pages/VastuPage';
 import ProfilePage from './pages/ProfilePage';
 import ContentPage from './pages/ContentPage';
+import ContactPage from './pages/ContactPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function Protected(element) {
@@ -29,6 +30,7 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/contact" element={<ContactPage />} />
 
         <Route path="/dashboard" element={Protected(<DashboardPage />)} />
 

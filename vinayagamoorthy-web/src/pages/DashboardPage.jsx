@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import AppHeader from '../components/AppHeader';
 import ParchmentCard from '../components/ParchmentCard';
 import RopeDivider from '../components/RopeDivider';
+import SiteFooter from '../components/SiteFooter';
 import { useLanguage } from '../i18n/LanguageContext';
 import {
   getMyProfile, getMyJathagam, getTodayPanchangam,
@@ -202,9 +203,7 @@ export default function DashboardPage() {
         ))}
       </div>
 
-      <p className="text-center text-xs opacity-60 pb-4" style={{ color: 'var(--gold)' }}>
-        {t('dash.footer')}
-      </p>
+      <SiteFooter />
     </div>
   );
 }

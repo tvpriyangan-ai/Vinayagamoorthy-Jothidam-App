@@ -1,4 +1,5 @@
 import ParchmentCard from './ParchmentCard';
+import SiteFooter from './SiteFooter';
 
 export default function AuthLayout({ children, subtitle }) {
   return (
@@ -21,9 +22,7 @@ export default function AuthLayout({ children, subtitle }) {
 
         <ParchmentCard>{children}</ParchmentCard>
 
-        <p className="text-center text-xs mt-6 opacity-60" style={{ color: 'var(--gold)' }}>
-          © 2026 Vinayagamoorthy Jothidam. All Rights Reserved. TVP Creations
-        </p>
+        <SiteFooter className="mt-4 !py-3" />
       </div>
     </div>
   );

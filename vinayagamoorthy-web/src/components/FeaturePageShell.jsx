@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import AppHeader from './AppHeader';
+import SiteFooter from './SiteFooter';
 import { useT } from '../i18n/LanguageContext';
 
 export default function FeaturePageShell({ title, subtitle, children, wide = false }) {
@@ -17,9 +18,7 @@ export default function FeaturePageShell({ title, subtitle, children, wide = fal
         </Link>
       </div>
       {children}
-      <p className="text-center text-xs opacity-60 py-6" style={{ color: 'var(--gold)' }}>
-        {t('dash.footer')}
-      </p>
+      <SiteFooter />
     </div>
   );
 }

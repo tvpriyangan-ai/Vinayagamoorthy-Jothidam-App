@@ -126,6 +126,11 @@ const translations = {
     'mr.recommendation': 'பரிந்துரை',
     'mr.recommendationBody': 'இந்த ஜோடிக்கு நல்ல புரிதலும் பரஸ்பர இணக்கமும் உள்ளது. அன்பு, பொறுமை, மரியாதையுடன் இந்தத் திருமணம் நீண்டகால ஆசீர்வதிக்கப்பட்ட உறவாக அமையும்.',
     'mr.calculatedBy': 'கணக்கிட்டவர்',
+    'contact.us': 'எங்களைத் தொடர்பு கொள்ள',
+    'contact.title': 'தொடர்பு கொள்ள',
+    'contact.creator': 'உருவாக்கியவர்',
+    'contact.email': 'மின்னஞ்சல்',
+    'contact.sendEmail': 'மின்னஞ்சல் அனுப்பு',
   },
 
   ml: {
@@ -233,6 +238,11 @@ const translations = {
     'mr.recommendation': 'ശുപാർശ',
     'mr.recommendationBody': 'ഈ ദമ്പതികൾക്ക് നല്ല ധാരണയും പരസ്പര യോജിപ്പുമുണ്ട്. സ്നേഹത്തോടും ക്ഷമയോടും ബഹുമാനത്തോടും കൂടി ഈ വിവാഹം അനുഗൃഹീതവും ദീർഘകാലവുമായ ബന്ധമാകാം.',
     'mr.calculatedBy': 'കണക്കാക്കിയത്',
+    'contact.us': 'ഞങ്ങളെ ബന്ധപ്പെടുക',
+    'contact.title': 'ബന്ധപ്പെടുക',
+    'contact.creator': 'സ്രഷ്ടാവ്',
+    'contact.email': 'ഇമെയിൽ',
+    'contact.sendEmail': 'ഇമെയിൽ അയയ്ക്കുക',
   },
 
   en: {
@@ -340,6 +350,11 @@ const translations = {
     'mr.recommendation': 'Recommendation',
     'mr.recommendationBody': 'This couple shares good understanding and mutual harmony. With love, patience and respect, this marriage can be a blessed and long-lasting relationship.',
     'mr.calculatedBy': 'Calculated By',
+    'contact.us': 'Contact Us',
+    'contact.title': 'Contact Us',
+    'contact.creator': 'Creator',
+    'contact.email': 'Email',
+    'contact.sendEmail': 'Send Email',
   },
 
   hi: {
@@ -447,6 +462,11 @@ const translations = {
     'mr.recommendation': 'सिफ़ारिश',
     'mr.recommendationBody': 'इस जोड़े में अच्छी समझ और आपसी सामंजस्य है। प्रेम, धैर्य और सम्मान के साथ यह विवाह एक शुभ और दीर्घकालिक संबंध बन सकता है।',
     'mr.calculatedBy': 'गणना की गई',
+    'contact.us': 'संपर्क करें',
+    'contact.title': 'संपर्क करें',
+    'contact.creator': 'निर्माता',
+    'contact.email': 'ईमेल',
+    'contact.sendEmail': 'ईमेल भेजें',
   },
 
   pa: {
@@ -554,6 +574,11 @@ const translations = {
     'mr.recommendation': 'ਸਿਫ਼ਾਰਸ਼',
     'mr.recommendationBody': 'ਇਸ ਜੋੜੇ ਵਿੱਚ ਚੰਗੀ ਸਮਝ ਅਤੇ ਆਪਸੀ ਤਾਲਮੇਲ ਹੈ। ਪਿਆਰ, ਧੀਰਜ ਅਤੇ ਸਤਿਕਾਰ ਨਾਲ ਇਹ ਵਿਆਹ ਇੱਕ ਬਰਕਤ ਵਾਲਾ ਅਤੇ ਲੰਬੇ ਸਮੇਂ ਦਾ ਰਿਸ਼ਤਾ ਬਣ ਸਕਦਾ ਹੈ।',
     'mr.calculatedBy': 'ਗਣਨਾ ਕੀਤੀ',
+    'contact.us': 'ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੋ',
+    'contact.title': 'ਸੰਪਰਕ ਕਰੋ',
+    'contact.creator': 'ਸਿਰਜਣਹਾਰ',
+    'contact.email': 'ਈਮੇਲ',
+    'contact.sendEmail': 'ਈਮੇਲ ਭੇਜੋ',
   },
 };
 
