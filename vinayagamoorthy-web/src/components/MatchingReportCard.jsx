@@ -2,10 +2,10 @@ import { forwardRef } from 'react';
 import { useT } from '../i18n/LanguageContext';
 import '../styles/matchingReport.css';
 
-// Small glyph per porutham, in the backend's check-list order.
+// Glyph per porutham, in the client's 22-porutham chart order.
 const PORUTHAM_ICONS = [
-  '🌸', '💬', '🌿', '💍', '❤', '🌙', '🍂', '🤝', '🧿', '⚡', '🌱',
-  '🌳', '🏠', '⌛', '🔱', '⚥', '👑', '🦚', '🌍', '⚙', '👫', '📜',
+  '🌸', '🧠', '🌿', '💍', '❤️', '🌙', '🪐', '🤝', '🪢', '⚡', '🌿',
+  '🌳', '🏠', '♾️', '🪔', '🛕', '👑', '🌺', '🌾', '🤲', '👫', '🐦',
 ];
 const ZODIAC = ['♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓'];
 

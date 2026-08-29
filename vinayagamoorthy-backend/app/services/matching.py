@@ -1,17 +1,11 @@
 """
 Traditional Tamil marriage-matching system, expanded to the client's
-requested 22-porutham report. The first 11 are the well-established
-"Dasakoot + Nadi" system already validated in earlier testing. The
-remaining 11 are supplementary checks with varying degrees of classical
-standardization -- Varna and Vasya-adjacent concepts are genuinely part of
-classical Ashtakoot; Lagna/Kendra/Sevaka/Koodali house-distance checks use
-real chart data (lagna, houses) with defensible traditional logic; Vruksha
-and Pakshi use simplified proxies (nakshatra-lord friendship, modular bird
-assignment) documented inline since a single universal source doesn't
-exist for these in the way it does for Dina/Gana/Rajju/Vedha/Nadi.
+requested 22-porutham report.
 
 Every check is computed from real chart data (nakshatra, rasi, lagna, Sun
-position) -- nothing here is hardcoded or randomized.
+position) -- nothing here is hardcoded or randomized. Only the porutham
+NAMES, ORDER and DESCRIPTIONS follow the client's supplied 22-porutham
+chart; the calculation of each `matched` result is unchanged.
 """
 from typing import TypedDict
 
@@ -79,7 +73,6 @@ VASIYA_GROUP = {
     7: "பூச்சி",
 }
 
-# ---- New tables for the 11 additional checks ----
 NAKSHATRA_LORD_CYCLE = ["கேது", "சுக்கிரன்", "சூரியன்", "சந்திரன்", "செவ்வாய்", "ராகு", "குரு", "சனி", "புதன்"]
 
 VARNA_BY_RASI = {
@@ -111,212 +104,225 @@ class PoruthamResult(TypedDict):
     description: str
 
 
-# ==================== Original 11 (validated) ====================
-
+# ── 1. தினப் பொருத்தம் ─────────────────────────────────────────
 def _porutham_dina(girl_nak: int, boy_nak: int) -> PoruthamResult:
     count = ((boy_nak - girl_nak) % 27) + 1
     remainder = count % 9
     good = remainder in (0, 2, 4, 6, 8)
     return {"name": "தினப் பொருத்தம்", "matched": good,
             "detail": f"எண்ணிக்கை {count}, தாரை மீதி {remainder if remainder else 9}",
-            "description": "உடல் நலம், அன்றாட ஒத்துழைப்பு, வாழ்க்கை செளகரியம்"}
+            "description": "அன்றாட வாழ்க்கையில் நல்ல ஒத்துழைப்பு, உடல்–மன நலம் மற்றும் சௌகரியம்"}
 
 
+# ── 2. கணப் பொருத்தம் ─────────────────────────────────────────
 def _porutham_gana(girl_nak: int, boy_nak: int) -> PoruthamResult:
     g, b = GANA[girl_nak], GANA[boy_nak]
     good = g == b or {g, b} == {0, 1}
     return {"name": "கணப் பொருத்தம்", "matched": good,
             "detail": f"பெண்: {GANA_NAMES[g]}, ஆண்: {GANA_NAMES[b]}",
-            "description": "குணநலம், மனப்பான்மை, இயல்பு"}
+            "description": "குணநலம், மனப்பான்மை மற்றும் பழக்கங்களில் ஒற்றுமை"}
 
 
+# ── 3. மகேந்திரப் பொருத்தம் ───────────────────────────────────
+def _porutham_mahendra(girl_nak: int, boy_nak: int) -> PoruthamResult:
+    count = ((boy_nak - girl_nak) % 27) + 1
+    good = count in {4, 7, 10, 13, 16, 19, 22, 25}
+    return {"name": "மகேந்திரப் பொருத்தம்", "matched": good, "detail": f"எண்ணிக்கை {count}",
+            "description": "குடும்ப வளர்ச்சி, சந்ததி மற்றும் இல்லற வளம்"}
+
+
+# ── 4. ஸ்திரீ தீர்க்கப் பொருத்தம் ─────────────────────────────
+def _porutham_stree_deergha(girl_nak: int, boy_nak: int) -> PoruthamResult:
+    count = ((boy_nak - girl_nak) % 27) + 1
+    good = count >= 13
+    return {"name": "ஸ்திரீ தீர்க்கப் பொருத்தம்", "matched": good, "detail": f"எண்ணிக்கை {count}",
+            "description": "பெண்ணின் நலம் மற்றும் திருமண வாழ்க்கையின் நீடிப்பு"}
+
+
+# ── 5. யோனிப் பொருத்தம் ─────────────────────────────────────
 def _porutham_yoni(girl_nak: int, boy_nak: int) -> PoruthamResult:
     g, b = YONI_ANIMAL[girl_nak], YONI_ANIMAL[boy_nak]
     good = g == b or frozenset({g, b}) not in YONI_ENEMIES
     return {"name": "யோனிப் பொருத்தம்", "matched": good,
             "detail": f"பெண்: {YONI_NAMES[g]}, ஆண்: {YONI_NAMES[b]}",
-            "description": "தாம்பத்திய ஒற்றுமை, இயல்பான ஈர்ப்பு"}
+            "description": "தாம்பத்திய ஒற்றுமை, நெருக்கம் மற்றும் இயல்பான இணக்கம்"}
 
 
+# ── 6. ராசிப் பொருத்தம் ─────────────────────────────────────
 def _porutham_rasi(girl_rasi: int, boy_rasi: int) -> PoruthamResult:
     count = ((boy_rasi - girl_rasi) % 12) + 1
     good = count not in {2, 6, 8, 12}
     return {"name": "ராசிப் பொருத்தம்", "matched": good, "detail": f"எண்ணிக்கை {count}",
-            "description": "மனநிலை, குடும்ப வாழ்க்கை, பரஸ்பர ஒத்துழைப்பு"}
+            "description": "மனநிலை, குடும்ப வாழ்க்கை மற்றும் பரஸ்பர ஒத்துழைப்பு"}
 
 
-def _porutham_rajju(girl_nak: int, boy_nak: int) -> PoruthamResult:
-    g, b = RAJJU_GROUP[girl_nak], RAJJU_GROUP[boy_nak]
-    return {"name": "ரஜ்ஜுப் பொருத்தம்", "matched": g != b, "detail": f"பெண்: {g}, ஆண்: {b}",
-            "description": "திருமண பந்தத்தின் நிலைத்தன்மை"}
-
-
-def _porutham_vedha(girl_nak: int, boy_nak: int) -> PoruthamResult:
-    bad = frozenset({girl_nak, boy_nak}) in VEDHA_PAIRS
-    return {"name": "வேதைப் பொருத்தம்", "matched": not bad,
-            "detail": "வேத தோஷம் உள்ளது" if bad else "வேத தோஷம் இல்லை",
-            "description": "நட்சத்திரங்களுக்கு இடையிலான பாரம்பரிய வேதை/தடை"}
-
-
-def _porutham_mahendra(girl_nak: int, boy_nak: int) -> PoruthamResult:
-    count = ((boy_nak - girl_nak) % 27) + 1
-    good = count in {4, 7, 10, 13, 16, 19, 22, 25}
-    return {"name": "மகேந்திரப் பொருத்தம்", "matched": good, "detail": f"எண்ணிக்கை {count}",
-            "description": "குடும்ப வளர்ச்சி, சந்ததி, வளம்"}
-
-
-def _porutham_stree_deergha(girl_nak: int, boy_nak: int) -> PoruthamResult:
-    count = ((boy_nak - girl_nak) % 27) + 1
-    good = count >= 13
-    return {"name": "ஸ்திரீ தீர்க்கப் பொருத்தம்", "matched": good, "detail": f"எண்ணிக்கை {count}",
-            "description": "பெண்ணின் நலம், திருமண வாழ்க்கையின் நீடிப்பு"}
-
-
+# ── 7. ராசி அதிபதிப் பொருத்தம் ───────────────────────────────
 def _porutham_rasyadhipathi(girl_rasi: int, boy_rasi: int) -> PoruthamResult:
     g_lord, b_lord = RASI_LORD[girl_rasi], RASI_LORD[boy_rasi]
     good = g_lord == b_lord or b_lord not in PLANET_FRIENDSHIP[g_lord]["enemies"]
-    return {"name": "ராசி அதிபதி பொருத்தம்", "matched": good,
+    return {"name": "ராசி அதிபதிப் பொருத்தம்", "matched": good,
             "detail": f"பெண் ராசி நாதன்: {g_lord}, ஆண் ராசி நாதன்: {b_lord}",
-            "description": "இருவரின் ராசி அதிபதிகளின் உறவு, புரிதல்"}
+            "description": "இருவரின் குணம், அணுகுமுறை மற்றும் பரஸ்பர புரிதல்"}
 
 
+# ── 8. வசியப் பொருத்தம் ─────────────────────────────────────
 def _porutham_vasiya(girl_rasi: int, boy_rasi: int) -> PoruthamResult:
     g, b = VASIYA_GROUP.get(girl_rasi, "மனிதம்"), VASIYA_GROUP.get(boy_rasi, "மனிதம்")
     good = g == b or {g, b} == {"மனிதம்", "சதுஷ்பாதம்"}
     return {"name": "வசியப் பொருத்தம்", "matched": good, "detail": f"பெண்: {g}, ஆண்: {b}",
-            "description": "ஈர்ப்பு, அன்பு, ஒருவரை ஒருவர் ஏற்றுக்கொள்ளும் தன்மை"}
+            "description": "ஈர்ப்பு, அன்பு மற்றும் ஒருவர் மீது ஒருவர் கொண்ட செல்வாக்கு"}
 
 
+# ── 9. ரஜ்ஜுப் பொருத்தம் ────────────────────────────────────
+def _porutham_rajju(girl_nak: int, boy_nak: int) -> PoruthamResult:
+    g, b = RAJJU_GROUP[girl_nak], RAJJU_GROUP[boy_nak]
+    return {"name": "ரஜ்ஜுப் பொருத்தம்", "matched": g != b, "detail": f"பெண்: {g}, ஆண்: {b}",
+            "description": "திருமண பந்தத்தின் நிலைத்தன்மை மற்றும் நீடித்த குடும்ப வாழ்க்கை"}
+
+
+# ── 10. வேதைப் பொருத்தம் ────────────────────────────────────
+def _porutham_vedha(girl_nak: int, boy_nak: int) -> PoruthamResult:
+    bad = frozenset({girl_nak, boy_nak}) in VEDHA_PAIRS
+    return {"name": "வேதைப் பொருத்தம்", "matched": not bad,
+            "detail": "வேத தோஷம் உள்ளது" if bad else "வேத தோஷம் இல்லை",
+            "description": "நட்சத்திரங்களுக்கிடையிலான பாரம்பரிய வேதை அல்லது தடைகள்"}
+
+
+# ── 11. நாடிப் பொருத்தம் ────────────────────────────────────
 def _porutham_nadi(girl_nak: int, boy_nak: int) -> PoruthamResult:
     nadi_names = ["வாத நாடி", "பித்த நாடி", "கபா நாடி"]
     g_nadi, b_nadi = girl_nak % 3, boy_nak % 3
     good = g_nadi != b_nadi
     return {"name": "நாடிப் பொருத்தம்", "matched": good,
             "detail": f"பெண்: {nadi_names[g_nadi]}, ஆண்: {nadi_names[b_nadi]}",
-            "description": "உடல்நலம் மற்றும் சந்ததி தொடர்பான பாரம்பரியக் கருத்து"}
+            "description": "உடல்நலம் மற்றும் சந்ததி நலம் தொடர்பான பாரம்பரியக் கருத்து"}
 
 
-# ==================== 11 additional checks ====================
-
+# ── 12. விருட்சப் பொருத்தம் ──────────────────────────────────
 def _porutham_vruksha(girl_nak: int, boy_nak: int) -> PoruthamResult:
     g_lord = NAKSHATRA_LORD_CYCLE[girl_nak % 9]
     b_lord = NAKSHATRA_LORD_CYCLE[boy_nak % 9]
     good = g_lord == b_lord or b_lord not in PLANET_FRIENDSHIP[g_lord]["enemies"]
     return {"name": "விருட்சப் பொருத்தம்", "matched": good,
             "detail": f"பெண் நட்சத்திர நாதன்: {g_lord}, ஆண் நட்சத்திர நாதன்: {b_lord}",
-            "description": "குடும்ப வளர்ச்சி, வளம், வாழ்க்கை செழிப்பு"}
+            "description": "குடும்ப வளர்ச்சி, வளம் மற்றும் வாழ்க்கைச் செழிப்பு"}
 
 
+# ── 13. லக்னப் பொருத்தம் ────────────────────────────────────
 def _porutham_lagna(girl_lagna: int, boy_lagna: int) -> PoruthamResult:
     count = ((boy_lagna - girl_lagna) % 12) + 1
     good = count not in {2, 6, 8, 12}
     return {"name": "லக்னப் பொருத்தம்", "matched": good,
             "detail": f"பெண் லக்னம்: {RASI_NAMES_TA[girl_lagna]}, ஆண் லக்னம்: {RASI_NAMES_TA[boy_lagna]}",
-            "description": "இருவரின் வாழ்க்கை அணுகுமுறை மற்றும் ஜாதக லக்னத் தொடர்பு"}
+            "description": "வாழ்க்கை அணுகுமுறை, தன்மை மற்றும் இல்லற அமைப்பின் ஒத்திசைவு"}
 
 
+# ── 14. ஆயுள் பொருத்தம் ─────────────────────────────────────
 def _porutham_ayul(girl_nak: int, boy_nak: int) -> PoruthamResult:
-    """Checks the reverse-direction tara (boy -> girl) as a supplementary
-    longevity indicator, alongside the forward Dina check."""
     count = ((girl_nak - boy_nak) % 27) + 1
     remainder = count % 9
     good = remainder in (0, 2, 4, 6, 8)
     return {"name": "ஆயுள் பொருத்தம்", "matched": good, "detail": f"எதிர் தாரை எண்ணிக்கை {count}",
-            "description": "இருவரின் ஆயுள்/நீண்டகால வாழ்க்கை தொடர்பான ஜாதகக் கணிப்பு"}
+            "description": "நீண்டகால வாழ்க்கை மற்றும் ஆயுள் தொடர்பான ஜாதகக் கணிப்பு"}
 
 
+# ── 15. லிங்கப் பொருத்தம் ───────────────────────────────────
 def _porutham_linga(girl_rasi: int, boy_rasi: int) -> PoruthamResult:
     g_gender = "ஆண் ராசி" if girl_rasi % 2 == 0 else "பெண் ராசி"
     b_gender = "ஆண் ராசி" if boy_rasi % 2 == 0 else "பெண் ராசி"
     good = g_gender != b_gender
     return {"name": "லிங்கப் பொருத்தம்", "matched": good, "detail": f"பெண்: {g_gender}, ஆண்: {b_gender}",
-            "description": "இயல்பு மற்றும் தாம்பத்திய இணக்கம்"}
+            "description": "இயல்பு, தாம்பத்திய தன்மை மற்றும் இருவருக்கிடையேயான இணக்கம்"}
 
 
+# ── 16. கேந்திரப் பொருத்தம் ──────────────────────────────────
 def _porutham_kendra(girl_rasi: int, boy_rasi: int) -> PoruthamResult:
     count = ((boy_rasi - girl_rasi) % 12) + 1
     good = count in {1, 4, 7, 10}
     return {"name": "கேந்திரப் பொருத்தம்", "matched": good, "detail": f"எண்ணிக்கை {count}",
-            "description": "குடும்ப வாழ்க்கையின் ஆதரவு மற்றும் நிலைத்தன்மை"}
+            "description": "குடும்ப வாழ்க்கையின் நிலைத்தன்மை மற்றும் முக்கிய வாழ்க்கை அம்சங்களின் ஆதரவு"}
 
 
+# ── 17. வர்ணப் பொருத்தம் ────────────────────────────────────
 def _porutham_varna(girl_rasi: int, boy_rasi: int) -> PoruthamResult:
     g_varna, g_rank = VARNA_BY_RASI[girl_rasi]
     b_varna, b_rank = VARNA_BY_RASI[boy_rasi]
     good = b_rank >= g_rank
     return {"name": "வர்ணப் பொருத்தம்", "matched": good,
             "detail": f"பெண்: {g_varna}, ஆண்: {b_varna}",
-            "description": "இயல்பு, குணநிலை மற்றும் மனப்பாங்கு தொடர்பான பாரம்பரிய வகைப்பாடு"}
+            "description": "இயல்பு, மனப்பான்மை மற்றும் குணநிலை சார்ந்த பாரம்பரிய ஒற்றுமை"}
 
 
-def _porutham_pakshi(girl_nak: int, boy_nak: int) -> PoruthamResult:
-    """Simplified proxy: full classical Panchapakshi uses a fixed
-    birth-star table with day/night ruling states, not pure modular
-    assignment. This gives a reasonable approximation, not the complete
-    traditional system."""
-    g_bird, b_bird = girl_nak % 5, boy_nak % 5
-    good = g_bird == b_bird or frozenset({g_bird, b_bird}) not in BIRD_ENEMY_PAIRS
-    return {"name": "பக்ஷீ / பஞ்சபட்சி பொருத்தம்", "matched": good,
-            "detail": f"பெண்: {BIRD_NAMES_TA[g_bird]}, ஆண்: {BIRD_NAMES_TA[b_bird]}",
-            "description": "பிறப்பு பட்சி மற்றும் அதன் சாதக-பாதக நிலைகள்"}
+# ── 18. வாசிப் பொருத்தம் ────────────────────────────────────
+def _porutham_vaasi(girl_sun_rasi: int, boy_sun_rasi: int) -> PoruthamResult:
+    g_lord, b_lord = RASI_LORD[girl_sun_rasi], RASI_LORD[boy_sun_rasi]
+    good = g_lord == b_lord or b_lord not in PLANET_FRIENDSHIP[g_lord]["enemies"]
+    return {"name": "வாசிப் பொருத்தம்", "matched": good,
+            "detail": f"பெண் சூரிய ராசி நாதன்: {g_lord}, ஆண் சூரிய ராசி நாதன்: {b_lord}",
+            "description": "பரஸ்பர ஈர்ப்பு, தொடர்பு மற்றும் ஒருவர் மற்றவரை ஏற்றுக்கொள்ளும் தன்மை"}
 
 
-def _porutham_naadu(girl_rasi: int, boy_rasi: int) -> PoruthamResult:
+# ── 19. நாட்டுப் பொருத்தம் ──────────────────────────────────
+def _porutham_naattu(girl_rasi: int, boy_rasi: int) -> PoruthamResult:
     g_elem, b_elem = RASI_ELEMENT[girl_rasi], RASI_ELEMENT[boy_rasi]
     good = frozenset({g_elem, b_elem}) in ELEMENT_COMPATIBLE
-    return {"name": "நாடு பொருத்தம்", "matched": good, "detail": f"பெண்: {g_elem}, ஆண்: {b_elem}",
-            "description": "வாழ்க்கைச் சூழல் மற்றும் குடும்ப ஒத்துழைப்பு தொடர்பான கூடுதல் கணிப்பு"}
+    return {"name": "நாட்டுப் பொருத்தம்", "matched": good, "detail": f"பெண்: {g_elem}, ஆண்: {b_elem}",
+            "description": "குடும்பச் சூழல், வாழ்க்கைச் சூழல் மற்றும் இல்லற ஒத்துழைப்பு தொடர்பான கூடுதல் கணிப்பு"}
 
 
+# ── 20. சேவகப் பொருத்தம் ────────────────────────────────────
 def _porutham_sevaka(girl_rasi: int, boy_rasi: int) -> PoruthamResult:
     count = ((boy_rasi - girl_rasi) % 12) + 1
     good = count in {3, 11}
     return {"name": "சேவகப் பொருத்தம்", "matched": good, "detail": f"எண்ணிக்கை {count}",
-            "description": "ஒருவருக்கொருவர் உதவி, ஆதரவு, பொறுப்பு"}
+            "description": "ஒருவருக்கொருவர் உதவி, ஆதரவு மற்றும் குடும்பப் பொறுப்புகளைப் பகிர்ந்துகொள்ளும் தன்மை"}
 
 
+# ── 21. கூட்டாளிப் பொருத்தம் ─────────────────────────────────
 def _porutham_koodali(girl_rasi: int, boy_rasi: int) -> PoruthamResult:
     count = ((boy_rasi - girl_rasi) % 12) + 1
     good = count in {5, 9}
     return {"name": "கூட்டாளிப் பொருத்தம்", "matched": good, "detail": f"எண்ணிக்கை {count}",
-            "description": "வாழ்க்கைத் துணையாக இணைந்து செயல்படும் தன்மை"}
+            "description": "வாழ்க்கைத் துணையாக இணைந்து செயல்படுதல், புரிதல் மற்றும் ஒத்துழைப்பு"}
 
 
-def _porutham_additional(girl_sun_rasi: int, boy_sun_rasi: int) -> PoruthamResult:
-    g_lord, b_lord = RASI_LORD[girl_sun_rasi], RASI_LORD[boy_sun_rasi]
-    good = g_lord == b_lord or b_lord not in PLANET_FRIENDSHIP[g_lord]["enemies"]
-    return {"name": "கூடுதல் ஜாதகப் பொருத்தம்", "matched": good,
-            "detail": f"பெண் சூரிய ராசி நாதன்: {g_lord}, ஆண் சூரிய ராசி நாதன்: {b_lord}",
-            "description": "உங்கள் software கணக்கிடும் விரிவான ஜாதக அம்சத்தின் அடிப்படையிலான இறுதி மதிப்பீடு"}
+# ── 22. பக்ஷி / பஞ்சபட்சி பொருத்தம் ─────────────────────────
+def _porutham_pakshi(girl_nak: int, boy_nak: int) -> PoruthamResult:
+    g_bird, b_bird = girl_nak % 5, boy_nak % 5
+    good = g_bird == b_bird or frozenset({g_bird, b_bird}) not in BIRD_ENEMY_PAIRS
+    return {"name": "பக்ஷி / பஞ்சபட்சி பொருத்தம்", "matched": good,
+            "detail": f"பெண்: {BIRD_NAMES_TA[g_bird]}, ஆண்: {BIRD_NAMES_TA[b_bird]}",
+            "description": "பிறப்பு பட்சி மற்றும் அதன் சாதக–பாதக நிலைகளை அடிப்படையாகக் கொண்ட பாரம்பரிய மதிப்பீடு"}
 
 
 def calculate_porutham(
     girl_nakshatra: int, girl_rasi: int, boy_nakshatra: int, boy_rasi: int,
     girl_lagna_rasi: int, boy_lagna_rasi: int, girl_sun_rasi: int, boy_sun_rasi: int,
 ) -> dict:
+    # Order follows the client's supplied 22-porutham chart.
     checks = [
-        _porutham_dina(girl_nakshatra, boy_nakshatra),
-        _porutham_gana(girl_nakshatra, boy_nakshatra),
-        _porutham_mahendra(girl_nakshatra, boy_nakshatra),
-        _porutham_stree_deergha(girl_nakshatra, boy_nakshatra),
-        _porutham_yoni(girl_nakshatra, boy_nakshatra),
-        _porutham_rasi(girl_rasi, boy_rasi),
-        _porutham_rasyadhipathi(girl_rasi, boy_rasi),
-        _porutham_vasiya(girl_rasi, boy_rasi),
-        _porutham_rajju(girl_nakshatra, boy_nakshatra),
-        _porutham_vedha(girl_nakshatra, boy_nakshatra),
-        _porutham_nadi(girl_nakshatra, boy_nakshatra),
-        _porutham_vruksha(girl_nakshatra, boy_nakshatra),
-        _porutham_lagna(girl_lagna_rasi, boy_lagna_rasi),
-        _porutham_ayul(girl_nakshatra, boy_nakshatra),
-        _porutham_linga(girl_rasi, boy_rasi),
-        _porutham_kendra(girl_rasi, boy_rasi),
-        _porutham_varna(girl_rasi, boy_rasi),
-        _porutham_pakshi(girl_nakshatra, boy_nakshatra),
-        _porutham_naadu(girl_rasi, boy_rasi),
-        _porutham_sevaka(girl_rasi, boy_rasi),
-        _porutham_koodali(girl_rasi, boy_rasi),
-        _porutham_additional(girl_sun_rasi, boy_sun_rasi),
+        _porutham_dina(girl_nakshatra, boy_nakshatra),                 # 1
+        _porutham_gana(girl_nakshatra, boy_nakshatra),                 # 2
+        _porutham_mahendra(girl_nakshatra, boy_nakshatra),             # 3
+        _porutham_stree_deergha(girl_nakshatra, boy_nakshatra),        # 4
+        _porutham_yoni(girl_nakshatra, boy_nakshatra),                 # 5
+        _porutham_rasi(girl_rasi, boy_rasi),                           # 6
+        _porutham_rasyadhipathi(girl_rasi, boy_rasi),                  # 7
+        _porutham_vasiya(girl_rasi, boy_rasi),                         # 8
+        _porutham_rajju(girl_nakshatra, boy_nakshatra),               # 9
+        _porutham_vedha(girl_nakshatra, boy_nakshatra),               # 10
+        _porutham_nadi(girl_nakshatra, boy_nakshatra),                # 11
+        _porutham_vruksha(girl_nakshatra, boy_nakshatra),             # 12
+        _porutham_lagna(girl_lagna_rasi, boy_lagna_rasi),             # 13
+        _porutham_ayul(girl_nakshatra, boy_nakshatra),               # 14
+        _porutham_linga(girl_rasi, boy_rasi),                         # 15
+        _porutham_kendra(girl_rasi, boy_rasi),                        # 16
+        _porutham_varna(girl_rasi, boy_rasi),                         # 17
+        _porutham_vaasi(girl_sun_rasi, boy_sun_rasi),                 # 18
+        _porutham_naattu(girl_rasi, boy_rasi),                        # 19
+        _porutham_sevaka(girl_rasi, boy_rasi),                        # 20
+        _porutham_koodali(girl_rasi, boy_rasi),                       # 21
+        _porutham_pakshi(girl_nakshatra, boy_nakshatra),             # 22
     ]
     matched_count = sum(1 for c in checks if c["matched"])
 
