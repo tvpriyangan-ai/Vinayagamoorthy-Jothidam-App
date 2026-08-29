@@ -202,8 +202,8 @@ const translations = {
   en: {
     'brand.tagline': 'VEDIC ASTROLOGY SOFTWARE',
     'common.language': 'Language',
-    'common.welcome': 'Welcome',
-    'common.logout': 'Logout',
+    'common.welcome': 'Hello',
+    'common.logout': 'Exit',
     'common.loading': 'Loading...',
     'common.retry': 'Try again',
     'common.back': 'Back',

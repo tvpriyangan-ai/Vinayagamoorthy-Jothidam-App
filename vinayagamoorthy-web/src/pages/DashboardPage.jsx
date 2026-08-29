@@ -10,22 +10,22 @@ import {
 } from '../api/client';
 
 const QUICK_START_ITEMS = [
-  { key: 'meditation', tKey: 'quick.meditation' },
-  { key: 'yoga', tKey: 'quick.yoga' },
-  { key: 'diet', tKey: 'quick.diet' },
-  { key: 'ayurveda', tKey: 'quick.ayurveda' },
-  { key: 'dosha', tKey: 'quick.dosha', route: '/dosha' },
-  { key: 'vastu', tKey: 'quick.vastu', route: '/vastu' },
-  { key: 'books', tKey: 'quick.books' },
+  { key: 'meditation', tKey: 'quick.meditation', icon: '🧘' },
+  { key: 'yoga', tKey: 'quick.yoga', icon: '🕉️' },
+  { key: 'diet', tKey: 'quick.diet', icon: '🍚' },
+  { key: 'ayurveda', tKey: 'quick.ayurveda', icon: '🌿' },
+  { key: 'dosha', tKey: 'quick.dosha', route: '/dosha', icon: '🔆' },
+  { key: 'vastu', tKey: 'quick.vastu', route: '/vastu', icon: '🧭' },
+  { key: 'books', tKey: 'quick.books', icon: '📖' },
 ];
 
 const FEATURE_GRID = [
-  { key: 'jathagam', tKey: 'feat.jathagam', subKey: 'feat.jathagam.sub', route: '/jathagam' },
-  { key: 'matching', tKey: 'feat.matching', subKey: 'feat.matching.sub', route: '/matching' },
-  { key: 'lucky', tKey: 'feat.lucky', subKey: 'feat.lucky.sub', route: '/lucky-notes' },
-  { key: 'temples', tKey: 'feat.temples', subKey: 'feat.temples.sub', route: '/temples' },
-  { key: 'panchangam', tKey: 'feat.panchangam', subKey: 'feat.panchangam.sub', route: '/panchangam' },
-  { key: 'transit', tKey: 'feat.transit', subKey: 'feat.transit.sub', route: '/transit' },
+  { key: 'jathagam', tKey: 'feat.jathagam', subKey: 'feat.jathagam.sub', route: '/jathagam', icon: '📜' },
+  { key: 'matching', tKey: 'feat.matching', subKey: 'feat.matching.sub', route: '/matching', icon: '💞' },
+  { key: 'lucky', tKey: 'feat.lucky', subKey: 'feat.lucky.sub', route: '/lucky-notes', icon: '🪶' },
+  { key: 'temples', tKey: 'feat.temples', subKey: 'feat.temples.sub', route: '/temples', icon: '🛕' },
+  { key: 'panchangam', tKey: 'feat.panchangam', subKey: 'feat.panchangam.sub', route: '/panchangam', icon: '📅' },
+  { key: 'transit', tKey: 'feat.transit', subKey: 'feat.transit.sub', route: '/transit', icon: '🪐' },
 ];
 
 export default function DashboardPage() {
@@ -122,10 +122,11 @@ export default function DashboardPage() {
                 key={item.key}
                 to={item.route || `/content/${item.key}`}
                 state={!item.route ? { title: t(item.tKey) } : undefined}
-                className="flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium"
-                style={{ background: 'rgba(255,255,255,0.25)', border: '1px solid rgba(40,24,10,0.3)' }}
+                className="quick-row"
               >
-                {t(item.tKey)} <span>›</span>
+                <span className="qi" aria-hidden="true">{item.icon}</span>
+                <span>{t(item.tKey)}</span>
+                <span className="qc" aria-hidden="true">›</span>
               </Link>
             ))}
           </div>
@@ -159,8 +160,8 @@ export default function DashboardPage() {
         <ParchmentCard className="flex flex-col">
           <h3 className="parchment-heading text-lg mb-2 text-center">{t('dash.chatTitle')}</h3>
           <div
-            className="flex-1 overflow-y-auto rounded-lg p-2 mb-2 text-sm space-y-2"
-            style={{ background: 'rgba(0,0,0,0.12)', minHeight: '180px', maxHeight: '220px' }}
+            className="chat-scroll flex-1 overflow-y-auto rounded-lg p-2 mb-2 text-sm space-y-2"
+            style={{ background: 'rgba(0,0,0,0.14)', minHeight: '180px', maxHeight: '220px' }}
           >
             {chatMessages.length === 0 && (
               <p className="text-center opacity-60 italic mt-6">{t('dash.chatEmpty')}</p>
@@ -187,14 +188,15 @@ export default function DashboardPage() {
         </ParchmentCard>
       </div>
 
-      <RopeDivider knots={4} />
+      <RopeDivider knots={2} om />
 
       <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-4 mt-4 mb-8">
         {FEATURE_GRID.map((f) => (
           <Link key={f.key} to={f.route}>
-            <ParchmentCard className="leaf-card--dark text-center h-full flex flex-col items-center justify-center py-6">
-              <p className="font-semibold">{t(f.tKey)}</p>
-              <p className="text-xs opacity-80 mt-1">{t(f.subKey)}</p>
+            <ParchmentCard className="feature-tile h-full flex flex-col items-center justify-center">
+              <div className="ft-icon" aria-hidden="true">{f.icon}</div>
+              <div className="ft-title">{t(f.tKey)}</div>
+              <div className="ft-sub">{t(f.subKey)}</div>
             </ParchmentCard>
           </Link>
         ))}
