@@ -305,52 +305,43 @@
 .report .result-mark.no { color: var(--r-red); }
 .report .result-mark.no .dot { background: var(--r-red); }
 
-/* ── bottom row ─────────────────────────────────────────────── */
-.report .bottom-grid {
-  display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  gap: 16px;
+/* ── bottom banner — full-width couple illustration ─────────── */
+.report .couple-banner {
   margin-top: 18px;
-}
-.report .couple-art {
-  position: relative;
-  min-height: 210px;
-  padding: 10px;
+  padding: 12px;
   border: 1px solid var(--r-gold-dk);
+  box-shadow: inset 0 0 0 3px rgba(124,86,41,.3);
   background:
     repeating-linear-gradient(0deg, rgba(0,0,0,.16) 0 2px, transparent 2px 7px),
     linear-gradient(150deg, #3d2513, #1d1109);
 }
-.report .couple-art .frame {
-  position: relative;
-  height: 100%;
-  min-height: 190px;
-  display: grid;
-  place-items: center;
-  border: 1px solid rgba(201,162,74,.4);
-  overflow: hidden;
-  background: radial-gradient(circle at 50% 70%, rgba(255,164,31,.16), transparent 30%), #4a2a13;
-}
-.report .couple-art img { max-width: 100%; max-height: 220px; object-fit: contain; }
-.report .couple-emoji { display: flex; align-items: flex-end; gap: 4px; }
-.report .couple-emoji span { font-size: 60px; }
-.report .couple-emoji .fire { font-size: 34px; }
-
-.report .note-card {
-  position: relative;
-  padding: 20px 20px 16px;
-  text-align: center;
-  border: 1px solid var(--r-gold-dk);
-  border-radius: 3px;
+.report .couple-inner {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 10px 8px 4px;
+  border: 1px solid rgba(201,162,74,.45);
   background:
-    repeating-linear-gradient(180deg, rgba(124,86,41,.06) 0 2px, transparent 2px 6px),
-    linear-gradient(160deg, #f0dcac, #d8b477);
-  box-shadow: inset 0 0 0 3px rgba(124,86,41,.28);
-  color: var(--r-ink);
+    radial-gradient(60% 80% at 50% 100%, rgba(255,164,31,.16), transparent 60%),
+    radial-gradient(circle, rgba(201,162,74,.10), transparent 62%),
+    #4a2a13;
 }
-.report .note-card .lotus { font-size: 20px; color: var(--r-red); }
-.report .note-card h3 { margin: 2px 0 6px; font: 700 19px 'Noto Serif Tamil', Cinzel, serif; color: #3a2410; }
-.report .note-card p { margin: 4px 0 0; font-size: 14.5px; line-height: 1.5; }
+.report .couple-photo {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 360px;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,.45));
+}
+.report .couple-caption {
+  margin: 8px 4px 0;
+  text-align: center;
+  font-size: 12.5px;
+  font-style: italic;
+  line-height: 1.45;
+  color: #e7cf9c;
+}
 
 /* ── footer ─────────────────────────────────────────────────── */
 .report .report-footer {

@@ -110,22 +110,13 @@ const MatchingReportCard = forwardRef(function MatchingReportCard({ result }, re
               </table>
             </div>
 
-            <section className="bottom-grid">
-              <div className="couple-art">
-                <div className="frame">
-                  <DecoImg src="/assets/report-couple.png" alt="" />
-                  <div className="couple-emoji" aria-hidden="true">
-                    <span>🤵</span><span className="fire">🔥</span><span>👰</span>
-                  </div>
-                </div>
+            <section className="couple-banner">
+              <div className="couple-inner">
+                <DecoImg className="couple-photo" src="/assets/report-couple.png" alt="" />
               </div>
-
-              <div className="note-card">
-                <div className="lotus" aria-hidden="true">🪷</div>
-                <h3>{t('mr.noteTitle')}</h3>
-                <p>{result.note}</p>
-                <p>{t('mr.noteCount', { n: result.matched_count, total: result.total_count })}</p>
-              </div>
+              <p className="couple-caption">
+                {t('mr.noteCount', { n: result.matched_count, total: result.total_count })} — {result.note}
+              </p>
             </section>
 
             <footer className="report-footer">
