@@ -131,6 +131,8 @@ const translations = {
     'contact.creator': 'உருவாக்கியவர்',
     'contact.email': 'மின்னஞ்சல்',
     'contact.sendEmail': 'மின்னஞ்சல் அனுப்பு',
+    'mr.noteTitle': 'குறிப்பு',
+    'mr.noteCount': 'மொத்த {total} பொருத்தங்களில் {n} பொருந்துகின்றன.',
   },
 
   ml: {
@@ -243,6 +245,8 @@ const translations = {
     'contact.creator': 'സ്രഷ്ടാവ്',
     'contact.email': 'ഇമെയിൽ',
     'contact.sendEmail': 'ഇമെയിൽ അയയ്ക്കുക',
+    'mr.noteTitle': 'കുറിപ്പ്',
+    'mr.noteCount': 'ആകെ {total} ഘടകങ്ങളിൽ {n} എണ്ണം യോജിക്കുന്നു.',
   },
 
   en: {
@@ -355,6 +359,8 @@ const translations = {
     'contact.creator': 'Creator',
     'contact.email': 'Email',
     'contact.sendEmail': 'Send Email',
+    'mr.noteTitle': 'Note',
+    'mr.noteCount': 'Of the {total} factors, {n} are compatible.',
   },
 
   hi: {
@@ -467,6 +473,8 @@ const translations = {
     'contact.creator': 'निर्माता',
     'contact.email': 'ईमेल',
     'contact.sendEmail': 'ईमेल भेजें',
+    'mr.noteTitle': 'टिप्पणी',
+    'mr.noteCount': 'कुल {total} कारकों में से {n} अनुकूल हैं।',
   },
 
   pa: {
@@ -579,6 +587,8 @@ const translations = {
     'contact.creator': 'ਸਿਰਜਣਹਾਰ',
     'contact.email': 'ਈਮੇਲ',
     'contact.sendEmail': 'ਈਮੇਲ ਭੇਜੋ',
+    'mr.noteTitle': 'ਨੋਟ',
+    'mr.noteCount': 'ਕੁੱਲ {total} ਕਾਰਕਾਂ ਵਿੱਚੋਂ {n} ਅਨੁਕੂਲ ਹਨ।',
   },
 };
 
