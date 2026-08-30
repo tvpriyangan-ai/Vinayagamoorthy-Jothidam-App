@@ -1,0 +1,9 @@
+{
+  "name": "vinayagamoorthy-jothidam-app",
+  "private": true,
+  "description": "Repo-root build/deploy orchestration for the Cloudflare Workers static-assets deployment. The React/Vite frontend lives in vinayagamoorthy-web/; wrangler.jsonc points at vinayagamoorthy-web/dist.",
+  "scripts": {
+    "build": "npm --prefix vinayagamoorthy-web ci && npm --prefix vinayagamoorthy-web run build",
+    "deploy": "npm run build && npx --yes wrangler@4 deploy"
+  }
+}
