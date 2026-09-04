@@ -13,6 +13,10 @@ export default function SiteFooter({ className = '' }) {
         {t('contact.us')}
       </Link>
       <span className="mx-2 opacity-50">·</span>
+      <Link to="/privacy" className="underline" style={{ color: 'var(--gold-bright)' }}>
+        {t('footer.privacyPolicy')}
+      </Link>
+      <span className="mx-2 opacity-50">·</span>
       <Link to="/delete-account" className="underline" style={{ color: 'var(--gold-bright)' }}>
         {t('footer.deleteAccount')}
       </Link>

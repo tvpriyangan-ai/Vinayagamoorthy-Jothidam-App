@@ -16,6 +16,7 @@ import ProfilePage from './pages/ProfilePage';
 import ContentPage from './pages/ContentPage';
 import ContactPage from './pages/ContactPage';
 import DeleteAccountPage from './pages/DeleteAccountPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import MusicPlayer from './components/MusicPlayer';
 
@@ -36,6 +37,7 @@ function AppRoutes() {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/delete-account" element={<DeleteAccountPage />} />
+        <Route path="/privacy" element={<PrivacyPolicyPage />} />
 
         <Route path="/dashboard" element={Protected(<DashboardPage />)} />
 
