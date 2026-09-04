@@ -1,14 +1,18 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import AuthLayout from '../components/AuthLayout';
 import { login, extractErrorMessage } from '../api/client';
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  // Set by ProfilePage / DeleteAccountPage after a successful account
+  // deletion, e.g. "Your account has been successfully deleted."
+  const [notice] = useState(location.state?.message || '');
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -29,6 +33,9 @@ export default function LoginPage() {
   return (
     <AuthLayout subtitle="Vedic Astrology Software">
       <h2 className="parchment-heading text-xl mb-4 text-center">உள்நுழைவு</h2>
+      {notice && (
+        <p className="text-sm text-center mb-4" style={{ color: 'var(--success-green)' }}>{notice}</p>
+      )}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="field-label">பயனர் பெயர் (Username)</label>

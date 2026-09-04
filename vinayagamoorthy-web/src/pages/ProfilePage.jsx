@@ -1,12 +1,15 @@
 import { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import FeaturePageShell from '../components/FeaturePageShell';
 import ParchmentCard from '../components/ParchmentCard';
-import { getMyProfile, updateMyProfile, uploadPalmPhoto, extractErrorMessage } from '../api/client';
+import ConfirmModal from '../components/ConfirmModal';
+import { getMyProfile, updateMyProfile, uploadPalmPhoto, deleteMyAccount, extractErrorMessage } from '../api/client';
 import Loading from '../components/Loading';
 import { useLanguage } from '../i18n/LanguageContext';
 import { LANGUAGES } from '../i18n/translations';
 
 export default function ProfilePage() {
+  const navigate = useNavigate();
   const { setLanguage } = useLanguage();
   const [profile, setProfile] = useState(null);
   const [form, setForm] = useState({ name: '', email: '', mobile: '', preferred_language: 'ta' });
@@ -18,6 +21,10 @@ export default function ProfilePage() {
   const [photoUploading, setPhotoUploading] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(null);
   const fileInputRef = useRef(null);
+
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState('');
 
   useEffect(() => {
     getMyProfile()
@@ -94,6 +101,25 @@ export default function ProfilePage() {
     }
   }
 
+
+  async function handleDeleteAccount() {
+    setDeleting(true);
+    setDeleteError('');
+    try {
+      await deleteMyAccount();
+      // Own account only — the server identifies it from this session's own
+      // JWT, so there's no way to target anyone else's account.
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('user_id');
+      navigate('/login', {
+        replace: true,
+        state: { message: 'உங்கள் கணக்கு வெற்றிகரமாக நீக்கப்பட்டது. / Your account has been successfully deleted.' },
+      });
+    } catch (err) {
+      setDeleteError(extractErrorMessage(err, 'கணக்கை நீக்க முடியவில்லை. மீண்டும் முயற்சிக்கவும்.'));
+      setDeleting(false);
+    }
+  }
 
   if (!profile) {
     return (
@@ -191,6 +217,35 @@ export default function ProfilePage() {
           </button>
         </form>
       </ParchmentCard>
+
+      <ParchmentCard className="mt-4">
+        <h3 className="parchment-heading text-lg mb-2 text-center" style={{ color: 'var(--alert-red)' }}>
+          ஆபத்தான மண்டலம் (Danger Zone)
+        </h3>
+        <p className="text-xs text-center opacity-70 mb-3 font-manuscript italic">
+          இது உங்கள் கணக்கையும், ஜாதகம், அரட்டை வரலாறு, பொருத்த சோதனைகள், வாஸ்து அறிக்கைகள் உள்ளிட்ட
+          தொடர்புடைய அனைத்து தரவையும் நிரந்தரமாக நீக்கும். இதை மீட்டெடுக்க முடியாது.
+        </p>
+        <button type="button" className="btn-danger w-full" onClick={() => { setDeleteError(''); setShowDeleteConfirm(true); }}>
+          கணக்கை நீக்கு (Delete Account)
+        </button>
+      </ParchmentCard>
+
+      {showDeleteConfirm && (
+        <ConfirmModal
+          title="கணக்கை நீக்கவா? / Delete your account?"
+          confirmLabel={deleting ? 'நீக்குகிறது...' : 'ஆம், நீக்கு'}
+          cancelLabel="ரத்து செய்"
+          loading={deleting}
+          error={deleteError}
+          onConfirm={handleDeleteAccount}
+          onCancel={() => setShowDeleteConfirm(false)}
+        >
+          இது நிரந்தரமானது — உங்கள் சுயவிவரம் மற்றும் அனைத்து தரவும் உடனடியாக நீக்கப்படும்.
+          <br />
+          This is permanent — your profile and all associated data will be deleted immediately.
+        </ConfirmModal>
+      )}
     </FeaturePageShell>
   );
 }

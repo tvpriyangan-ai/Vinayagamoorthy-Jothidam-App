@@ -53,6 +53,7 @@ export function extractErrorMessage(err, fallback = 'ஏதோ தவறு ந�
 // ---- Users ----
 export const getMyProfile = () => client.get('/users/me');
 export const updateMyProfile = (payload) => client.put('/users/me', payload);
+export const deleteMyAccount = () => client.delete('/users/me');
 export const uploadPalmPhoto = (file) => {
   const formData = new FormData();
   formData.append('file', file);

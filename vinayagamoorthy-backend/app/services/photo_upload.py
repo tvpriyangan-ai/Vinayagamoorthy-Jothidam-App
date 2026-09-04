@@ -39,3 +39,12 @@ def upload_palm_photo(file_bytes: bytes, user_id: str) -> str:
         resource_type="image",
     )
     return result["secure_url"]
+
+
+def delete_palm_photo(user_id: str) -> None:
+    """Best-effort removal of a user's palm photo (e.g. on account deletion).
+    Mirrors the folder/public_id used in upload_palm_photo above."""
+    if not is_configured():
+        return
+    _ensure_configured()
+    cloudinary.uploader.destroy(f"vinayagamoorthy/palm_photos/{user_id}", resource_type="image")
